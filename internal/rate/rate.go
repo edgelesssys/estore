@@ -3,7 +3,7 @@
 // the LICENSE file.
 
 // Package rate provides a rate limiter.
-package rate // import "github.com/cockroachdb/pebble/internal/rate"
+package rate // import "github.com/edgelesssys/ego-kvstore/internal/rate"
 
 import (
 	"sync"

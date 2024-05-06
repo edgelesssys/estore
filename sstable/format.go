@@ -6,7 +6,7 @@ package sstable
 
 import (
 	"github.com/cockroachdb/errors"
-	"github.com/cockroachdb/pebble/internal/base"
+	"github.com/edgelesssys/ego-kvstore/internal/base"
 )
 
 // TableFormat specifies the format version for sstables. The legacy LevelDB

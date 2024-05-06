@@ -17,11 +17,11 @@ import (
 
 	"github.com/cockroachdb/datadriven"
 	"github.com/cockroachdb/errors"
-	"github.com/cockroachdb/pebble/internal/base"
-	"github.com/cockroachdb/pebble/internal/humanize"
-	"github.com/cockroachdb/pebble/internal/manifest"
-	"github.com/cockroachdb/pebble/internal/testkeys"
-	"github.com/cockroachdb/pebble/vfs"
+	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/ego-kvstore/internal/humanize"
+	"github.com/edgelesssys/ego-kvstore/internal/manifest"
+	"github.com/edgelesssys/ego-kvstore/internal/testkeys"
+	"github.com/edgelesssys/ego-kvstore/vfs"
 	"github.com/stretchr/testify/require"
 )
 

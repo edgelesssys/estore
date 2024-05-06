@@ -13,11 +13,11 @@ import (
 	"strconv"
 
 	"github.com/cockroachdb/errors"
-	"github.com/cockroachdb/pebble/internal/base"
-	"github.com/cockroachdb/pebble/internal/bytealloc"
-	"github.com/cockroachdb/pebble/internal/keyspan"
-	"github.com/cockroachdb/pebble/internal/rangekey"
 	"github.com/cockroachdb/redact"
+	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/ego-kvstore/internal/bytealloc"
+	"github.com/edgelesssys/ego-kvstore/internal/keyspan"
+	"github.com/edgelesssys/ego-kvstore/internal/rangekey"
 )
 
 // compactionIter provides a forward-only iterator that encapsulates the logic

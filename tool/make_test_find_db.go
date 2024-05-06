@@ -11,11 +11,11 @@ package main
 import (
 	"log"
 
-	"github.com/cockroachdb/pebble"
-	"github.com/cockroachdb/pebble/internal/base"
-	"github.com/cockroachdb/pebble/objstorage/objstorageprovider"
-	"github.com/cockroachdb/pebble/sstable"
-	"github.com/cockroachdb/pebble/vfs"
+	"github.com/edgelesssys/ego-kvstore"
+	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/ego-kvstore/objstorage/objstorageprovider"
+	"github.com/edgelesssys/ego-kvstore/sstable"
+	"github.com/edgelesssys/ego-kvstore/vfs"
 )
 
 type db struct {

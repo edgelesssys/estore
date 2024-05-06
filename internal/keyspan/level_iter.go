@@ -7,9 +7,9 @@ package keyspan
 import (
 	"fmt"
 
-	"github.com/cockroachdb/pebble/internal/base"
-	"github.com/cockroachdb/pebble/internal/invariants"
-	"github.com/cockroachdb/pebble/internal/manifest"
+	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/ego-kvstore/internal/invariants"
+	"github.com/edgelesssys/ego-kvstore/internal/manifest"
 )
 
 // LevelIter provides a merged view of spans from sstables in a level.

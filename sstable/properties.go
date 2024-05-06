@@ -13,7 +13,7 @@ import (
 	"sort"
 	"unsafe"
 
-	"github.com/cockroachdb/pebble/internal/intern"
+	"github.com/edgelesssys/ego-kvstore/internal/intern"
 )
 
 const propertiesBlockRestartInterval = math.MaxInt32

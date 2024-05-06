@@ -3,7 +3,7 @@ package sstable
 import (
 	"sync"
 
-	"github.com/cockroachdb/pebble/internal/base"
+	"github.com/edgelesssys/ego-kvstore/internal/base"
 )
 
 type writeTask struct {

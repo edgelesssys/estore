@@ -11,9 +11,9 @@ import (
 	"unsafe"
 
 	"github.com/cockroachdb/errors"
-	"github.com/cockroachdb/pebble/internal/base"
-	"github.com/cockroachdb/pebble/internal/invariants"
-	"github.com/cockroachdb/pebble/internal/keyspan"
+	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/ego-kvstore/internal/invariants"
+	"github.com/edgelesssys/ego-kvstore/internal/keyspan"
 )
 
 type mergingIterLevel struct {

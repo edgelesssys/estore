@@ -15,13 +15,13 @@ import (
 	"time"
 
 	"github.com/cockroachdb/errors"
-	"github.com/cockroachdb/pebble"
-	"github.com/cockroachdb/pebble/bloom"
-	"github.com/cockroachdb/pebble/internal/cache"
-	"github.com/cockroachdb/pebble/internal/testkeys"
-	"github.com/cockroachdb/pebble/objstorage/remote"
-	"github.com/cockroachdb/pebble/sstable"
-	"github.com/cockroachdb/pebble/vfs"
+	"github.com/edgelesssys/ego-kvstore"
+	"github.com/edgelesssys/ego-kvstore/bloom"
+	"github.com/edgelesssys/ego-kvstore/internal/cache"
+	"github.com/edgelesssys/ego-kvstore/internal/testkeys"
+	"github.com/edgelesssys/ego-kvstore/objstorage/remote"
+	"github.com/edgelesssys/ego-kvstore/sstable"
+	"github.com/edgelesssys/ego-kvstore/vfs"
 	"golang.org/x/exp/rand"
 )
 

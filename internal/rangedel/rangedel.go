@@ -5,8 +5,8 @@
 package rangedel
 
 import (
-	"github.com/cockroachdb/pebble/internal/base"
-	"github.com/cockroachdb/pebble/internal/keyspan"
+	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/ego-kvstore/internal/keyspan"
 )
 
 // Encode takes a Span containing only range deletions. It invokes the provided

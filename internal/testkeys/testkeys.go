@@ -19,7 +19,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/cockroachdb/pebble/internal/base"
+	"github.com/edgelesssys/ego-kvstore/internal/base"
 	"golang.org/x/exp/constraints"
 	"golang.org/x/exp/rand"
 )

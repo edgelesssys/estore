@@ -9,7 +9,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/cockroachdb/pebble/vfs"
+	"github.com/edgelesssys/ego-kvstore/vfs"
 	"golang.org/x/exp/rand"
 )
 

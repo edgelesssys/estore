@@ -16,7 +16,7 @@ import (
 
 	"github.com/cockroachdb/datadriven"
 	"github.com/cockroachdb/errors"
-	"github.com/cockroachdb/pebble/internal/dsl"
+	"github.com/edgelesssys/ego-kvstore/internal/dsl"
 )
 
 // This file contains testing facilities for Spans and FragmentIterators. It's

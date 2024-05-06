@@ -41,7 +41,7 @@ Key differences:
 - Iterator includes mutator functions.
 */
 
-package arenaskl // import "github.com/cockroachdb/pebble/internal/arenaskl"
+package arenaskl // import "github.com/edgelesssys/ego-kvstore/internal/arenaskl"
 
 import (
 	"math"
@@ -50,8 +50,8 @@ import (
 	"unsafe"
 
 	"github.com/cockroachdb/errors"
-	"github.com/cockroachdb/pebble/internal/base"
-	"github.com/cockroachdb/pebble/internal/fastrand"
+	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/ego-kvstore/internal/fastrand"
 )
 
 const (

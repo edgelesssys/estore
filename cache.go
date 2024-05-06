@@ -4,7 +4,7 @@
 
 package pebble
 
-import "github.com/cockroachdb/pebble/internal/cache"
+import "github.com/edgelesssys/ego-kvstore/internal/cache"
 
 // Cache exports the cache.Cache type.
 type Cache = cache.Cache

@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/cockroachdb/pebble"
-	"github.com/cockroachdb/pebble/internal/cache"
+	"github.com/edgelesssys/ego-kvstore"
+	"github.com/edgelesssys/ego-kvstore/internal/cache"
 	"github.com/stretchr/testify/require"
 )
 

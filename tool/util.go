@@ -13,10 +13,10 @@ import (
 	"time"
 
 	"github.com/cockroachdb/errors"
-	"github.com/cockroachdb/pebble/internal/base"
-	"github.com/cockroachdb/pebble/internal/keyspan"
-	"github.com/cockroachdb/pebble/sstable"
-	"github.com/cockroachdb/pebble/vfs"
+	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/ego-kvstore/internal/keyspan"
+	"github.com/edgelesssys/ego-kvstore/sstable"
+	"github.com/edgelesssys/ego-kvstore/vfs"
 )
 
 var timeNow = time.Now

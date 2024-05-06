@@ -18,7 +18,7 @@ import (
 	"time"
 
 	"github.com/cockroachdb/errors"
-	"github.com/cockroachdb/pebble/internal/humanize"
+	"github.com/edgelesssys/ego-kvstore/internal/humanize"
 	"github.com/spf13/cobra"
 )
 

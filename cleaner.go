@@ -11,10 +11,10 @@ import (
 	"time"
 
 	"github.com/cockroachdb/errors/oserror"
-	"github.com/cockroachdb/pebble/internal/base"
-	"github.com/cockroachdb/pebble/internal/invariants"
-	"github.com/cockroachdb/pebble/objstorage"
 	"github.com/cockroachdb/tokenbucket"
+	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/ego-kvstore/internal/invariants"
+	"github.com/edgelesssys/ego-kvstore/objstorage"
 )
 
 // Cleaner exports the base.Cleaner type.

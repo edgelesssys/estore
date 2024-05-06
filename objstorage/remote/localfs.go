@@ -10,7 +10,7 @@ import (
 	"os"
 	"path"
 
-	"github.com/cockroachdb/pebble/vfs"
+	"github.com/edgelesssys/ego-kvstore/vfs"
 )
 
 // NewLocalFS returns a vfs-backed implementation of the remote.Storage

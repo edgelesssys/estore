@@ -18,9 +18,9 @@ import (
 
 	"github.com/cockroachdb/datadriven"
 	"github.com/cockroachdb/errors"
-	"github.com/cockroachdb/pebble/internal/base"
-	"github.com/cockroachdb/pebble/internal/rangekey"
-	"github.com/cockroachdb/pebble/internal/testkeys"
+	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/ego-kvstore/internal/rangekey"
+	"github.com/edgelesssys/ego-kvstore/internal/testkeys"
 	"github.com/stretchr/testify/require"
 )
 

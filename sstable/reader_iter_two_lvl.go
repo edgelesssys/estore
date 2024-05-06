@@ -8,8 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/cockroachdb/pebble/internal/base"
-	"github.com/cockroachdb/pebble/objstorage/objstorageprovider/objiotracing"
+	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/ego-kvstore/objstorage/objstorageprovider/objiotracing"
 )
 
 type twoLevelIterator struct {

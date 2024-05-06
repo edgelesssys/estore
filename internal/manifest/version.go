@@ -15,8 +15,8 @@ import (
 	"unicode"
 
 	"github.com/cockroachdb/errors"
-	"github.com/cockroachdb/pebble/internal/base"
-	"github.com/cockroachdb/pebble/internal/invariants"
+	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/ego-kvstore/internal/invariants"
 )
 
 // Compare exports the base.Compare type.

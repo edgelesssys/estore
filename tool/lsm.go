@@ -13,11 +13,11 @@ import (
 	"sort"
 
 	"github.com/cockroachdb/errors"
-	"github.com/cockroachdb/pebble"
-	"github.com/cockroachdb/pebble/internal/base"
-	"github.com/cockroachdb/pebble/internal/manifest"
-	"github.com/cockroachdb/pebble/record"
-	"github.com/cockroachdb/pebble/sstable"
+	"github.com/edgelesssys/ego-kvstore"
+	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/ego-kvstore/internal/manifest"
+	"github.com/edgelesssys/ego-kvstore/record"
+	"github.com/edgelesssys/ego-kvstore/sstable"
 	"github.com/spf13/cobra"
 )
 

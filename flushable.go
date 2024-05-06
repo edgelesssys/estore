@@ -10,8 +10,8 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/cockroachdb/pebble/internal/keyspan"
-	"github.com/cockroachdb/pebble/internal/manifest"
+	"github.com/edgelesssys/ego-kvstore/internal/keyspan"
+	"github.com/edgelesssys/ego-kvstore/internal/manifest"
 )
 
 // flushable defines the interface for immutable memtables.

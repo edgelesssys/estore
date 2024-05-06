@@ -3,7 +3,7 @@
 // the LICENSE file.
 
 // Package pebble provides an ordered key/value store.
-package pebble // import "github.com/cockroachdb/pebble"
+package pebble // import "github.com/edgelesssys/ego-kvstore"
 
 import (
 	"context"
@@ -16,21 +16,21 @@ import (
 	"time"
 
 	"github.com/cockroachdb/errors"
-	"github.com/cockroachdb/pebble/internal/arenaskl"
-	"github.com/cockroachdb/pebble/internal/base"
-	"github.com/cockroachdb/pebble/internal/invalidating"
-	"github.com/cockroachdb/pebble/internal/invariants"
-	"github.com/cockroachdb/pebble/internal/keyspan"
-	"github.com/cockroachdb/pebble/internal/manifest"
-	"github.com/cockroachdb/pebble/internal/manual"
-	"github.com/cockroachdb/pebble/objstorage"
-	"github.com/cockroachdb/pebble/objstorage/remote"
-	"github.com/cockroachdb/pebble/rangekey"
-	"github.com/cockroachdb/pebble/record"
-	"github.com/cockroachdb/pebble/sstable"
-	"github.com/cockroachdb/pebble/vfs"
-	"github.com/cockroachdb/pebble/vfs/atomicfs"
 	"github.com/cockroachdb/tokenbucket"
+	"github.com/edgelesssys/ego-kvstore/internal/arenaskl"
+	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/ego-kvstore/internal/invalidating"
+	"github.com/edgelesssys/ego-kvstore/internal/invariants"
+	"github.com/edgelesssys/ego-kvstore/internal/keyspan"
+	"github.com/edgelesssys/ego-kvstore/internal/manifest"
+	"github.com/edgelesssys/ego-kvstore/internal/manual"
+	"github.com/edgelesssys/ego-kvstore/objstorage"
+	"github.com/edgelesssys/ego-kvstore/objstorage/remote"
+	"github.com/edgelesssys/ego-kvstore/rangekey"
+	"github.com/edgelesssys/ego-kvstore/record"
+	"github.com/edgelesssys/ego-kvstore/sstable"
+	"github.com/edgelesssys/ego-kvstore/vfs"
+	"github.com/edgelesssys/ego-kvstore/vfs/atomicfs"
 	"github.com/prometheus/client_golang/prometheus"
 )
 

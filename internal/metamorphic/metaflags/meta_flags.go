@@ -13,8 +13,8 @@ import (
 	"math"
 	"regexp"
 
-	"github.com/cockroachdb/pebble/internal/randvar"
-	"github.com/cockroachdb/pebble/metamorphic"
+	"github.com/edgelesssys/ego-kvstore/internal/randvar"
+	"github.com/edgelesssys/ego-kvstore/metamorphic"
 )
 
 // CommonFlags contains flags that apply to both metamorphic.Run and

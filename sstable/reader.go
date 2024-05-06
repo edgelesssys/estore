@@ -15,15 +15,15 @@ import (
 
 	"github.com/cespare/xxhash/v2"
 	"github.com/cockroachdb/errors"
-	"github.com/cockroachdb/pebble/internal/base"
-	"github.com/cockroachdb/pebble/internal/bytealloc"
-	"github.com/cockroachdb/pebble/internal/cache"
-	"github.com/cockroachdb/pebble/internal/crc"
-	"github.com/cockroachdb/pebble/internal/invariants"
-	"github.com/cockroachdb/pebble/internal/keyspan"
-	"github.com/cockroachdb/pebble/internal/private"
-	"github.com/cockroachdb/pebble/objstorage"
-	"github.com/cockroachdb/pebble/objstorage/objstorageprovider/objiotracing"
+	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/ego-kvstore/internal/bytealloc"
+	"github.com/edgelesssys/ego-kvstore/internal/cache"
+	"github.com/edgelesssys/ego-kvstore/internal/crc"
+	"github.com/edgelesssys/ego-kvstore/internal/invariants"
+	"github.com/edgelesssys/ego-kvstore/internal/keyspan"
+	"github.com/edgelesssys/ego-kvstore/internal/private"
+	"github.com/edgelesssys/ego-kvstore/objstorage"
+	"github.com/edgelesssys/ego-kvstore/objstorage/objstorageprovider/objiotracing"
 )
 
 var errCorruptIndexEntry = base.CorruptionErrorf("pebble/table: corrupt index entry")

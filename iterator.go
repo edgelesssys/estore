@@ -12,16 +12,16 @@ import (
 	"unsafe"
 
 	"github.com/cockroachdb/errors"
-	"github.com/cockroachdb/pebble/internal/base"
-	"github.com/cockroachdb/pebble/internal/bytealloc"
-	"github.com/cockroachdb/pebble/internal/fastrand"
-	"github.com/cockroachdb/pebble/internal/humanize"
-	"github.com/cockroachdb/pebble/internal/invariants"
-	"github.com/cockroachdb/pebble/internal/keyspan"
-	"github.com/cockroachdb/pebble/internal/manifest"
-	"github.com/cockroachdb/pebble/internal/rangekey"
-	"github.com/cockroachdb/pebble/sstable"
 	"github.com/cockroachdb/redact"
+	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/ego-kvstore/internal/bytealloc"
+	"github.com/edgelesssys/ego-kvstore/internal/fastrand"
+	"github.com/edgelesssys/ego-kvstore/internal/humanize"
+	"github.com/edgelesssys/ego-kvstore/internal/invariants"
+	"github.com/edgelesssys/ego-kvstore/internal/keyspan"
+	"github.com/edgelesssys/ego-kvstore/internal/manifest"
+	"github.com/edgelesssys/ego-kvstore/internal/rangekey"
+	"github.com/edgelesssys/ego-kvstore/sstable"
 )
 
 // iterPos describes the state of the internal iterator, in terms of whether it

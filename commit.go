@@ -10,7 +10,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/cockroachdb/pebble/record"
+	"github.com/edgelesssys/ego-kvstore/record"
 )
 
 // commitQueue is a lock-free fixed-size single-producer, multi-consumer

@@ -11,9 +11,9 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/cockroachdb/pebble/internal/base"
-	"github.com/cockroachdb/pebble/internal/humanize"
-	"github.com/cockroachdb/pebble/internal/manifest"
+	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/ego-kvstore/internal/humanize"
+	"github.com/edgelesssys/ego-kvstore/internal/manifest"
 )
 
 // The minimum count for an intra-L0 compaction. This matches the RocksDB

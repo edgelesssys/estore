@@ -7,9 +7,9 @@ package sstable
 import (
 	"context"
 
-	"github.com/cockroachdb/pebble/internal/base"
-	"github.com/cockroachdb/pebble/internal/keyspan"
-	"github.com/cockroachdb/pebble/internal/manifest"
+	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/ego-kvstore/internal/keyspan"
+	"github.com/edgelesssys/ego-kvstore/internal/manifest"
 )
 
 // VirtualReader wraps Reader. Its purpose is to restrict functionality of the

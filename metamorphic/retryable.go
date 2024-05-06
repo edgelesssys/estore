@@ -6,8 +6,8 @@ package metamorphic
 
 import (
 	"github.com/cockroachdb/errors"
-	"github.com/cockroachdb/pebble"
-	"github.com/cockroachdb/pebble/vfs/errorfs"
+	"github.com/edgelesssys/ego-kvstore"
+	"github.com/edgelesssys/ego-kvstore/vfs/errorfs"
 )
 
 // withRetries executes fn, retrying it whenever an errorfs.ErrInjected error

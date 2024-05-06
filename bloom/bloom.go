@@ -3,14 +3,14 @@
 // the LICENSE file.
 
 // Package bloom implements Bloom filters.
-package bloom // import "github.com/cockroachdb/pebble/bloom"
+package bloom // import "github.com/edgelesssys/ego-kvstore/bloom"
 
 import (
 	"encoding/binary"
 	"fmt"
 	"sync"
 
-	"github.com/cockroachdb/pebble/internal/base"
+	"github.com/edgelesssys/ego-kvstore/internal/base"
 )
 
 const (

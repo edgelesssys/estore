@@ -10,10 +10,10 @@ import (
 	"io"
 
 	"github.com/cockroachdb/errors"
-	"github.com/cockroachdb/pebble/internal/base"
-	"github.com/cockroachdb/pebble/objstorage"
-	"github.com/cockroachdb/pebble/objstorage/objstorageprovider/remoteobjcat"
-	"github.com/cockroachdb/pebble/objstorage/remote"
+	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/ego-kvstore/objstorage"
+	"github.com/edgelesssys/ego-kvstore/objstorage/objstorageprovider/remoteobjcat"
+	"github.com/edgelesssys/ego-kvstore/objstorage/remote"
 )
 
 const (

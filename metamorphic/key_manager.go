@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"sort"
 
-	"github.com/cockroachdb/pebble"
-	"github.com/cockroachdb/pebble/internal/base"
-	"github.com/cockroachdb/pebble/internal/testkeys"
+	"github.com/edgelesssys/ego-kvstore"
+	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/ego-kvstore/internal/testkeys"
 	"github.com/stretchr/testify/require"
 )
 

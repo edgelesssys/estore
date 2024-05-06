@@ -14,14 +14,14 @@ import (
 
 	"github.com/cockroachdb/datadriven"
 	"github.com/cockroachdb/errors"
-	"github.com/cockroachdb/pebble/bloom"
-	"github.com/cockroachdb/pebble/internal/base"
-	"github.com/cockroachdb/pebble/internal/cache"
-	"github.com/cockroachdb/pebble/internal/keyspan"
-	"github.com/cockroachdb/pebble/internal/testkeys"
-	"github.com/cockroachdb/pebble/objstorage"
-	"github.com/cockroachdb/pebble/objstorage/objstorageprovider"
-	"github.com/cockroachdb/pebble/vfs"
+	"github.com/edgelesssys/ego-kvstore/bloom"
+	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/ego-kvstore/internal/cache"
+	"github.com/edgelesssys/ego-kvstore/internal/keyspan"
+	"github.com/edgelesssys/ego-kvstore/internal/testkeys"
+	"github.com/edgelesssys/ego-kvstore/objstorage"
+	"github.com/edgelesssys/ego-kvstore/objstorage/objstorageprovider"
+	"github.com/edgelesssys/ego-kvstore/vfs"
 )
 
 func optsFromArgs(td *datadriven.TestData, writerOpts *WriterOptions) error {

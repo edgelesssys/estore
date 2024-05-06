@@ -7,11 +7,11 @@ package main
 import (
 	"log"
 
-	"github.com/cockroachdb/pebble"
-	"github.com/cockroachdb/pebble/bloom"
-	"github.com/cockroachdb/pebble/internal/bytealloc"
-	"github.com/cockroachdb/pebble/objstorage/remote"
-	"github.com/cockroachdb/pebble/vfs"
+	"github.com/edgelesssys/ego-kvstore"
+	"github.com/edgelesssys/ego-kvstore/bloom"
+	"github.com/edgelesssys/ego-kvstore/internal/bytealloc"
+	"github.com/edgelesssys/ego-kvstore/objstorage/remote"
+	"github.com/edgelesssys/ego-kvstore/vfs"
 )
 
 // DB specifies the minimal interfaces that need to be implemented to support

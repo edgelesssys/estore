@@ -10,14 +10,14 @@ import (
 	"io"
 	"sort"
 
-	"github.com/cockroachdb/pebble"
-	"github.com/cockroachdb/pebble/internal/base"
-	"github.com/cockroachdb/pebble/internal/keyspan"
-	"github.com/cockroachdb/pebble/internal/manifest"
-	"github.com/cockroachdb/pebble/internal/private"
-	"github.com/cockroachdb/pebble/internal/rangedel"
-	"github.com/cockroachdb/pebble/record"
-	"github.com/cockroachdb/pebble/sstable"
+	"github.com/edgelesssys/ego-kvstore"
+	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/ego-kvstore/internal/keyspan"
+	"github.com/edgelesssys/ego-kvstore/internal/manifest"
+	"github.com/edgelesssys/ego-kvstore/internal/private"
+	"github.com/edgelesssys/ego-kvstore/internal/rangedel"
+	"github.com/edgelesssys/ego-kvstore/record"
+	"github.com/edgelesssys/ego-kvstore/sstable"
 	"github.com/spf13/cobra"
 )
 

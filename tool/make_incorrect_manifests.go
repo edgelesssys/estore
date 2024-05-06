@@ -11,9 +11,9 @@ package main
 import (
 	"log"
 
-	"github.com/cockroachdb/pebble/internal/manifest"
-	"github.com/cockroachdb/pebble/record"
-	"github.com/cockroachdb/pebble/vfs"
+	"github.com/edgelesssys/ego-kvstore/internal/manifest"
+	"github.com/edgelesssys/ego-kvstore/record"
+	"github.com/edgelesssys/ego-kvstore/vfs"
 )
 
 func writeVE(writer *record.Writer, ve *manifest.VersionEdit) {

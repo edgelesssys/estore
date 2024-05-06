@@ -10,9 +10,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/cockroachdb/pebble/internal/ackseq"
-	"github.com/cockroachdb/pebble/internal/randvar"
-	"github.com/cockroachdb/pebble/internal/rate"
+	"github.com/edgelesssys/ego-kvstore/internal/ackseq"
+	"github.com/edgelesssys/ego-kvstore/internal/randvar"
+	"github.com/edgelesssys/ego-kvstore/internal/rate"
 	"github.com/spf13/cobra"
 )
 

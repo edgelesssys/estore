@@ -8,8 +8,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/cockroachdb/pebble"
-	"github.com/cockroachdb/pebble/internal/randvar"
+	"github.com/edgelesssys/ego-kvstore"
+	"github.com/edgelesssys/ego-kvstore/internal/randvar"
 	"github.com/pmezard/go-difflib/difflib"
 	"github.com/stretchr/testify/require"
 	"golang.org/x/exp/rand"

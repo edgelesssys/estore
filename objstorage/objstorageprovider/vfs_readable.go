@@ -10,9 +10,9 @@ import (
 	"os"
 	"sync"
 
-	"github.com/cockroachdb/pebble/internal/invariants"
-	"github.com/cockroachdb/pebble/objstorage"
-	"github.com/cockroachdb/pebble/vfs"
+	"github.com/edgelesssys/ego-kvstore/internal/invariants"
+	"github.com/edgelesssys/ego-kvstore/objstorage"
+	"github.com/edgelesssys/ego-kvstore/vfs"
 )
 
 const fileMaxReadaheadSize = 256 * 1024 /* 256KB */

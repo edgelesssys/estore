@@ -13,8 +13,8 @@ import (
 	"time"
 	"unsafe"
 
-	"github.com/cockroachdb/pebble/internal/invariants"
-	"github.com/cockroachdb/pebble/internal/manual"
+	"github.com/edgelesssys/ego-kvstore/internal/invariants"
+	"github.com/edgelesssys/ego-kvstore/internal/manual"
 )
 
 var hashSeed = uint64(time.Now().UnixNano())

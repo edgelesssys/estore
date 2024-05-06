@@ -10,7 +10,7 @@ import (
 	"testing"
 
 	"github.com/cockroachdb/datadriven"
-	"github.com/cockroachdb/pebble/internal/base"
+	"github.com/edgelesssys/ego-kvstore/internal/base"
 )
 
 func TestTruncate(t *testing.T) {

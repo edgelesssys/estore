@@ -9,9 +9,9 @@ import (
 	"fmt"
 	"sort"
 
-	"github.com/cockroachdb/pebble"
-	"github.com/cockroachdb/pebble/internal/randvar"
-	"github.com/cockroachdb/pebble/internal/testkeys"
+	"github.com/edgelesssys/ego-kvstore"
+	"github.com/edgelesssys/ego-kvstore/internal/randvar"
+	"github.com/edgelesssys/ego-kvstore/internal/testkeys"
 	"golang.org/x/exp/rand"
 )
 

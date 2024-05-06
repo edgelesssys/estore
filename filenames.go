@@ -7,8 +7,8 @@ package pebble
 import (
 	"fmt"
 
-	"github.com/cockroachdb/pebble/internal/base"
-	"github.com/cockroachdb/pebble/vfs"
+	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/ego-kvstore/vfs"
 )
 
 type fileType = base.FileType

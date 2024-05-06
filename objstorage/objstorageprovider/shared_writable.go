@@ -7,7 +7,7 @@ package objstorageprovider
 import (
 	"io"
 
-	"github.com/cockroachdb/pebble/objstorage"
+	"github.com/edgelesssys/ego-kvstore/objstorage"
 )
 
 // NewRemoteWritable creates an objstorage.Writable out of an io.WriteCloser.

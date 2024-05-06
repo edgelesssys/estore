@@ -16,9 +16,9 @@ import (
 
 	"github.com/cockroachdb/datadriven"
 	"github.com/cockroachdb/errors"
-	"github.com/cockroachdb/pebble/internal/arenaskl"
-	"github.com/cockroachdb/pebble/internal/base"
-	"github.com/cockroachdb/pebble/internal/rangekey"
+	"github.com/edgelesssys/ego-kvstore/internal/arenaskl"
+	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/ego-kvstore/internal/rangekey"
 	"github.com/stretchr/testify/require"
 	"golang.org/x/exp/rand"
 	"golang.org/x/sync/errgroup"

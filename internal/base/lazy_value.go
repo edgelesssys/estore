@@ -4,7 +4,7 @@
 
 package base
 
-import "github.com/cockroachdb/pebble/internal/invariants"
+import "github.com/edgelesssys/ego-kvstore/internal/invariants"
 
 // A value can have user-defined attributes that are a function of the value
 // byte slice. For now, we only support "short attributes", which can be

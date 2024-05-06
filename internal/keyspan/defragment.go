@@ -7,9 +7,9 @@ package keyspan
 import (
 	"bytes"
 
-	"github.com/cockroachdb/pebble/internal/base"
-	"github.com/cockroachdb/pebble/internal/bytealloc"
-	"github.com/cockroachdb/pebble/internal/invariants"
+	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/ego-kvstore/internal/bytealloc"
+	"github.com/edgelesssys/ego-kvstore/internal/invariants"
 )
 
 // bufferReuseMaxCapacity is the maximum capacity of a DefragmentingIter buffer

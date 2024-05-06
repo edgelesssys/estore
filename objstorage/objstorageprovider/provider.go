@@ -13,14 +13,14 @@ import (
 
 	"github.com/cockroachdb/errors"
 	"github.com/cockroachdb/errors/oserror"
-	"github.com/cockroachdb/pebble/internal/base"
-	"github.com/cockroachdb/pebble/internal/invariants"
-	"github.com/cockroachdb/pebble/objstorage"
-	"github.com/cockroachdb/pebble/objstorage/objstorageprovider/objiotracing"
-	"github.com/cockroachdb/pebble/objstorage/objstorageprovider/remoteobjcat"
-	"github.com/cockroachdb/pebble/objstorage/objstorageprovider/sharedcache"
-	"github.com/cockroachdb/pebble/objstorage/remote"
-	"github.com/cockroachdb/pebble/vfs"
+	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/ego-kvstore/internal/invariants"
+	"github.com/edgelesssys/ego-kvstore/objstorage"
+	"github.com/edgelesssys/ego-kvstore/objstorage/objstorageprovider/objiotracing"
+	"github.com/edgelesssys/ego-kvstore/objstorage/objstorageprovider/remoteobjcat"
+	"github.com/edgelesssys/ego-kvstore/objstorage/objstorageprovider/sharedcache"
+	"github.com/edgelesssys/ego-kvstore/objstorage/remote"
+	"github.com/edgelesssys/ego-kvstore/vfs"
 )
 
 // provider is the implementation of objstorage.Provider.

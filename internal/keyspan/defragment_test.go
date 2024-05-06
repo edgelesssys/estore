@@ -14,8 +14,8 @@ import (
 	"time"
 
 	"github.com/cockroachdb/datadriven"
-	"github.com/cockroachdb/pebble/internal/base"
-	"github.com/cockroachdb/pebble/internal/testkeys"
+	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/ego-kvstore/internal/testkeys"
 	"github.com/pmezard/go-difflib/difflib"
 )
 

@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/cockroachdb/pebble"
-	"github.com/cockroachdb/pebble/vfs"
+	"github.com/edgelesssys/ego-kvstore"
+	"github.com/edgelesssys/ego-kvstore/vfs"
 )
 
 func Example() {

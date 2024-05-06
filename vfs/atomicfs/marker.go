@@ -11,7 +11,7 @@ import (
 
 	"github.com/cockroachdb/errors"
 	"github.com/cockroachdb/errors/oserror"
-	"github.com/cockroachdb/pebble/vfs"
+	"github.com/edgelesssys/ego-kvstore/vfs"
 )
 
 // ReadMarker looks up the current state of a marker returning just the

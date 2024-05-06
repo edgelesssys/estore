@@ -9,9 +9,9 @@ import (
 	"fmt"
 	"sort"
 
-	"github.com/cockroachdb/pebble/internal/base"
-	"github.com/cockroachdb/pebble/internal/invariants"
-	"github.com/cockroachdb/pebble/internal/manifest"
+	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/ego-kvstore/internal/invariants"
+	"github.com/edgelesssys/ego-kvstore/internal/manifest"
 )
 
 // TODO(jackson): Consider implementing an optimization to seek lower levels

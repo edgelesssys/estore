@@ -10,8 +10,8 @@ import (
 	"time"
 
 	"github.com/cockroachdb/errors"
-	"github.com/cockroachdb/pebble/internal/randvar"
-	"github.com/cockroachdb/pebble/internal/rate"
+	"github.com/edgelesssys/ego-kvstore/internal/randvar"
+	"github.com/edgelesssys/ego-kvstore/internal/rate"
 )
 
 type rateFlag struct {

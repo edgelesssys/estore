@@ -4,7 +4,7 @@
 
 package pebble
 
-import "github.com/cockroachdb/pebble/internal/base"
+import "github.com/edgelesssys/ego-kvstore/internal/base"
 
 // internalIterAdapter adapts the new internalIterator interface which returns
 // the key and value from positioning methods (Seek*, First, Last, Next, Prev)

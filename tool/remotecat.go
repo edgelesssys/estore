@@ -9,11 +9,11 @@ import (
 	"io"
 	"sort"
 
-	"github.com/cockroachdb/pebble"
-	"github.com/cockroachdb/pebble/internal/base"
-	"github.com/cockroachdb/pebble/objstorage"
-	"github.com/cockroachdb/pebble/objstorage/objstorageprovider/remoteobjcat"
-	"github.com/cockroachdb/pebble/record"
+	"github.com/edgelesssys/ego-kvstore"
+	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/ego-kvstore/objstorage"
+	"github.com/edgelesssys/ego-kvstore/objstorage/objstorageprovider/remoteobjcat"
+	"github.com/edgelesssys/ego-kvstore/record"
 	"github.com/spf13/cobra"
 )
 

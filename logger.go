@@ -4,7 +4,7 @@
 
 package pebble
 
-import "github.com/cockroachdb/pebble/internal/base"
+import "github.com/edgelesssys/ego-kvstore/internal/base"
 
 // Logger defines an interface for writing log messages.
 type Logger = base.Logger

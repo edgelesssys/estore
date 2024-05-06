@@ -13,7 +13,7 @@ import (
 	"strings"
 
 	"github.com/cockroachdb/errors"
-	"github.com/cockroachdb/pebble"
+	"github.com/edgelesssys/ego-kvstore"
 )
 
 type methodInfo struct {

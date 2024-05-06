@@ -7,8 +7,8 @@ package pebble
 import (
 	"testing"
 
-	"github.com/cockroachdb/pebble/internal/base"
-	"github.com/cockroachdb/pebble/vfs"
+	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/ego-kvstore/vfs"
 	"github.com/stretchr/testify/require"
 )
 

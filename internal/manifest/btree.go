@@ -12,7 +12,7 @@ import (
 	"unsafe"
 
 	"github.com/cockroachdb/errors"
-	"github.com/cockroachdb/pebble/internal/invariants"
+	"github.com/edgelesssys/ego-kvstore/internal/invariants"
 )
 
 // The Annotator type defined below is used by other packages to lazily

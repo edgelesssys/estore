@@ -10,7 +10,7 @@ package cache
 import (
 	"unsafe"
 
-	"github.com/cockroachdb/pebble/internal/manual"
+	"github.com/edgelesssys/ego-kvstore/internal/manual"
 )
 
 const valueSize = int(unsafe.Sizeof(Value{}))

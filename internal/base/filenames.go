@@ -10,8 +10,8 @@ import (
 	"strings"
 
 	"github.com/cockroachdb/errors/oserror"
-	"github.com/cockroachdb/pebble/vfs"
 	"github.com/cockroachdb/redact"
+	"github.com/edgelesssys/ego-kvstore/vfs"
 )
 
 // FileNum is an internal DB identifier for a file.

@@ -1,4 +1,4 @@
-module github.com/cockroachdb/pebble
+module github.com/edgelesssys/ego-kvstore
 
 require (
 	github.com/DataDog/zstd v1.4.5

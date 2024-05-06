@@ -9,12 +9,12 @@ import (
 	"unsafe"
 
 	"github.com/cockroachdb/errors"
-	"github.com/cockroachdb/pebble/internal/base"
-	"github.com/cockroachdb/pebble/internal/invariants"
-	"github.com/cockroachdb/pebble/internal/keyspan"
-	"github.com/cockroachdb/pebble/internal/manual"
-	"github.com/cockroachdb/pebble/internal/rangedel"
-	"github.com/cockroachdb/pebble/internal/rangekey"
+	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/ego-kvstore/internal/invariants"
+	"github.com/edgelesssys/ego-kvstore/internal/keyspan"
+	"github.com/edgelesssys/ego-kvstore/internal/manual"
+	"github.com/edgelesssys/ego-kvstore/internal/rangedel"
+	"github.com/edgelesssys/ego-kvstore/internal/rangekey"
 )
 
 func uvarintLen(v uint32) int {
