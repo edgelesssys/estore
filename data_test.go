@@ -652,6 +652,7 @@ func runBuildRemoteCmd(td *datadriven.TestData, d *DB, storage remote.Storage) e
 	if err != nil {
 		return err
 	}
+	_ = writeOpts // EDG: ignore lint "SA4006: this value of `writeOpts` is never used" because NewRemoteWritable panics
 	w := sstable.NewWriter(objstorageprovider.NewRemoteWritable(f), writeOpts)
 	iter := b.newInternalIter(nil)
 	for key, val := iter.First(); key != nil; key, val = iter.Next() {

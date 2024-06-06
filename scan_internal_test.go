@@ -27,7 +27,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestScanStatistics(t *testing.T) {
+func DisabledTestScanStatistics(t *testing.T) { // EDG: we don't support shared objects
 	var d *DB
 	type scanInternalReader interface {
 		ScanStatistics(
@@ -206,7 +206,7 @@ func TestScanStatistics(t *testing.T) {
 	})
 }
 
-func TestScanInternal(t *testing.T) {
+func DisabledTestScanInternal(t *testing.T) { // EDG: we don't support shared objects
 	var d *DB
 	type scanInternalReader interface {
 		ScanInternal(

@@ -509,7 +509,7 @@ func Open(dirname string, opts *Options) (db *DB, _ error) {
 			return nil, err
 		}
 		serializedOpts := []byte(opts.String())
-		if _, err := optionsFile.Write(serializedOpts); err != nil {
+		if _, err := optionsFile.WriteApproved(serializedOpts); err != nil {
 			return nil, errors.CombineErrors(err, optionsFile.Close())
 		}
 		d.optionsFileSize = uint64(len(serializedOpts))

@@ -576,7 +576,7 @@ func TestWriterClearCache(t *testing.T) {
 	writerOpts := WriterOptions{
 		Cache:       opts.Cache,
 		Comparer:    testkeys.Comparer,
-		TableFormat: TableFormatPebblev3,
+		TableFormat: TableFormatPebblev2, // EDG: we don't support value blocks
 	}
 	cacheOpts := &cacheOpts{cacheID: 1, fileNum: base.FileNum(1).DiskFileNum()}
 	invalidData := func() *cache.Value {

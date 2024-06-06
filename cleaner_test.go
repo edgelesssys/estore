@@ -124,7 +124,7 @@ func TestCleaner(t *testing.T) {
 			}
 			dst, err := fs.Create(td.CmdArgs[0].String())
 			require.NoError(t, err)
-			_, err = dst.Write([]byte("bogus data"))
+			_, err = dst.WriteApproved([]byte("bogus data"))
 			require.NoError(t, err)
 			require.NoError(t, dst.Sync())
 			require.NoError(t, dst.Close())

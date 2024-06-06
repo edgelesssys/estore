@@ -7,13 +7,13 @@ package kvstore
 import (
 	"encoding/binary"
 	"fmt"
-	"io"
 	"sync"
 	"sync/atomic"
 	"testing"
 	"time"
 
 	"github.com/edgelesssys/ego-kvstore/internal/arenaskl"
+	"github.com/edgelesssys/ego-kvstore/internal/edg"
 	"github.com/edgelesssys/ego-kvstore/internal/invariants"
 	"github.com/edgelesssys/ego-kvstore/record"
 	"github.com/edgelesssys/ego-kvstore/vfs"
@@ -321,7 +321,7 @@ func BenchmarkCommitPipeline(b *testing.B) {
 						},
 					}
 					p := newCommitPipeline(nullCommitEnv)
-					wal = record.NewLogWriter(io.Discard, 0, /* logNum */
+					wal = record.NewLogWriter(edg.Discard, 0, /* logNum */
 						record.LogWriterConfig{
 							WALFsyncLatency: prometheus.NewHistogram(prometheus.HistogramOpts{}),
 							QueueSemChan:    p.logSyncQSem,

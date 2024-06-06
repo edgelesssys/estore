@@ -20,7 +20,7 @@ import (
 	"golang.org/x/exp/rand"
 )
 
-func TestSharedCache(t *testing.T) {
+func DisabledTestSharedCache(t *testing.T) { // EDG: we don't support shared objects
 	ctx := context.Background()
 
 	datadriven.Walk(t, "testdata/cache", func(t *testing.T, path string) {
@@ -115,7 +115,7 @@ func TestSharedCache(t *testing.T) {
 	})
 }
 
-func TestSharedCacheRandomized(t *testing.T) {
+func DisabledTestSharedCacheRandomized(t *testing.T) { // EDG: we don't support shared objects
 	ctx := context.Background()
 
 	var log base.InMemLogger

@@ -41,7 +41,7 @@ func setCurrentFile(dirname string, fs vfs.FS, fileNum base.DiskFileNum) error {
 	if err != nil {
 		return err
 	}
-	if _, err := fmt.Fprintf(f, "MANIFEST-%s\n", fileNum); err != nil {
+	if _, err := f.WriteApproved([]byte(fmt.Sprintf("MANIFEST-%s\n", fileNum))); err != nil {
 		return err
 	}
 	if err := f.Sync(); err != nil {

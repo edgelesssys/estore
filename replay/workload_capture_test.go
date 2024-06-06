@@ -69,7 +69,7 @@ func TestWorkloadCollector(t *testing.T) {
 				path := base.MakeFilepath(fs, srcDir, base.FileTypeManifest, base.FileNum(fileNum).DiskFileNum())
 				currentManifest, err = fs.Create(path)
 				require.NoError(t, err)
-				_, err = currentManifest.Write(randData(100))
+				_, err = currentManifest.WriteApproved(randData(100))
 				require.NoError(t, err)
 
 				c.onManifestCreated(pebble.ManifestCreateInfo{
@@ -100,7 +100,7 @@ func TestWorkloadCollector(t *testing.T) {
 					flushInfo.Output = append(flushInfo.Output, tableInfo)
 
 					// Simulate a version edit applied to the current manifest.
-					_, err = currentManifest.Write(randData(25))
+					_, err = currentManifest.WriteApproved(randData(25))
 					require.NoError(t, err)
 				}
 				flushInfo.InputBytes = 100 // Determinism
@@ -128,7 +128,7 @@ func TestWorkloadCollector(t *testing.T) {
 					}{Level: 0, TableInfo: tableInfo})
 
 					// Simulate a version edit applied to the current manifest.
-					_, err = currentManifest.Write(randData(25))
+					_, err = currentManifest.WriteApproved(randData(25))
 					require.NoError(t, err)
 				}
 				fmt.Fprint(&buf, ingestInfo.String())
@@ -184,7 +184,7 @@ func writeFile(
 	path := base.MakeFilepath(fs, dir, typ, fileNum)
 	f, err := fs.Create(path)
 	require.NoError(t, err)
-	_, err = f.Write(data)
+	_, err = f.WriteApproved(data)
 	require.NoError(t, err)
 	require.NoError(t, f.Close())
 	return path

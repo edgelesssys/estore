@@ -1056,7 +1056,7 @@ func TestReadaheadSetupForV3TablesWithMultipleVersions(t *testing.T) {
 	require.NoError(t, err)
 
 	w := NewWriter(f0, WriterOptions{
-		TableFormat: TableFormatPebblev3,
+		TableFormat: TableFormatPebblev2, // EDG: we don't support value blocks
 		Comparer:    testkeys.Comparer,
 	})
 	keys := testkeys.Alpha(1)
@@ -1083,7 +1083,6 @@ func TestReadaheadSetupForV3TablesWithMultipleVersions(t *testing.T) {
 		defer citer.Close()
 		i := citer.(*compactionIterator)
 		require.True(t, objstorageprovider.TestingCheckMaxReadahead(i.dataRH))
-		require.True(t, objstorageprovider.TestingCheckMaxReadahead(i.vbRH))
 	}
 	{
 		iter, err := r.NewIter(nil, nil)
@@ -1091,7 +1090,6 @@ func TestReadaheadSetupForV3TablesWithMultipleVersions(t *testing.T) {
 		defer iter.Close()
 		i := iter.(*singleLevelIterator)
 		require.False(t, objstorageprovider.TestingCheckMaxReadahead(i.dataRH))
-		require.False(t, objstorageprovider.TestingCheckMaxReadahead(i.vbRH))
 	}
 }
 
@@ -1152,7 +1150,7 @@ func TestReaderChecksumErrors(t *testing.T) {
 
 						corrupted, err := mem.Create("corrupted")
 						require.NoError(t, err)
-						_, err = corrupted.Write(data)
+						_, err = corrupted.WriteApproved(data)
 						require.NoError(t, err)
 						require.NoError(t, corrupted.Close())
 

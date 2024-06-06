@@ -61,7 +61,7 @@ func runTestCases(t *testing.T, testCases []string, fs *MemFS) {
 		case "stopIgnoringSyncs":
 			fs.SetIgnoreSyncs(false)
 		case "f.write":
-			_, err = f.Write([]byte(s[1]))
+			_, err = f.WriteApproved([]byte(s[1]))
 		case "f.sync":
 			err = f.Sync()
 		case "f.read":

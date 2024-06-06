@@ -12,7 +12,7 @@ import (
 
 // NewRemoteWritable creates an objstorage.Writable out of an io.WriteCloser.
 func NewRemoteWritable(obj io.WriteCloser) objstorage.Writable {
-	return &sharedWritable{storageWriter: obj}
+	panic("shared objects are not supported")
 }
 
 // sharedWritable is a very simple implementation of Writable on top of the
@@ -25,7 +25,7 @@ type sharedWritable struct {
 	storageWriter io.WriteCloser
 }
 
-var _ objstorage.Writable = (*sharedWritable)(nil)
+var _ = (*sharedWritable)(nil)
 
 // Write is part of the Writable interface.
 func (w *sharedWritable) Write(p []byte) error {

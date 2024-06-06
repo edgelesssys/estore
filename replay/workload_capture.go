@@ -282,7 +282,11 @@ func (w *WorkloadCollector) copyManifests(startAtIndex int, manifests []*manifes
 			}
 		}
 
-		numBytesRead, err := io.CopyBuffer(manifest.destFile, manifest.sourceFile, w.buffer)
+		data, err := io.ReadAll(manifest.sourceFile)
+		if err != nil {
+			panic(err)
+		}
+		numBytesRead, err := manifest.destFile.WriteApproved(data)
 		if err != nil {
 			panic(err)
 		}

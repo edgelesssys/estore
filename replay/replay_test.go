@@ -348,7 +348,7 @@ func collectCorpus(t *testing.T, fs *vfs.MemFS, name string) {
 			require.NoError(t, err)
 			b, err := hex.DecodeString(strings.ReplaceAll(td.Input, "\n", ""))
 			require.NoError(t, err)
-			_, err = f.Write(b)
+			_, err = f.WriteApproved(b)
 			require.NoError(t, err)
 			return "created"
 		case "find-workload-files":

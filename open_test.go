@@ -405,15 +405,15 @@ type optionsTornWriteFile struct {
 	vfs.File
 }
 
-func (f optionsTornWriteFile) Write(b []byte) (int, error) {
+func (f optionsTornWriteFile) WriteApproved(b []byte) (int, error) {
 	// Look for the OPTIONS-XXXXXX file's `comparer=` field.
 	comparerKey := []byte("comparer=")
 	i := bytes.Index(b, comparerKey)
 	if i == -1 {
-		return f.File.Write(b)
+		return f.File.WriteApproved(b)
 	}
 	// Write only the contents through `comparer=` and return an error.
-	n, _ := f.File.Write(b[:i+len(comparerKey)])
+	n, _ := f.File.WriteApproved(b[:i+len(comparerKey)])
 	return n, syscall.EIO
 }
 
@@ -908,9 +908,9 @@ func TestCrashOpenCrashAfterWALCreation(t *testing.T) {
 		require.NoError(t, f.Close())
 		f, err = fs.Create(logs[0])
 		require.NoError(t, err)
-		_, err = f.Write(b)
+		_, err = f.WriteApproved(b)
 		require.NoError(t, err)
-		_, err = f.Write([]byte{0xde, 0xad, 0xbe, 0xef})
+		_, err = f.WriteApproved([]byte{0xde, 0xad, 0xbe, 0xef})
 		require.NoError(t, err)
 		require.NoError(t, f.Sync())
 		require.NoError(t, f.Close())
@@ -1096,7 +1096,7 @@ func TestGetVersion(t *testing.T) {
 		}
 	}
 	f, _ := mem.Create(fmt.Sprintf("OPTIONS-%d", highestOptionsNum+1))
-	_, err = f.Write([]byte("[Version]\n  pebble_version=0.2\n"))
+	_, err = f.WriteApproved([]byte("[Version]\n  pebble_version=0.2\n"))
 	require.NoError(t, err)
 	err = f.Close()
 	require.NoError(t, err)
@@ -1106,7 +1106,7 @@ func TestGetVersion(t *testing.T) {
 
 	// Case 4: Manually created OPTIONS file with a RocksDB number.
 	f, _ = mem.Create(fmt.Sprintf("OPTIONS-%d", highestOptionsNum+2))
-	_, err = f.Write([]byte("[Version]\n  rocksdb_version=6.2.1\n"))
+	_, err = f.WriteApproved([]byte("[Version]\n  rocksdb_version=6.2.1\n"))
 	require.NoError(t, err)
 	err = f.Close()
 	require.NoError(t, err)
@@ -1346,7 +1346,7 @@ func TestCheckConsistency(t *testing.T) {
 		})
 }
 
-func TestOpenRatchetsNextFileNum(t *testing.T) {
+func DisabledTestOpenRatchetsNextFileNum(t *testing.T) { // EDG: we don't support shared objects
 	mem := vfs.NewMem()
 	memShared := remote.NewInMem()
 

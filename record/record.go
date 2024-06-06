@@ -111,6 +111,7 @@ import (
 	"github.com/cockroachdb/errors"
 	"github.com/edgelesssys/ego-kvstore/internal/base"
 	"github.com/edgelesssys/ego-kvstore/internal/crc"
+	"github.com/edgelesssys/ego-kvstore/internal/edg"
 )
 
 // These constants are part of the wire format and should not be changed.
@@ -412,7 +413,7 @@ func (x singleReader) Read(p []byte) (int, error) {
 // Writer writes records to an underlying io.Writer.
 type Writer struct {
 	// w is the underlying writer.
-	w io.Writer
+	w edg.Writer
 	// seq is the sequence number of the current record.
 	seq int
 	// f is w as a flusher.
@@ -444,7 +445,7 @@ type Writer struct {
 }
 
 // NewWriter returns a new Writer.
-func NewWriter(w io.Writer) *Writer {
+func NewWriter(w edg.Writer) *Writer {
 	f, _ := w.(flusher)
 
 	var o int64
@@ -487,7 +488,7 @@ func (w *Writer) fillHeader(last bool) {
 // writeBlock writes the buffered block to the underlying writer, and reserves
 // space for the next chunk's header.
 func (w *Writer) writeBlock() {
-	_, w.err = w.w.Write(w.buf[w.written:])
+	_, w.err = w.w.WriteApproved(w.buf[w.written:])
 	w.i = 0
 	w.j = legacyHeaderSize
 	w.written = 0
@@ -504,7 +505,7 @@ func (w *Writer) writePending() {
 		w.fillHeader(true)
 		w.pending = false
 	}
-	_, w.err = w.w.Write(w.buf[w.written:w.j])
+	_, w.err = w.w.WriteApproved(w.buf[w.written:w.j])
 	w.written = w.j
 }
 

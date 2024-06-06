@@ -122,7 +122,7 @@ func Clone(srcFS, dstFS FS, srcPath, dstPath string, opts ...CloneOption) (bool,
 	if err != nil {
 		return false, err
 	}
-	if _, err = dstFile.Write(data); err != nil {
+	if _, err = dstFile.WriteApproved(data); err != nil {
 		return false, err
 	}
 	if o.sync {

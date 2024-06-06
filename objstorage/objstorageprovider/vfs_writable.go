@@ -7,6 +7,7 @@ package objstorageprovider
 import (
 	"bufio"
 
+	"github.com/edgelesssys/ego-kvstore/internal/edg"
 	"github.com/edgelesssys/ego-kvstore/objstorage"
 	"github.com/edgelesssys/ego-kvstore/vfs"
 )
@@ -26,12 +27,16 @@ var _ objstorage.Writable = (*fileBufferedWritable)(nil)
 func newFileBufferedWritable(file vfs.File) *fileBufferedWritable {
 	return &fileBufferedWritable{
 		file: file,
-		bw:   bufio.NewWriter(file),
+		bw:   bufio.NewWriter(&edg.ApprovedWriter{Writer: file}),
 	}
 }
 
 // Write is part of the objstorage.Writable interface.
 func (w *fileBufferedWritable) Write(p []byte) error {
+	panic("unapproved write")
+}
+
+func (w *fileBufferedWritable) WriteApproved(p []byte) error {
 	// Ignoring the length written since bufio.Writer.Write is guaranteed to
 	// return an error if the length written is < len(p).
 	_, err := w.bw.Write(p)

@@ -769,7 +769,7 @@ func TestIteratorStats(t *testing.T) {
 
 		mem = vfs.NewMem()
 		require.NoError(t, mem.MkdirAll("ext", 0755))
-		opts := &Options{Comparer: testkeys.Comparer, FS: mem, FormatMajorVersion: internalFormatNewest}
+		opts := &Options{Comparer: testkeys.Comparer, FS: mem, FormatMajorVersion: formatUnusedPrePebblev1MarkedCompacted} // EDG: we don't support SST value blocks
 		// Automatic compactions may make some testcases non-deterministic.
 		opts.DisableAutomaticCompactions = true
 		var err error

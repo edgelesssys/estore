@@ -1,3 +1,9 @@
+/*
+Copyright (c) Edgeless Systems GmbH
+
+SPDX-License-Identifier: AGPL-3.0-only
+*/
+
 // Copyright 2012 The LevelDB-Go and Pebble Authors. All rights reserved. Use
 // of this source code is governed by a BSD-style license that can be found in
 // the LICENSE file.
@@ -70,6 +76,13 @@ type File interface {
 	// It can be used for specific functionality like Prefetch.
 	// Returns InvalidFd if not supported.
 	Fd() uintptr
+
+	// WriteApproved writes to the file. The caller must ensure that it's
+	// secure to write the data to the untrusted file.
+	//
+	// EDG: The original Write method is modified to panic so that no
+	// accidental data leaks can happen.
+	WriteApproved(p []byte) (n int, err error)
 }
 
 // InvalidFd is a special value returned by File.Fd() when the file is not
@@ -350,7 +363,11 @@ func CopyAcrossFS(srcFS FS, oldname string, dstFS FS, newname string) error {
 	}
 	defer dst.Close()
 
-	if _, err := io.Copy(dst, src); err != nil {
+	data, err := io.ReadAll(src)
+	if err != nil {
+		return err
+	}
+	if _, err := dst.WriteApproved(data); err != nil {
 		return err
 	}
 	return dst.Sync()

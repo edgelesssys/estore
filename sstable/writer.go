@@ -1785,11 +1785,11 @@ func (w *Writer) writeCompressedBlock(block []byte, blockTrailerBuf []byte) (Blo
 	}
 
 	// Write the bytes to the file.
-	if err := w.writable.Write(block); err != nil {
+	if err := w.writable.WriteApproved(block); err != nil {
 		return BlockHandle{}, err
 	}
 	w.meta.Size += uint64(len(block))
-	if err := w.writable.Write(blockTrailerBuf[:blockTrailerLen]); err != nil {
+	if err := w.writable.WriteApproved(blockTrailerBuf[:blockTrailerLen]); err != nil {
 		return BlockHandle{}, err
 	}
 	w.meta.Size += blockTrailerLen
@@ -2111,7 +2111,7 @@ func (w *Writer) Close() (err error) {
 		indexBH:     indexBH,
 	}
 	encoded := footer.encode(w.blockBuf.tmp[:])
-	if err := w.writable.Write(footer.encode(w.blockBuf.tmp[:])); err != nil {
+	if err := w.writable.WriteApproved(footer.encode(w.blockBuf.tmp[:])); err != nil {
 		return err
 	}
 	w.meta.Size += uint64(len(encoded))

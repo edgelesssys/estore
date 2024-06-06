@@ -41,7 +41,7 @@ func TestSyncingFile(t *testing.T) {
 		{16 << 10, mb + 32<<10},
 	}
 	for i, c := range testCases {
-		_, err := sf.Write(make([]byte, c.n))
+		_, err := sf.WriteApproved(make([]byte, c.n))
 		require.NoError(t, err)
 
 		syncTo := sf.(*syncingFile).syncOffset.Load()
@@ -90,7 +90,7 @@ close: test [<nil>]
 
 			write := func(n int64) {
 				t.Helper()
-				_, err := s.Write(make([]byte, n))
+				_, err := s.WriteApproved(make([]byte, n))
 				require.NoError(t, err)
 			}
 
@@ -157,7 +157,7 @@ func TestSyncingFileNoSyncOnClose(t *testing.T) {
 
 			write := func(n int64) {
 				t.Helper()
-				_, err := s.Write(make([]byte, n))
+				_, err := s.WriteApproved(make([]byte, n))
 				require.NoError(t, err)
 			}
 

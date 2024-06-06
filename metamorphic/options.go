@@ -40,7 +40,7 @@ const (
 	// the metamorphic tests should use. This may be greater than
 	// pebble.FormatNewest when some format major versions are marked as
 	// experimental.
-	newestFormatMajorVersionToTest = pebble.FormatNewest
+	newestFormatMajorVersionToTest = pebble.FormatPrePebblev1Marked // EDG: we don't support SST value blocks
 )
 
 func parseOptions(
@@ -413,11 +413,6 @@ func standardOptions() []*TestOptions {
 [Options]
   format_major_version=%s
 `, newestFormatMajorVersionToTest),
-		27: `
-[TestOptions]
-  shared_storage_enabled=true
-  secondary_cache_enabled=true
-`,
 	}
 
 	opts := make([]*TestOptions, len(stdOpts))
@@ -552,7 +547,7 @@ func randomOptions(
 	}
 	testOpts.asyncApplyToDB = rng.Intn(2) != 0
 	// 20% of time, enable shared storage.
-	if rng.Intn(5) == 0 {
+	if false { // EDG: we don't support shared objects
 		testOpts.sharedStorageEnabled = true
 		testOpts.Opts.Experimental.RemoteStorage = remote.MakeSimpleFactory(map[remote.Locator]remote.Storage{
 			"": remote.NewInMem(),

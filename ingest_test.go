@@ -320,7 +320,7 @@ func TestIngestLink(t *testing.T) {
 				contents[j] = []byte(fmt.Sprintf("data%d", j))
 				// memFile.Write will modify the supplied buffer when invariants are
 				// enabled, so provide a throw-away copy.
-				_, err = f.Write(append([]byte(nil), contents[j]...))
+				_, err = f.WriteApproved(append([]byte(nil), contents[j]...))
 				require.NoError(t, err)
 				require.NoError(t, f.Close())
 			}
@@ -406,7 +406,7 @@ func TestIngestLinkFallback(t *testing.T) {
 
 	// We should be able to write bytes to src, and not have them show up in
 	// dest.
-	_, _ = src.Write([]byte("test"))
+	_, _ = src.WriteApproved([]byte("test"))
 	data, err := io.ReadAll(dest)
 	require.NoError(t, err)
 	if len(data) != 0 {
@@ -1108,7 +1108,7 @@ func testIngestSharedImpl(
 	})
 }
 
-func TestIngestShared(t *testing.T) {
+func DisabledTestIngestShared(t *testing.T) { // EDG: we don't support shared objects
 	for _, strategy := range []remote.CreateOnSharedStrategy{remote.CreateOnSharedAll, remote.CreateOnSharedLower} {
 		strategyStr := "all"
 		if strategy == remote.CreateOnSharedLower {
@@ -1124,7 +1124,7 @@ func TestIngestShared(t *testing.T) {
 	}
 }
 
-func TestSimpleIngestShared(t *testing.T) {
+func DisabledTestSimpleIngestShared(t *testing.T) { // EDG: we don't support shared objects
 	mem := vfs.NewMem()
 	var d *DB
 	var provider2 objstorage.Provider
@@ -1229,7 +1229,7 @@ type blockedCompaction struct {
 	startBlock, unblock chan struct{}
 }
 
-func TestConcurrentExcise(t *testing.T) {
+func DisabledTestConcurrentExcise(t *testing.T) { // EDG: we don't support shared objects
 	var d, d1, d2 *DB
 	var efos map[string]*EventuallyFileOnlySnapshot
 	backgroundErrs := make(chan error, 5)
@@ -1639,7 +1639,7 @@ func TestConcurrentExcise(t *testing.T) {
 	})
 }
 
-func TestIngestExternal(t *testing.T) {
+func DisabledTestIngestExternal(t *testing.T) { // EDG: we don't support shared objects
 	var mem vfs.FS
 	var d *DB
 	var flushed bool

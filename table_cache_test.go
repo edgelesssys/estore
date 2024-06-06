@@ -1013,7 +1013,7 @@ func TestTableCacheErrorBadMagicNumber(t *testing.T) {
 	require.NoError(t, err)
 	w, _, err := objProvider.Create(context.Background(), fileTypeTable,
 		base.FileNum(testFileNum).DiskFileNum(), objstorage.CreateOptions{})
-	w.Write(buf)
+	w.WriteApproved(buf)
 	require.NoError(t, w.Finish())
 	opts := &Options{}
 	opts.EnsureDefaults()

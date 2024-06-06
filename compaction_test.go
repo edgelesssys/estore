@@ -1970,7 +1970,7 @@ func TestCompactionDeleteOnlyHints(t *testing.T) {
 					compactInfo = &info
 				},
 			},
-			FormatMajorVersion: internalFormatNewest,
+			FormatMajorVersion: FormatPrePebblev1MarkedCompacted, // EDG: we don't support SST value blocks
 		}).WithFSDefaults()
 
 		// Collection of table stats can trigger compactions. As we want full
@@ -3825,7 +3825,7 @@ func TestCompaction_LogAndApplyFails(t *testing.T) {
 
 // TestSharedObjectDeletePacing tests that we don't throttle shared object
 // deletes (see the TargetBytesDeletionRate option).
-func TestSharedObjectDeletePacing(t *testing.T) {
+func DisabledTestSharedObjectDeletePacing(t *testing.T) { // EDG: we don't support shared objects
 	var opts Options
 	opts.FS = vfs.NewMem()
 	opts.Experimental.RemoteStorage = remote.MakeSimpleFactory(map[remote.Locator]remote.Storage{

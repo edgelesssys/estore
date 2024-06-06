@@ -735,11 +735,11 @@ func TestFooterRoundTrip(t *testing.T) {
 							f, err := mem.Create("test")
 							require.NoError(t, err)
 
-							_, err = f.Write(buf[:offset])
+							_, err = f.WriteApproved(buf[:offset])
 							require.NoError(t, err)
 
 							encoded := footer.encode(buf[100:])
-							_, err = f.Write(encoded)
+							_, err = f.WriteApproved(encoded)
 							require.NoError(t, err)
 							require.NoError(t, f.Close())
 
@@ -795,7 +795,7 @@ func TestReadFooter(t *testing.T) {
 			f, err := mem.Create("test")
 			require.NoError(t, err)
 
-			_, err = f.Write([]byte(c.encoded))
+			_, err = f.WriteApproved([]byte(c.encoded))
 			require.NoError(t, err)
 			require.NoError(t, f.Close())
 

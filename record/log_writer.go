@@ -16,6 +16,7 @@ import (
 	"github.com/cockroachdb/errors"
 	"github.com/edgelesssys/ego-kvstore/internal/base"
 	"github.com/edgelesssys/ego-kvstore/internal/crc"
+	"github.com/edgelesssys/ego-kvstore/internal/edg"
 	"github.com/prometheus/client_golang/prometheus"
 )
 
@@ -250,7 +251,7 @@ type syncTimer interface {
 // file will return the error ErrInvalidLogNum.
 type LogWriter struct {
 	// w is the underlying writer.
-	w io.Writer
+	w edg.Writer
 	// c is w as a closer.
 	c io.Closer
 	// s is w as a syncer.
@@ -323,7 +324,7 @@ var blockPool = sync.Pool{
 }
 
 // NewLogWriter returns a new LogWriter.
-func NewLogWriter(w io.Writer, logNum base.FileNum, logWriterConfig LogWriterConfig) *LogWriter {
+func NewLogWriter(w edg.Writer, logNum base.FileNum, logWriterConfig LogWriterConfig) *LogWriter {
 	c, _ := w.(io.Closer)
 	s, _ := w.(syncer)
 	r := &LogWriter{
@@ -530,7 +531,7 @@ func (w *LogWriter) flushPending(
 	}
 	if n := len(data); err == nil && n > 0 {
 		bytesWritten += int64(n)
-		_, err = w.w.Write(data)
+		_, err = w.w.WriteApproved(data)
 	}
 
 	synced = head != tail
@@ -555,7 +556,7 @@ func (w *LogWriter) syncWithLatency() (time.Duration, error) {
 }
 
 func (w *LogWriter) flushBlock(b *block) error {
-	if _, err := w.w.Write(b.buf[b.flushed:]); err != nil {
+	if _, err := w.w.WriteApproved(b.buf[b.flushed:]); err != nil {
 		return err
 	}
 	b.written.Store(0)

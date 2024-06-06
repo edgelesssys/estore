@@ -21,7 +21,8 @@ import (
 )
 
 func TestProvider(t *testing.T) {
-	datadriven.Walk(t, "testdata/provider", func(t *testing.T, path string) {
+	const path = "testdata/provider/local" // EDG: we don't support shared objects
+	{
 		var log base.InMemLogger
 		fs := vfs.WithLogging(vfs.NewMem(), func(fmt string, args ...interface{}) {
 			log.Infof("<local fs> "+fmt, args...)
@@ -127,7 +128,7 @@ func TestProvider(t *testing.T) {
 				data := make([]byte, size)
 				// TODO(radu): write in chunks?
 				genData(byte(salt), 0, data)
-				require.NoError(t, w.Write(data))
+				require.NoError(t, w.WriteApproved(data))
 				require.NoError(t, w.Finish())
 
 				return log.String()
@@ -158,7 +159,7 @@ func TestProvider(t *testing.T) {
 				require.NoError(t, err)
 				data := make([]byte, size)
 				genData(byte(salt), 0, data)
-				n, err := f.Write(data)
+				n, err := f.WriteApproved(data)
 				require.Equal(t, len(data), n)
 				require.NoError(t, err)
 				require.NoError(t, f.Close())
@@ -273,10 +274,10 @@ func TestProvider(t *testing.T) {
 				return ""
 			}
 		})
-	})
+	}
 }
 
-func TestSharedMultipleLocators(t *testing.T) {
+func DisabledTestSharedMultipleLocators(t *testing.T) { // EDG: we don't support shared objects
 	ctx := context.Background()
 	stores := map[remote.Locator]remote.Storage{
 		"foo": remote.NewInMem(),
@@ -472,7 +473,7 @@ func TestNotExistError(t *testing.T) {
 	require.NoError(t, err)
 	require.NoError(t, provider.SetCreatorID(1))
 
-	for i, shared := range []bool{false, true} {
+	for i, shared := range []bool{false} {
 		fileNum := base.FileNum(1 + i).DiskFileNum()
 		name := "local"
 		if shared {
@@ -490,7 +491,7 @@ func TestNotExistError(t *testing.T) {
 				PreferSharedStorage: shared,
 			})
 			require.NoError(t, err)
-			require.NoError(t, w.Write([]byte("foo")))
+			require.NoError(t, w.WriteApproved([]byte("foo")))
 			require.NoError(t, w.Finish())
 
 			// Remove the underlying file or object.
@@ -543,7 +544,7 @@ func xor(n int) byte {
 // TestParallelSync checks that multiple goroutines can create and delete
 // objects and sync in parallel.
 func TestParallelSync(t *testing.T) {
-	for _, shared := range []bool{false, true} {
+	for _, shared := range []bool{false} {
 		name := "local"
 		if shared {
 			name = "shared"

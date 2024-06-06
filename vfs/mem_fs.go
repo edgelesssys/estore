@@ -1,3 +1,9 @@
+/*
+Copyright (c) Edgeless Systems GmbH
+
+SPDX-License-Identifier: AGPL-3.0-only
+*/
+
 // Copyright 2012 The LevelDB-Go and Pebble Authors. All rights reserved. Use
 // of this source code is governed by a BSD-style license that can be found in
 // the LICENSE file.
@@ -714,6 +720,10 @@ func (f *memFile) ReadAt(p []byte, off int64) (int, error) {
 }
 
 func (f *memFile) Write(p []byte) (int, error) {
+	panic("unapproved write")
+}
+
+func (f *memFile) WriteApproved(p []byte) (int, error) {
 	if !f.write {
 		return 0, errors.New("pebble/vfs: file was not created for writing")
 	}
@@ -744,26 +754,7 @@ func (f *memFile) Write(p []byte) (int, error) {
 }
 
 func (f *memFile) WriteAt(p []byte, ofs int64) (int, error) {
-	if !f.write {
-		return 0, errors.New("pebble/vfs: file was not created for writing")
-	}
-	if f.n.isDir {
-		return 0, errors.New("pebble/vfs: cannot write a directory")
-	}
-	f.n.mu.Lock()
-	defer f.n.mu.Unlock()
-	f.n.mu.modTime = time.Now()
-
-	for len(f.n.mu.data) < int(ofs)+len(p) {
-		f.n.mu.data = append(f.n.mu.data, 0)
-	}
-
-	n := copy(f.n.mu.data[int(ofs):int(ofs)+len(p)], p)
-	if n != len(p) {
-		panic("stuff")
-	}
-
-	return len(p), nil
+	panic("unapproved write")
 }
 
 func (f *memFile) Prefetch(offset int64, length int64) error { return nil }

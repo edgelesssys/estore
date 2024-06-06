@@ -299,7 +299,7 @@ func TestVFSCreateLinkSemantics(t *testing.T) {
 				path = fs.PathJoin(dir, path)
 				f, err := fs.Create(path)
 				require.NoError(t, err)
-				_, err = f.Write([]byte(contents))
+				_, err = f.WriteApproved([]byte(contents))
 				require.NoError(t, err)
 				require.NoError(t, f.Close())
 			}

@@ -83,6 +83,8 @@ type Writable interface {
 	// the object exists after calling Abort.
 	// No further calls are allowed after calling Abort.
 	Abort()
+
+	WriteApproved(p []byte) error
 }
 
 // ObjectMetadata contains the metadata required to be able to access an object.

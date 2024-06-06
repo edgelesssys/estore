@@ -263,15 +263,11 @@ func (p *provider) sharedCreate(
 	meta.Remote.Storage = storage
 
 	objName := remoteObjectName(meta)
-	writer, err := storage.CreateObject(objName)
+	_, err = storage.CreateObject(objName)
 	if err != nil {
 		return nil, objstorage.ObjectMetadata{}, errors.Wrapf(err, "creating object %q", objName)
 	}
-	return &sharedWritable{
-		p:             p,
-		meta:          meta,
-		storageWriter: writer,
-	}, meta, nil
+	panic("shared objects are not supported")
 }
 
 func (p *provider) remoteOpenForReading(
