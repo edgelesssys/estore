@@ -427,7 +427,6 @@ func runInternalIterCmd(
 		return key, v
 	}
 	var b bytes.Buffer
-	var prefix []byte
 	for _, line := range strings.Split(d.Input, "\n") {
 		parts := strings.Fields(line)
 		if len(parts) == 0 {
@@ -440,7 +439,6 @@ func runInternalIterCmd(
 			if len(parts) < 2 || len(parts) > 3 {
 				return "seek-ge <key> [<try-seek-using-next>]\n"
 			}
-			prefix = nil
 			var flags base.SeekGEFlags
 			if len(parts) == 3 {
 				if trySeekUsingNext, err := strconv.ParseBool(parts[2]); err != nil {
@@ -454,7 +452,7 @@ func runInternalIterCmd(
 			if len(parts) != 2 && len(parts) != 3 {
 				return "seek-prefix-ge <key> [<try-seek-using-next>]\n"
 			}
-			prefix = []byte(strings.TrimSpace(parts[1]))
+			prefix := []byte(strings.TrimSpace(parts[1]))
 			var flags base.SeekGEFlags
 			if len(parts) == 3 {
 				if trySeekUsingNext, err := strconv.ParseBool(parts[2]); err != nil {
@@ -468,13 +466,10 @@ func runInternalIterCmd(
 			if len(parts) != 2 {
 				return "seek-lt <key>\n"
 			}
-			prefix = nil
 			key, value = getKV(iter.SeekLT([]byte(strings.TrimSpace(parts[1])), base.SeekLTFlagsNone))
 		case "first":
-			prefix = nil
 			key, value = getKV(iter.First())
 		case "last":
-			prefix = nil
 			key, value = getKV(iter.Last())
 		case "next":
 			key, value = getKV(iter.Next())

@@ -320,7 +320,6 @@ func testIterator(
 			t.Errorf("random splits: i=%d, j=%d: iter was not exhausted", i, j)
 		}
 		if j != len(testKeyValuePairs) {
-			bad = true
 			t.Errorf("random splits: i=%d, j=%d: want j=%d", i, j, len(testKeyValuePairs))
 			return
 		}

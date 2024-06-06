@@ -554,7 +554,6 @@ func rangeKeyCompactionTransform(
 				return err
 			}
 			keysDst = elideInLastStripe(keysDst)
-			usedLen += len(keysDst)
 			dst.Keys = append(dst.Keys, keysDst...)
 		}
 		return nil

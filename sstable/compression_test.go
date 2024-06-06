@@ -30,9 +30,8 @@ func TestCompressionRoundtrip(t *testing.T) {
 			btyp, compressed := compressBlock(compression, payload, compressedBuf)
 			v, err := decompressBlock(btyp, compressed)
 			require.NoError(t, err)
-			got := payload
 			if v != nil {
-				got = v.Buf()
+				got := v.Buf()
 				require.Equal(t, payload, got)
 				cache.Free(v)
 			}

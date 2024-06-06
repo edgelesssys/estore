@@ -122,7 +122,6 @@ func (v *VersionEdit) Decode(r io.Reader) error {
 			return err
 		}
 
-		err = nil
 		switch tag {
 		case tagNewObject:
 			var fileNum, creatorID, creatorFileNum, cleanupMethod uint64
