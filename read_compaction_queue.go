@@ -1,4 +1,4 @@
-package pebble
+package kvstore
 
 import "github.com/edgelesssys/ego-kvstore/internal/base"
 

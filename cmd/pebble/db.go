@@ -7,7 +7,7 @@ package main
 import (
 	"log"
 
-	"github.com/edgelesssys/ego-kvstore"
+	pebble "github.com/edgelesssys/ego-kvstore"
 	"github.com/edgelesssys/ego-kvstore/bloom"
 	"github.com/edgelesssys/ego-kvstore/internal/bytealloc"
 	"github.com/edgelesssys/ego-kvstore/objstorage/remote"

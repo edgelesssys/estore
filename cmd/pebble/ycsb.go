@@ -14,7 +14,7 @@ import (
 	"time"
 
 	"github.com/cockroachdb/errors"
-	"github.com/edgelesssys/ego-kvstore"
+	pebble "github.com/edgelesssys/ego-kvstore"
 	"github.com/edgelesssys/ego-kvstore/internal/ackseq"
 	"github.com/edgelesssys/ego-kvstore/internal/randvar"
 	"github.com/edgelesssys/ego-kvstore/internal/rate"

@@ -11,7 +11,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/edgelesssys/ego-kvstore"
+	pebble "github.com/edgelesssys/ego-kvstore"
 	"github.com/edgelesssys/ego-kvstore/internal/randvar"
 	"github.com/spf13/cobra"
 	"golang.org/x/exp/rand"

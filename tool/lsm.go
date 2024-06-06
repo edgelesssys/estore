@@ -13,7 +13,7 @@ import (
 	"sort"
 
 	"github.com/cockroachdb/errors"
-	"github.com/edgelesssys/ego-kvstore"
+	pebble "github.com/edgelesssys/ego-kvstore"
 	"github.com/edgelesssys/ego-kvstore/internal/base"
 	"github.com/edgelesssys/ego-kvstore/internal/manifest"
 	"github.com/edgelesssys/ego-kvstore/record"

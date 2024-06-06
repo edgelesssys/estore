@@ -6,7 +6,7 @@ package metamorphic
 
 import (
 	"github.com/cockroachdb/errors"
-	"github.com/edgelesssys/ego-kvstore"
+	pebble "github.com/edgelesssys/ego-kvstore"
 	"github.com/edgelesssys/ego-kvstore/vfs/errorfs"
 )
 

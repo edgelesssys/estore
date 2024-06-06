@@ -7,7 +7,7 @@ package main
 import (
 	"bytes"
 
-	"github.com/edgelesssys/ego-kvstore"
+	pebble "github.com/edgelesssys/ego-kvstore"
 	"github.com/edgelesssys/ego-kvstore/internal/bytealloc"
 )
 

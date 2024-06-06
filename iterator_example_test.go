@@ -2,7 +2,7 @@
 // of this source code is governed by a BSD-style license that can be found in
 // the LICENSE file.
 
-package pebble_test
+package kvstore_test
 
 import (
 	"fmt"
@@ -13,14 +13,14 @@ import (
 )
 
 func ExampleIterator() {
-	db, err := pebble.Open("", &pebble.Options{FS: vfs.NewMem()})
+	db, err := kvstore.Open("", &kvstore.Options{FS: vfs.NewMem()})
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	keys := []string{"hello", "world", "hello world"}
 	for _, key := range keys {
-		if err := db.Set([]byte(key), nil, pebble.Sync); err != nil {
+		if err := db.Set([]byte(key), nil, kvstore.Sync); err != nil {
 			log.Fatal(err)
 		}
 	}
@@ -42,7 +42,7 @@ func ExampleIterator() {
 }
 
 func ExampleIterator_prefixIteration() {
-	db, err := pebble.Open("", &pebble.Options{FS: vfs.NewMem()})
+	db, err := kvstore.Open("", &kvstore.Options{FS: vfs.NewMem()})
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -59,8 +59,8 @@ func ExampleIterator_prefixIteration() {
 		return nil // no upper-bound
 	}
 
-	prefixIterOptions := func(prefix []byte) *pebble.IterOptions {
-		return &pebble.IterOptions{
+	prefixIterOptions := func(prefix []byte) *kvstore.IterOptions {
+		return &kvstore.IterOptions{
 			LowerBound: prefix,
 			UpperBound: keyUpperBound(prefix),
 		}
@@ -68,7 +68,7 @@ func ExampleIterator_prefixIteration() {
 
 	keys := []string{"hello", "world", "hello world"}
 	for _, key := range keys {
-		if err := db.Set([]byte(key), nil, pebble.Sync); err != nil {
+		if err := db.Set([]byte(key), nil, kvstore.Sync); err != nil {
 			log.Fatal(err)
 		}
 	}
@@ -89,14 +89,14 @@ func ExampleIterator_prefixIteration() {
 }
 
 func ExampleIterator_SeekGE() {
-	db, err := pebble.Open("", &pebble.Options{FS: vfs.NewMem()})
+	db, err := kvstore.Open("", &kvstore.Options{FS: vfs.NewMem()})
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	keys := []string{"hello", "world", "hello world"}
 	for _, key := range keys {
-		if err := db.Set([]byte(key), nil, pebble.Sync); err != nil {
+		if err := db.Set([]byte(key), nil, kvstore.Sync); err != nil {
 			log.Fatal(err)
 		}
 	}

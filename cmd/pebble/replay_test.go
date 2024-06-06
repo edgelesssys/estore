@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/edgelesssys/ego-kvstore"
+	pebble "github.com/edgelesssys/ego-kvstore"
 	"github.com/edgelesssys/ego-kvstore/internal/cache"
 	"github.com/stretchr/testify/require"
 )

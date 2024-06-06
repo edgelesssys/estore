@@ -18,7 +18,7 @@ import (
 	"time"
 
 	"github.com/cockroachdb/datadriven"
-	"github.com/edgelesssys/ego-kvstore"
+	pebble "github.com/edgelesssys/ego-kvstore"
 	"github.com/edgelesssys/ego-kvstore/internal/base"
 	"github.com/edgelesssys/ego-kvstore/internal/datatest"
 	"github.com/edgelesssys/ego-kvstore/internal/humanize"

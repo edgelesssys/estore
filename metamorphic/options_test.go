@@ -13,7 +13,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/edgelesssys/ego-kvstore"
+	pebble "github.com/edgelesssys/ego-kvstore"
 	"github.com/edgelesssys/ego-kvstore/internal/testkeys"
 	"github.com/edgelesssys/ego-kvstore/sstable"
 	"github.com/edgelesssys/ego-kvstore/vfs"

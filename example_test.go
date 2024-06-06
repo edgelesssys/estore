@@ -2,7 +2,7 @@
 // of this source code is governed by a BSD-style license that can be found in
 // the LICENSE file.
 
-package pebble_test
+package kvstore_test
 
 import (
 	"fmt"
@@ -13,12 +13,12 @@ import (
 )
 
 func Example() {
-	db, err := pebble.Open("", &pebble.Options{FS: vfs.NewMem()})
+	db, err := kvstore.Open("", &kvstore.Options{FS: vfs.NewMem()})
 	if err != nil {
 		log.Fatal(err)
 	}
 	key := []byte("hello")
-	if err := db.Set(key, []byte("world"), pebble.Sync); err != nil {
+	if err := db.Set(key, []byte("world"), kvstore.Sync); err != nil {
 		log.Fatal(err)
 	}
 	value, closer, err := db.Get(key)

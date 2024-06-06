@@ -9,7 +9,7 @@ import (
 	"fmt"
 	"sort"
 
-	"github.com/edgelesssys/ego-kvstore"
+	pebble "github.com/edgelesssys/ego-kvstore"
 	"github.com/edgelesssys/ego-kvstore/internal/randvar"
 	"github.com/edgelesssys/ego-kvstore/internal/testkeys"
 	"golang.org/x/exp/rand"

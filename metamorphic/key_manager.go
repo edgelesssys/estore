@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"sort"
 
-	"github.com/edgelesssys/ego-kvstore"
+	pebble "github.com/edgelesssys/ego-kvstore"
 	"github.com/edgelesssys/ego-kvstore/internal/base"
 	"github.com/edgelesssys/ego-kvstore/internal/testkeys"
 	"github.com/stretchr/testify/require"
