@@ -51,7 +51,7 @@ func testRewriterParallelism(t *testing.T, parallelism bool) {
 	}
 }
 
-func TestRewriter(t *testing.T) {
+func DisabledTestRewriter(t *testing.T) { // EDG: we don't support RewriteKeySuffixes
 	testRewriterParallelism(t, false)
 }
 
@@ -59,7 +59,7 @@ func TestWriterParallel(t *testing.T) {
 	testWriterParallelism(t, true)
 }
 
-func TestRewriterParallel(t *testing.T) {
+func DisabledTestRewriterParallel(t *testing.T) { // EDG: we don't support RewriteKeySuffixes
 	testRewriterParallelism(t, true)
 }
 
@@ -235,7 +235,7 @@ func runDataDriven(t *testing.T, file string, tableFormat TableFormat, paralleli
 	})
 }
 
-func TestWriterWithValueBlocks(t *testing.T) {
+func DisabledTestWriterWithValueBlocks(t *testing.T) { // EDG: we don't support value blocks
 	var r *Reader
 	defer func() {
 		if r != nil {

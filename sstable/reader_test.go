@@ -491,7 +491,7 @@ func TestReader(t *testing.T) {
 		"prefixFilter": "testdata/prefixreader",
 	}
 
-	for format := TableFormatPebblev2; format <= TableFormatMax; format++ {
+	for format := TableFormatPebblev2; format <= TableFormatPebblev2; format++ { // EDG: we don't support value blocks
 		for dName, blockSize := range blockSizes {
 			for iName, indexBlockSize := range blockSizes {
 				for lName, tableOpt := range writerOpts {
@@ -553,7 +553,7 @@ func TestHamletReader(t *testing.T) {
 		f, err := os.Open(filepath.FromSlash(prebuiltSST))
 		require.NoError(t, err)
 
-		r, err := newReader(f, ReaderOptions{})
+		r, err := newReader(encryptSST(t, f), ReaderOptions{})
 		require.NoError(t, err)
 
 		t.Run(
@@ -580,12 +580,9 @@ func TestReaderStats(t *testing.T) {
 	forEveryTableFormat[string](t,
 		[NumTableFormats]string{
 			TableFormatUnspecified: "",
-			TableFormatLevelDB:     "testdata/readerstats_LevelDB",
 			TableFormatRocksDBv2:   "testdata/readerstats_LevelDB",
 			TableFormatPebblev1:    "testdata/readerstats_LevelDB",
 			TableFormatPebblev2:    "testdata/readerstats_LevelDB",
-			TableFormatPebblev3:    "testdata/readerstats_Pebblev3",
-			TableFormatPebblev4:    "testdata/readerstats_Pebblev3",
 		}, func(t *testing.T, format TableFormat, dir string) {
 			if dir == "" {
 				t.Skip()
@@ -616,8 +613,6 @@ func TestReaderWithBlockPropertyFilter(t *testing.T) {
 			TableFormatRocksDBv2:   "", // Block properties unsupported
 			TableFormatPebblev1:    "", // Block properties unsupported
 			TableFormatPebblev2:    "testdata/reader_bpf/Pebblev2",
-			TableFormatPebblev3:    "testdata/reader_bpf/Pebblev3",
-			TableFormatPebblev4:    "testdata/reader_bpf/Pebblev3",
 		}, func(t *testing.T, format TableFormat, dir string) {
 			if dir == "" {
 				t.Skip("Block-properties unsupported")
@@ -647,7 +642,7 @@ func TestInjectedErrors(t *testing.T) {
 			f, err := vfs.Default.Open(filepath.FromSlash(prebuiltSST))
 			require.NoError(t, err)
 
-			r, err := newReader(errorfs.WrapFile(f, errorfs.OnIndex(int32(i))), ReaderOptions{})
+			r, err := newReader(errorfs.WrapFile(encryptSST(t, f), errorfs.OnIndex(int32(i))), ReaderOptions{})
 			if err != nil {
 				return firstError(err, f.Close())
 			}
@@ -1283,8 +1278,9 @@ func TestValidateBlockChecksums(t *testing.T) {
 
 	testFn := func(t *testing.T, file string, corruptionLocations []corruptionLocation) {
 		// Create a copy of the SSTable that we can freely corrupt.
-		f, err := os.Open(filepath.FromSlash(file))
+		forg, err := os.Open(filepath.FromSlash(file))
 		require.NoError(t, err)
+		f := encryptSST(t, forg)
 
 		pathCopy := path.Join(t.TempDir(), path.Base(file))
 		fCopy, err := os.OpenFile(pathCopy, os.O_CREATE|os.O_RDWR, 0600)
@@ -1336,6 +1332,11 @@ func TestValidateBlockChecksums(t *testing.T) {
 				bh = layout.MetaIndex
 			default:
 				t.Fatalf("unknown location")
+			}
+
+			// EDG: the encrypted SST doesn't have this block type (because encryptSST creates a very basic copy)
+			if bh.Length == 0 {
+				return
 			}
 
 			// Corrupt a random byte within the selected block.
@@ -1401,7 +1402,7 @@ func TestReader_TableFormat(t *testing.T) {
 		require.Equal(t, want, got)
 	}
 
-	for tf := TableFormatLevelDB; tf <= TableFormatMax; tf++ {
+	for tf := TableFormatRocksDBv2; tf <= TableFormatMax; tf++ {
 		t.Run(tf.String(), func(t *testing.T) {
 			test(t, tf)
 		})

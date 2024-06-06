@@ -137,6 +137,8 @@ type ReaderOptions struct {
 
 	// Logger is an optional logger and tracer.
 	LoggerAndTracer base.LoggerAndTracer
+
+	EncryptionKey []byte
 }
 
 func (o ReaderOptions) ensureDefaults() ReaderOptions {
@@ -269,6 +271,8 @@ type WriterOptions struct {
 	// RequiredInPlaceValueBound mirrors
 	// Options.Experimental.RequiredInPlaceValueBound.
 	RequiredInPlaceValueBound UserKeyPrefixBound
+
+	EncryptionKey []byte
 }
 
 func (o WriterOptions) ensureDefaults() WriterOptions {

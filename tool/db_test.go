@@ -6,6 +6,6 @@ package tool
 
 import "testing"
 
-func TestDB(t *testing.T) {
+func DisabledTestDB(t *testing.T) { // EDG: tries to read unencrypted files
 	runTests(t, "testdata/db_*")
 }

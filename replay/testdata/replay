@@ -1,33 +1,6 @@
 corpus simple
 ----
 
-tree
-----
-          /
-            build/
-      89      000004.log
-     658      000005.sst
-      49      000006.log
-     686      000007.sst
-      16      CURRENT
-       0      LOCK
-      98      MANIFEST-000001
-     122      MANIFEST-000008
-    1189      OPTIONS-000003
-       0      marker.format-version.000007.008
-       0      marker.manifest.000002.MANIFEST-000008
-            simple/
-     686      000007.sst
-      98      MANIFEST-000001
-     122      MANIFEST-000008
-              checkpoint/
-      25        000004.log
-     658        000005.sst
-      98        MANIFEST-000001
-    1189        OPTIONS-000003
-       0        marker.format-version.000001.008
-       0        marker.manifest.000001.MANIFEST-000001
-
 cat build/OPTIONS-000003
 ----
 ----

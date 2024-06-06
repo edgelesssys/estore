@@ -73,6 +73,7 @@ import (
 
 	"github.com/cockroachdb/errors"
 	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/ego-kvstore/internal/edg"
 	"github.com/edgelesssys/ego-kvstore/objstorage"
 )
 
@@ -184,7 +185,7 @@ Data blocks have some additional features:
 */
 
 const (
-	blockTrailerLen                    = 5
+	blockTrailerLen                    = 5 + edg.GCMTagSize
 	blockHandleMaxLenWithoutProperties = 10 + 10
 	// blockHandleLikelyMaxLen can be used for pre-allocating buffers to
 	// reduce memory copies. It is not guaranteed that a block handle will not

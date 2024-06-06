@@ -1115,7 +1115,7 @@ func TestGetVersion(t *testing.T) {
 	require.Equal(t, "rocksdb v6.2.1", version)
 }
 
-func TestRocksDBNoFlushManifest(t *testing.T) {
+func DisabledTestRocksDBNoFlushManifest(t *testing.T) { // EDG: tries to read unencrypted files
 	mem := vfs.NewMem()
 	// Have the comparer and merger names match what's in the testdata
 	// directory.

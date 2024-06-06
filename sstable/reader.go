@@ -1,3 +1,9 @@
+/*
+Copyright (c) Edgeless Systems GmbH
+
+SPDX-License-Identifier: AGPL-3.0-only
+*/
+
 // Copyright 2011 The LevelDB-Go and Pebble Authors. All rights reserved. Use
 // of this source code is governed by a BSD-style license that can be found in
 // the LICENSE file.
@@ -7,6 +13,7 @@ package sstable
 import (
 	"bytes"
 	"context"
+	"crypto/cipher"
 	"encoding/binary"
 	"io"
 	"os"
@@ -19,6 +26,7 @@ import (
 	"github.com/edgelesssys/ego-kvstore/internal/bytealloc"
 	"github.com/edgelesssys/ego-kvstore/internal/cache"
 	"github.com/edgelesssys/ego-kvstore/internal/crc"
+	"github.com/edgelesssys/ego-kvstore/internal/edg"
 	"github.com/edgelesssys/ego-kvstore/internal/invariants"
 	"github.com/edgelesssys/ego-kvstore/internal/keyspan"
 	"github.com/edgelesssys/ego-kvstore/internal/private"
@@ -231,6 +239,9 @@ type Reader struct {
 	// simultaneously.
 	metaBufferPool      BufferPool
 	metaBufferPoolAlloc [3]allocedBuffer
+
+	aead        cipher.AEAD
+	unencrypted bool // EDG: tests can enable this for reading existing test files
 }
 
 // Close implements DB.Close, as documented in the pebble package.
@@ -577,6 +588,12 @@ func (r *Reader) readBlock(
 		compressed.release()
 		return bufferHandle{}, err
 	}
+
+	if err := r.edgDecrypt(bh, compressed.get()); err != nil {
+		compressed.release()
+		return bufferHandle{}, err
+	}
+
 	if err := checkChecksum(r.checksumType, compressed.get(), bh, r.fileNum.FileNum()); err != nil {
 		compressed.release()
 		return bufferHandle{}, err
@@ -1124,6 +1141,20 @@ func NewReader(f objstorage.Readable, o ReaderOptions, extraOpts ...ReaderOption
 	}
 	if r.cacheID == 0 {
 		r.cacheID = r.opts.Cache.NewID()
+	}
+
+	aead, err := edg.GetCipher(o.EncryptionKey)
+	if err != nil {
+		r.err = err
+		return nil, r.Close()
+	}
+	r.aead = aead
+	if !r.unencrypted {
+		f, err = newDecryptedFooter(f, aead)
+		if err != nil {
+			r.err = err
+			return nil, r.Close()
+		}
 	}
 
 	footer, err := readFooter(f)

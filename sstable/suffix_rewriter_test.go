@@ -14,7 +14,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestRewriteSuffixProps(t *testing.T) {
+func DisabledTestRewriteSuffixProps(t *testing.T) { // EDG: we don't support RewriteKeySuffixes
 	from, to := []byte("_212"), []byte("_646")
 	for format := TableFormatPebblev2; format <= TableFormatMax; format++ {
 		t.Run(format.String(), func(t *testing.T) {

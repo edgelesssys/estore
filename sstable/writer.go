@@ -1,3 +1,9 @@
+/*
+Copyright (c) Edgeless Systems GmbH
+
+SPDX-License-Identifier: AGPL-3.0-only
+*/
+
 // Copyright 2011 The LevelDB-Go and Pebble Authors. All rights reserved. Use
 // of this source code is governed by a BSD-style license that can be found in
 // the LICENSE file.
@@ -6,6 +12,7 @@ package sstable
 
 import (
 	"bytes"
+	"crypto/cipher"
 	"encoding/binary"
 	"fmt"
 	"math"
@@ -19,6 +26,7 @@ import (
 	"github.com/edgelesssys/ego-kvstore/internal/bytealloc"
 	"github.com/edgelesssys/ego-kvstore/internal/cache"
 	"github.com/edgelesssys/ego-kvstore/internal/crc"
+	"github.com/edgelesssys/ego-kvstore/internal/edg"
 	"github.com/edgelesssys/ego-kvstore/internal/invariants"
 	"github.com/edgelesssys/ego-kvstore/internal/keyspan"
 	"github.com/edgelesssys/ego-kvstore/internal/private"
@@ -209,6 +217,8 @@ type Writer struct {
 	shortAttributeExtractor   base.ShortAttributeExtractor
 	requiredInPlaceValueBound UserKeyPrefixBound
 	valueBlockWriter          *valueBlockWriter
+
+	aead cipher.AEAD
 }
 
 type pointKeyInfo struct {
@@ -1784,15 +1794,13 @@ func (w *Writer) writeCompressedBlock(block []byte, blockTrailerBuf []byte) (Blo
 		w.cache.Delete(w.cacheID, w.fileNum, bh.Offset)
 	}
 
+	ciphertext := w.edgEncrypt(bh, block, blockTrailerBuf)
+
 	// Write the bytes to the file.
-	if err := w.writable.WriteApproved(block); err != nil {
+	if err := w.writable.WriteApproved(ciphertext); err != nil {
 		return BlockHandle{}, err
 	}
-	w.meta.Size += uint64(len(block))
-	if err := w.writable.WriteApproved(blockTrailerBuf[:blockTrailerLen]); err != nil {
-		return BlockHandle{}, err
-	}
-	w.meta.Size += blockTrailerLen
+	w.meta.Size += uint64(len(ciphertext))
 
 	return bh, nil
 }
@@ -2111,7 +2119,8 @@ func (w *Writer) Close() (err error) {
 		indexBH:     indexBH,
 	}
 	encoded := footer.encode(w.blockBuf.tmp[:])
-	if err := w.writable.WriteApproved(footer.encode(w.blockBuf.tmp[:])); err != nil {
+	encoded = w.edgEncryptFooter(encoded, w.meta.Size)
+	if err := w.writable.WriteApproved(encoded); err != nil {
 		return err
 	}
 	w.meta.Size += uint64(len(encoded))
@@ -2348,6 +2357,14 @@ func NewWriter(writable objstorage.Writable, o WriterOptions, extraOpts ...Write
 	// Initialize the range key fragmenter and encoder.
 	w.fragmenter.Emit = w.encodeRangeKeySpan
 	w.rangeKeyEncoder.Emit = w.addRangeKey
+
+	aead, err := edg.GetCipher(o.EncryptionKey)
+	if err != nil {
+		w.err = err
+		return w
+	}
+	w.aead = aead
+
 	return w
 }
 

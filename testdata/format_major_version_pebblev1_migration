@@ -49,23 +49,18 @@ ingest c format=rocksdbv2
 set rocksdbv2 rockdbv2
 ----
 
-ingest d format=leveldb
-set leveldb leveldb
-----
-
 lsm
 ----
 0.0:
   000005:[a#10,SET-a#10,SET]
 6:
-  000009:[leveldb#14,SET-leveldb#14,SET]
   000007:[pebblev1#12,SET-pebblev1#12,SET]
   000006:[pebblev2#11,SET-pebblev2#11,SET]
   000008:[rocksdbv2#13,SET-rocksdbv2#13,SET]
 
 tally-table-formats
 ----
-(LevelDB): 1
+(LevelDB): 0
 (RocksDB,v2): 1
 (Pebble,v1): 1
 (Pebble,v2): 2
@@ -118,7 +113,7 @@ max-table-format
 
 marked-file-count
 ----
-2 files marked for compaction
+1 files marked for compaction
 
 # Upgrade the DB to FormatPrePebblev1MarkedCompacted. The marked count returns
 # to zero.
@@ -147,24 +142,3 @@ marked-file-count
 
 # The two tables with older table formats were rewritten with newer table format
 # versions (note updated table numbers for the leveldb and rocksdb2 tables).
-
-lsm
-----
-0.0:
-  000005:[a#10,SET-a#10,SET]
-6:
-  000013:[leveldb#0,SET-leveldb#0,SET]
-  000007:[pebblev1#12,SET-pebblev1#12,SET]
-  000006:[pebblev2#11,SET-pebblev2#11,SET]
-  000012:[rocksdbv2#0,SET-rocksdbv2#0,SET]
-
-# Confirm all tables are at least the minimum supported table format version.
-
-tally-table-formats
-----
-(LevelDB): 0
-(RocksDB,v2): 0
-(Pebble,v1): 1
-(Pebble,v2): 4
-(Pebble,v3): 0
-(Pebble,v4): 0
