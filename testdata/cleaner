@@ -25,6 +25,7 @@ sync: db/MANIFEST-000001
 create: db_wal/000002.log
 sync: db_wal
 create: db/temporary.000003.dbtmp
+sync: db/SALTCHAIN
 sync: db/temporary.000003.dbtmp
 close: db/temporary.000003.dbtmp
 rename: db/temporary.000003.dbtmp -> db/OPTIONS-000003
@@ -158,6 +159,7 @@ sync: db1/MANIFEST-000001
 create: db1_wal/000002.log
 sync: db1_wal
 create: db1/temporary.000003.dbtmp
+sync: db1/SALTCHAIN
 sync: db1/temporary.000003.dbtmp
 close: db1/temporary.000003.dbtmp
 rename: db1/temporary.000003.dbtmp -> db1/OPTIONS-000003
@@ -242,6 +244,7 @@ sync: db1
 create: db1_wal/000457.log
 sync: db1_wal
 create: db1/temporary.000459.dbtmp
+sync: db1/SALTCHAIN
 sync: db1/temporary.000459.dbtmp
 close: db1/temporary.000459.dbtmp
 rename: db1/temporary.000459.dbtmp -> db1/OPTIONS-000459

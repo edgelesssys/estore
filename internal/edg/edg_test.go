@@ -89,7 +89,6 @@ func TestConfidentiality(t *testing.T) {
 		if fileType, _, ok := base.ParseFilename(fs, filename); ok {
 			switch fileType {
 			case base.FileTypeLock, base.FileTypeCurrent: // these are not encrypted
-			case base.FileTypeOptions: // TODO
 			case base.FileTypeManifest:
 				assert.Greater(entropy(data), 6.6, filename) // manifest is short
 			default:
@@ -136,14 +135,6 @@ func TestIntegrity(t *testing.T) {
 
 		if filename == "CURRENT" {
 			continue // CURRENT is not encrypted. Corrupting it doesn't cause crypto errors (but other errors).
-		}
-
-		// TODO encrypt these file types
-		if fileType, _, ok := base.ParseFilename(fs, filename); ok {
-			switch fileType {
-			case base.FileTypeOptions:
-				continue
-			}
 		}
 
 		for i := 0; i < len(orgData); i++ {

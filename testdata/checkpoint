@@ -89,6 +89,7 @@ close: db/marker.format-version.000015.016
 remove: db/marker.format-version.000014.015
 sync: db
 create: db/temporary.000003.dbtmp
+sync: db/SALTCHAIN
 sync: db/temporary.000003.dbtmp
 close: db/temporary.000003.dbtmp
 rename: db/temporary.000003.dbtmp -> db/OPTIONS-000003

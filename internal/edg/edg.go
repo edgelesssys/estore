@@ -10,6 +10,8 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 	"crypto/rand"
+
+	"github.com/edgelesssys/ego-kvstore/internal/base"
 )
 
 // GCMTagSize is the AES-GCM tag size.
@@ -39,6 +41,37 @@ func TestEnableRandomKey() {
 	if _, err := rand.Read(randomTestKey); err != nil {
 		panic(err)
 	}
+}
+
+// EncryptOptions encrypts the contents of an OPTIONS file.
+func EncryptOptions(
+	serializedOpts []byte, fileNum base.DiskFileNum, keyManager *KeyManager,
+) ([]byte, error) {
+	key, err := keyManager.Create(fileNum.FileNum())
+	if err != nil {
+		return nil, err
+	}
+	aead, err := GetCipher(key)
+	if err != nil {
+		return nil, err
+	}
+	// Use all-zero nonce because the key is unique and won't be used again for another encryption.
+	return aead.Seal(nil, make([]byte, aead.NonceSize()), serializedOpts, nil), nil
+}
+
+// DecryptOptions decrypts the contents of an OPTIONS file.
+func DecryptOptions(
+	ciphertext []byte, fileNum base.FileNum, keyManager *KeyManager,
+) ([]byte, error) {
+	key, err := keyManager.Get(fileNum)
+	if err != nil {
+		return nil, err
+	}
+	aead, err := GetCipher(key)
+	if err != nil {
+		return nil, err
+	}
+	return aead.Open(nil, make([]byte, aead.NonceSize()), ciphertext, nil)
 }
 
 // Writer is an interface for Write and WriteApproved.

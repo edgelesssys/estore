@@ -108,6 +108,7 @@ remove: db/marker.format-version.000014.015
 sync: db
 upgraded to format version: 016
 create: db/temporary.000003.dbtmp
+sync: db/SALTCHAIN
 sync: db/temporary.000003.dbtmp
 close: db/temporary.000003.dbtmp
 rename: db/temporary.000003.dbtmp -> db/OPTIONS-000003

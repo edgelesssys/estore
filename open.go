@@ -401,7 +401,7 @@ func Open(dirname string, opts *Options) (db *DB, _ error) {
 	var strictWALTail bool
 	if previousOptionsFilename != "" {
 		path := opts.FS.PathJoin(dirname, previousOptionsFilename)
-		strictWALTail, err = checkOptions(opts, path)
+		strictWALTail, err = checkOptions(opts, path, previousOptionsFileNum, d.keyManager)
 		if err != nil {
 			return nil, err
 		}
@@ -522,7 +522,13 @@ func Open(dirname string, opts *Options) (db *DB, _ error) {
 			return nil, err
 		}
 		serializedOpts := []byte(opts.String())
-		if _, err := optionsFile.WriteApproved(serializedOpts); err != nil {
+
+		encryptedOpts, err := edg.EncryptOptions(serializedOpts, d.optionsFileNum, d.keyManager)
+		if err != nil {
+			return nil, errors.CombineErrors(err, optionsFile.Close())
+		}
+
+		if _, err := optionsFile.WriteApproved(encryptedOpts); err != nil {
 			return nil, errors.CombineErrors(err, optionsFile.Close())
 		}
 		d.optionsFileSize = uint64(len(serializedOpts))
@@ -1014,7 +1020,9 @@ func (d *DB) replayWAL(
 	return toFlush, maxSeqNum, err
 }
 
-func checkOptions(opts *Options, path string) (strictWALTail bool, err error) {
+func checkOptions(
+	opts *Options, path string, fileNum base.FileNum, keyManager *edg.KeyManager,
+) (strictWALTail bool, err error) {
 	f, err := opts.FS.Open(path)
 	if err != nil {
 		return false, err
@@ -1025,6 +1033,12 @@ func checkOptions(opts *Options, path string) (strictWALTail bool, err error) {
 	if err != nil {
 		return false, err
 	}
+
+	data, err = edg.DecryptOptions(data, fileNum, keyManager)
+	if err != nil {
+		return false, err
+	}
+
 	return opts.checkOptions(string(data))
 }
 
