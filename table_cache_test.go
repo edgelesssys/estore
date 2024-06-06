@@ -20,6 +20,7 @@ import (
 
 	"github.com/cockroachdb/errors"
 	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/ego-kvstore/internal/edg"
 	"github.com/edgelesssys/ego-kvstore/internal/keyspan"
 	"github.com/edgelesssys/ego-kvstore/internal/manifest"
 	"github.com/edgelesssys/ego-kvstore/internal/testkeys"
@@ -203,7 +204,12 @@ func newTableCacheContainerTest(
 		opts.Cache = tc.cache
 	}
 
-	c := newTableCacheContainer(tc, opts.Cache.NewID(), objProvider, opts, tableCacheTestCacheSize)
+	keyManager, err := edg.NewKeyManager(fs, dirname, nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	c := newTableCacheContainer(tc, opts.Cache.NewID(), objProvider, opts, tableCacheTestCacheSize, keyManager)
 	return c, fs, nil
 }
 
@@ -1019,7 +1025,12 @@ func TestTableCacheErrorBadMagicNumber(t *testing.T) {
 	opts.EnsureDefaults()
 	opts.Cache = NewCache(8 << 20) // 8 MB
 	defer opts.Cache.Unref()
-	c := newTableCacheContainer(nil, opts.Cache.NewID(), objProvider, opts, tableCacheTestCacheSize)
+
+	require.NoError(t, err)
+	keyManager, err := edg.NewKeyManager(fs, "", nil)
+	require.NoError(t, err)
+
+	c := newTableCacheContainer(nil, opts.Cache.NewID(), objProvider, opts, tableCacheTestCacheSize, keyManager)
 	require.NoError(t, err)
 	defer c.close()
 
@@ -1096,6 +1107,9 @@ func TestTableCacheClockPro(t *testing.T) {
 	dbOpts.cacheID = 0
 	dbOpts.objProvider = objProvider
 	dbOpts.opts = opts.MakeReaderOptions()
+
+	dbOpts.keyManager, err = edg.NewKeyManager(mem, "", nil)
+	require.NoError(t, err)
 
 	scanner := bufio.NewScanner(f)
 	tables := make(map[int]bool)

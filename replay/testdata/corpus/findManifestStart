@@ -42,6 +42,7 @@ build:
   LOCK
   MANIFEST-000001
   OPTIONS-000003
+  SALTCHAIN
   marker.format-version.000007.008
   marker.manifest.000001.MANIFEST-000001
 
@@ -63,6 +64,7 @@ build:
   LOCK
   MANIFEST-000001
   OPTIONS-000003
+  SALTCHAIN
   marker.format-version.000007.008
   marker.manifest.000001.MANIFEST-000001
 
@@ -83,6 +85,7 @@ build:
   MANIFEST-000001
   MANIFEST-000007
   OPTIONS-000008
+  SALTCHAIN
   marker.format-version.000007.008
   marker.manifest.000002.MANIFEST-000007
 

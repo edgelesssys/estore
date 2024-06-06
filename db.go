@@ -19,6 +19,7 @@ import (
 	"github.com/cockroachdb/tokenbucket"
 	"github.com/edgelesssys/ego-kvstore/internal/arenaskl"
 	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/ego-kvstore/internal/edg"
 	"github.com/edgelesssys/ego-kvstore/internal/invalidating"
 	"github.com/edgelesssys/ego-kvstore/internal/invariants"
 	"github.com/edgelesssys/ego-kvstore/internal/keyspan"
@@ -499,6 +500,8 @@ type DB struct {
 	// the time at database Open; may be used to compute metrics like effective
 	// compaction concurrency
 	openedAt time.Time
+
+	keyManager *edg.KeyManager
 }
 
 var _ Reader = (*DB)(nil)
@@ -1689,6 +1692,8 @@ func (d *DB) Close() error {
 		err = firstError(err, errors.Errorf("leaked snapshots: %d open snapshots on DB %p", v, d))
 	}
 
+	err = firstError(err, d.keyManager.Close())
+
 	return err
 }
 
@@ -2644,6 +2649,11 @@ func (d *DB) recycleWAL() (newLogNum FileNum, prevLogSize uint64) {
 		err = firstError(err, d.logRecycler.pop(recycleLog.fileNum.FileNum()))
 	}
 
+	var encryptionKey []byte
+	if err == nil {
+		encryptionKey, err = d.keyManager.Create(newLogNum)
+	}
+
 	d.opts.EventListener.WALCreated(WALCreateInfo{
 		JobID:           jobID,
 		Path:            newLogName,
@@ -2671,6 +2681,8 @@ func (d *DB) recycleWAL() (newLogNum FileNum, prevLogSize uint64) {
 		WALMinSyncInterval: d.opts.WALMinSyncInterval,
 		QueueSemChan:       d.commit.logSyncQSem,
 	})
+	d.mu.log.LogWriter.EncryptionKey = encryptionKey
+
 	if d.mu.log.registerLogWriterForTesting != nil {
 		d.mu.log.registerLogWriterForTesting(d.mu.log.LogWriter)
 	}

@@ -1177,7 +1177,6 @@ func TestDBConcurrentCompactClose(t *testing.T) {
 			})
 			require.NoError(t, w.Set([]byte(fmt.Sprint(j)), nil))
 			require.NoError(t, w.Close())
-			require.NoError(t, d.Ingest([]string{path}))
 		}
 
 		require.NoError(t, d.Close())

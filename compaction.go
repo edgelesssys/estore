@@ -3169,6 +3169,11 @@ func (d *DB) runCompaction(
 			d.opts.Experimental.MaxWriterConcurrency > 0 &&
 				(cpuWorkHandle.Permitted() || d.opts.Experimental.ForceWriterParallelism)
 
+		writerOpts.EncryptionKey, err = d.keyManager.Create(fileNum)
+		if err != nil {
+			return err
+		}
+
 		tw = sstable.NewWriter(writable, writerOpts, cacheOpts, &prevPointKey)
 
 		fileMeta.CreationTime = time.Now().Unix()

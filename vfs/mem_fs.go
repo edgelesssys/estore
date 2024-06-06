@@ -668,8 +668,7 @@ func (f *memNode) resetToSyncedState() {
 type memFile struct {
 	n           *memNode
 	fs          *MemFS // nil for a standalone memFile
-	rpos        int
-	wpos        int
+	wpos        int    // EDG: bugfix: files in Go use the same pos for read and write
 	read, write bool
 }
 
@@ -692,11 +691,11 @@ func (f *memFile) Read(p []byte) (int, error) {
 	}
 	f.n.mu.Lock()
 	defer f.n.mu.Unlock()
-	if f.rpos >= len(f.n.mu.data) {
+	if f.wpos >= len(f.n.mu.data) {
 		return 0, io.EOF
 	}
-	n := copy(p, f.n.mu.data[f.rpos:])
-	f.rpos += n
+	n := copy(p, f.n.mu.data[f.wpos:])
+	f.wpos += n
 	return n, nil
 }
 

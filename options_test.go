@@ -37,6 +37,14 @@ func (o *Options) testingRandomized(t testing.TB) *Options {
 
 func testingRandomized(t testing.TB, o *Options) *Options {
 	o.testingRandomized(t)
+
+	// EDG: Most tests don't set the encryption key. With TestEnableRandomKey, the file crypto routines will still get a key.
+	// While this reduces required changes to existing tests, it doesn't cover the interaction of DB, KeyManager, and crypto routines.
+	//
+	// There are quite a few tests that get their DB options via this func. So by setting a key here, we have a good tradeoff between
+	// coverage of the full crypto implementation and the need for adapting tests.
+	o.EncryptionKey = testKey()
+
 	return o
 }
 

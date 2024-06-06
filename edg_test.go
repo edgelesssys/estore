@@ -7,12 +7,18 @@ SPDX-License-Identifier: AGPL-3.0-only
 package kvstore
 
 import (
+	"bytes"
+
 	"github.com/edgelesssys/ego-kvstore/internal/edg"
 	"github.com/edgelesssys/ego-kvstore/vfs/errorfs"
 )
 
 func init() {
 	edg.TestEnableRandomKey()
+}
+
+func testKey() []byte {
+	return bytes.Repeat([]byte{2}, 16)
 }
 
 func (f *memFile) WriteApproved(p []byte) error {

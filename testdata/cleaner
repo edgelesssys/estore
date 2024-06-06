@@ -9,6 +9,8 @@ lock: db/LOCK
 open-dir: db
 open-dir: db
 open: db/CURRENT
+open-read-write: db/SALTCHAIN
+sync: db/SALTCHAIN
 create: db/MANIFEST-000001
 sync: db/MANIFEST-000001
 remove: db/temporary.000001.dbtmp
@@ -18,6 +20,7 @@ close: db/temporary.000001.dbtmp
 rename: db/temporary.000001.dbtmp -> db/CURRENT
 sync: db
 open-dir: db
+sync: db/SALTCHAIN
 sync: db/MANIFEST-000001
 create: db_wal/000002.log
 sync: db_wal
@@ -40,7 +43,9 @@ sync-data: db_wal/000002.log
 close: db_wal/000002.log
 create: db_wal/000004.log
 sync: db_wal
+sync: db/SALTCHAIN
 create: db/000005.sst
+sync: db/SALTCHAIN
 sync-data: db/000005.sst
 close: db/000005.sst
 sync: db
@@ -59,7 +64,9 @@ sync-data: db_wal/000004.log
 close: db_wal/000004.log
 create: db_wal/000006.log
 sync: db_wal
+sync: db/SALTCHAIN
 create: db/000007.sst
+sync: db/SALTCHAIN
 sync-data: db/000007.sst
 close: db/000007.sst
 sync: db
@@ -83,6 +90,7 @@ close: db/000007.sst
 open: db/000005.sst
 read-at(0, 68): db/000005.sst
 create: db/000008.sst
+sync: db/SALTCHAIN
 close: db/000005.sst
 open: db/000007.sst
 read-at(0, 42): db/000007.sst
@@ -105,6 +113,7 @@ CURRENT
 LOCK
 MANIFEST-000001
 OPTIONS-000003
+SALTCHAIN
 archive
 
 list db_wal
@@ -133,6 +142,8 @@ lock: db1/LOCK
 open-dir: db1
 open-dir: db1
 open: db1/CURRENT
+open-read-write: db1/SALTCHAIN
+sync: db1/SALTCHAIN
 create: db1/MANIFEST-000001
 sync: db1/MANIFEST-000001
 remove: db1/temporary.000001.dbtmp
@@ -142,6 +153,7 @@ close: db1/temporary.000001.dbtmp
 rename: db1/temporary.000001.dbtmp -> db1/CURRENT
 sync: db1
 open-dir: db1
+sync: db1/SALTCHAIN
 sync: db1/MANIFEST-000001
 create: db1_wal/000002.log
 sync: db1_wal
@@ -164,7 +176,9 @@ sync-data: db1_wal/000002.log
 close: db1_wal/000002.log
 create: db1_wal/000004.log
 sync: db1_wal
+sync: db1/SALTCHAIN
 create: db1/000005.sst
+sync: db1/SALTCHAIN
 sync-data: db1/000005.sst
 close: db1/000005.sst
 sync: db1
@@ -181,6 +195,7 @@ close: db1
 close: db1
 close: db1_wal
 close: db1
+close: db1/SALTCHAIN
 
 create-bogus-file db1/000123.sst
 ----
@@ -206,6 +221,7 @@ open-dir: db1
 open: db1/CURRENT
 read-at(0, 16): db1/CURRENT
 close: db1/CURRENT
+open-read-write: db1/SALTCHAIN
 open: db1/MANIFEST-000001
 close: db1/MANIFEST-000001
 open-dir: db1
@@ -213,6 +229,8 @@ open: db1/OPTIONS-000003
 close: db1/OPTIONS-000003
 open: db1_wal/000004.log
 close: db1_wal/000004.log
+sync: db1/SALTCHAIN
+sync: db1/SALTCHAIN
 create: db1/MANIFEST-000458
 sync: db1/MANIFEST-000458
 remove: db1/temporary.000458.dbtmp
@@ -241,3 +259,4 @@ LOCK
 MANIFEST-000001
 MANIFEST-000458
 OPTIONS-000459
+SALTCHAIN

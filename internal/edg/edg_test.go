@@ -15,22 +15,18 @@ import (
 
 	kvstore "github.com/edgelesssys/ego-kvstore"
 	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/internal/edg"
 	"github.com/edgelesssys/ego-kvstore/vfs"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
-
-func init() {
-	edg.TestEnableRandomKey()
-}
 
 // TestReopen creates a db with a key-value pair and reopens it multiple times checking the value. Useful for debugging.
 func TestReopen(t *testing.T) {
 	require := require.New(t)
 
 	opts := &kvstore.Options{
-		FS: vfs.NewMem(),
+		EncryptionKey: testKey(),
+		FS:            vfs.NewMem(),
 	}
 	key := []byte("foo")
 	val := []byte("bar")
@@ -58,8 +54,9 @@ func TestConfidentiality(t *testing.T) {
 
 	fs := vfs.NewMem()
 	db, err := kvstore.Open("", &kvstore.Options{
-		FS:     fs,
-		Levels: []kvstore.LevelOptions{{Compression: kvstore.NoCompression}},
+		EncryptionKey: testKey(),
+		FS:            fs,
+		Levels:        []kvstore.LevelOptions{{Compression: kvstore.NoCompression}},
 	})
 	require.NoError(err)
 
@@ -110,8 +107,9 @@ func TestIntegrity(t *testing.T) {
 	const db2 = "db2"
 	fs := vfs.NewMem()
 	opts := &kvstore.Options{
-		FS:     fs,
-		Logger: base.NoopLoggerAndTracer{},
+		EncryptionKey: testKey(),
+		FS:            fs,
+		Logger:        base.NoopLoggerAndTracer{},
 	}
 
 	// arange a db
@@ -187,6 +185,63 @@ func TestIntegrity(t *testing.T) {
 	require.NoError(db.Close())
 }
 
+// TestSSTFromForkIsRejected tests that one can't replace an SST file of a db with one from a forked db.
+func TestSSTFromForkIsRejected(t *testing.T) {
+	require := require.New(t)
+
+	const dbdir = "db"
+	const forkdir = "fork"
+	fs := vfs.NewMem()
+	opts := &kvstore.Options{
+		EncryptionKey: testKey(),
+		FS:            fs,
+		Logger:        base.NoopLoggerAndTracer{},
+		WALDir:        "wal",
+	}
+
+	// create db
+	db, err := kvstore.Open(dbdir, opts)
+	require.NoError(err)
+	require.NoError(db.Set([]byte("key1"), []byte("val1"), nil))
+	require.NoError(db.Flush())
+	require.NoError(db.Close())
+	require.NoError(fs.RemoveAll(opts.WALDir))
+
+	// create fork
+	ok, err := vfs.Clone(fs, fs, dbdir, forkdir)
+	require.NoError(err)
+	require.True(ok)
+
+	// advance db
+	db, err = kvstore.Open(dbdir, opts)
+	require.NoError(err)
+	require.NoError(db.Set([]byte("key2"), []byte("val2"), nil))
+	require.NoError(db.Flush())
+	require.NoError(db.Close())
+	require.NoError(fs.RemoveAll(opts.WALDir))
+
+	// advance fork
+	db, err = kvstore.Open(forkdir, opts)
+	require.NoError(err)
+	require.NoError(db.Set([]byte("key2"), []byte("val2"), nil))
+	require.NoError(db.Flush())
+	require.NoError(db.Close())
+	require.NoError(fs.RemoveAll(opts.WALDir))
+
+	// copy SST from fork to db
+	require.NoError(vfs.Copy(fs, "fork/000010.sst", "db/000010.sst"))
+
+	// try to read from db
+	db, err = kvstore.Open(dbdir, opts)
+	require.NoError(err)
+	_, _, err = db.Get([]byte("key2"))
+	require.EqualError(err, "pebble: backing file 000010 error: cipher: message authentication failed")
+}
+
+func testKey() []byte {
+	return bytes.Repeat([]byte{2}, 16)
+}
+
 func entropy(data []byte) float64 {
 	var freq [256]int
 	for _, b := range data {
@@ -212,6 +267,7 @@ func isCryptoError(err error) bool {
 
 	for _, s := range []string{
 		"cipher: message authentication failed",
+		"invalid mac",
 		"pebble/record: invalid chunk",
 	} {
 		if strings.Contains(err.Error(), s) {

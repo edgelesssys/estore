@@ -22,6 +22,7 @@ import (
 	"github.com/edgelesssys/ego-kvstore/internal/base"
 	"github.com/edgelesssys/ego-kvstore/internal/cache"
 	"github.com/edgelesssys/ego-kvstore/internal/constants"
+	"github.com/edgelesssys/ego-kvstore/internal/edg"
 	"github.com/edgelesssys/ego-kvstore/internal/invariants"
 	"github.com/edgelesssys/ego-kvstore/internal/manifest"
 	"github.com/edgelesssys/ego-kvstore/internal/manual"
@@ -253,6 +254,12 @@ func Open(dirname string, opts *Options) (db *DB, _ error) {
 
 	setCurrent := setCurrentFunc(d.FormatMajorVersion(), manifestMarker, opts.FS, dirname, d.dataDir)
 
+	d.keyManager, err = edg.NewKeyManager(opts.FS, dirname, d.opts.EncryptionKey)
+	if err != nil {
+		return nil, err
+	}
+	d.mu.versions.keyManager = d.keyManager
+
 	if !manifestExists {
 		// DB does not exist.
 		if d.opts.ErrorIfNotExists || d.opts.ReadOnly {
@@ -330,7 +337,7 @@ func Open(dirname string, opts *Options) (db *DB, _ error) {
 	}
 
 	tableCacheSize := TableCacheSize(opts.MaxOpenFiles)
-	d.tableCache = newTableCacheContainer(opts.TableCache, d.cacheID, d.objProvider, d.opts, tableCacheSize)
+	d.tableCache = newTableCacheContainer(opts.TableCache, d.cacheID, d.objProvider, d.opts, tableCacheSize, d.keyManager)
 	d.newIters = d.tableCache.newIters
 	d.tableNewRangeKeyIter = d.tableCache.newRangeKeyIter
 
@@ -430,6 +437,11 @@ func Open(dirname string, opts *Options) (db *DB, _ error) {
 		// newLogNum. There should be no difference in using either value.
 		ve.MinUnflushedLogNum = newLogNum
 
+		encryptionKey, err := d.keyManager.Create(newLogNum)
+		if err != nil {
+			return nil, err
+		}
+
 		// Create the manifest with the updated MinUnflushedLogNum before
 		// creating the new log file. If we created the log file first, a
 		// crash before the manifest is synced could leave two WALs with
@@ -478,6 +490,7 @@ func Open(dirname string, opts *Options) (db *DB, _ error) {
 			QueueSemChan:       d.commit.logSyncQSem,
 		}
 		d.mu.log.LogWriter = record.NewLogWriter(logFile, newLogNum, logWriterConfig)
+		d.mu.log.LogWriter.EncryptionKey = encryptionKey
 		d.mu.versions.metrics.WAL.Files++
 	}
 	d.updateReadStateLocked(d.opts.DebugCheck)
@@ -773,6 +786,12 @@ func (d *DB) replayWAL(
 			err = errors.WithDetailf(err, "replaying log %s, offset %d", logNum, offset)
 		}
 	}()
+
+	encryptionKey, err := d.keyManager.Get(logNum)
+	if err != nil {
+		return nil, 0, err
+	}
+	rr.EncryptionKey = encryptionKey
 
 	for {
 		offset = rr.Offset()

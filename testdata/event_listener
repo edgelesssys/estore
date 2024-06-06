@@ -8,6 +8,8 @@ lock: db/LOCK
 open-dir: db
 open-dir: db
 open: db/CURRENT
+open-read-write: db/SALTCHAIN
+sync: db/SALTCHAIN
 create: db/MANIFEST-000001
 sync: db/MANIFEST-000001
 remove: db/temporary.000001.dbtmp
@@ -18,6 +20,7 @@ rename: db/temporary.000001.dbtmp -> db/CURRENT
 sync: db
 [JOB 1] MANIFEST created 000001
 open-dir: db
+sync: db/SALTCHAIN
 sync: db/MANIFEST-000001
 create: wal/000002.log
 sync: wal

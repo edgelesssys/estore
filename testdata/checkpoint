@@ -6,6 +6,8 @@ lock: db/LOCK
 open-dir: db
 open-dir: db
 open: db/CURRENT
+open-read-write: db/SALTCHAIN
+sync: db/SALTCHAIN
 create: db/MANIFEST-000001
 sync: db/MANIFEST-000001
 remove: db/temporary.000001.dbtmp
@@ -15,6 +17,7 @@ close: db/temporary.000001.dbtmp
 rename: db/temporary.000001.dbtmp -> db/CURRENT
 sync: db
 open-dir: db
+sync: db/SALTCHAIN
 sync: db/MANIFEST-000001
 create: db/000002.log
 sync: db
@@ -104,7 +107,9 @@ sync-data: db/000002.log
 close: db/000002.log
 create: db/000004.log
 sync: db
+sync: db/SALTCHAIN
 create: db/000005.sst
+sync: db/SALTCHAIN
 sync-data: db/000005.sst
 close: db/000005.sst
 sync: db
@@ -124,7 +129,9 @@ sync-data: db/000004.log
 close: db/000004.log
 create: db/000006.log
 sync: db
+sync: db/SALTCHAIN
 create: db/000007.sst
+sync: db/SALTCHAIN
 sync-data: db/000007.sst
 close: db/000007.sst
 sync: db

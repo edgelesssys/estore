@@ -14,6 +14,7 @@ import (
 	"github.com/cockroachdb/errors"
 	"github.com/cockroachdb/errors/oserror"
 	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/ego-kvstore/internal/edg"
 	"github.com/edgelesssys/ego-kvstore/internal/invariants"
 	"github.com/edgelesssys/ego-kvstore/internal/manifest"
 	"github.com/edgelesssys/ego-kvstore/record"
@@ -123,6 +124,8 @@ type versionSet struct {
 	writerCond sync.Cond
 	// State for deciding when to write a snapshot. Protected by mu.
 	rotationHelper record.RotationHelper
+
+	keyManager *edg.KeyManager
 }
 
 func (vs *versionSet) init(
@@ -227,6 +230,13 @@ func (vs *versionSet) load(
 	}
 	defer manifest.Close()
 	rr := record.NewReader(manifest, 0 /* logNum */)
+
+	encryptionKey, err := vs.keyManager.Get(manifestFileNum)
+	if err != nil {
+		return err
+	}
+	rr.EncryptionKey = encryptionKey
+
 	for {
 		r, err := rr.Next()
 		if err == io.EOF || record.IsInvalidRecord(err) {
@@ -718,11 +728,18 @@ func (vs *versionSet) createManifest(
 			vs.fs.Remove(filename)
 		}
 	}()
+
+	encryptionKey, err := vs.keyManager.Create(fileNum)
+	if err != nil {
+		return err
+	}
+
 	manifestFile, err = vs.fs.Create(filename)
 	if err != nil {
 		return err
 	}
 	manifest = record.NewWriter(manifestFile)
+	manifest.EncryptionKey = encryptionKey
 
 	snapshot := versionEdit{
 		ComparerName: vs.cmpName,

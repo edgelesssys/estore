@@ -17,6 +17,7 @@ import (
 
 	"github.com/cockroachdb/errors"
 	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/ego-kvstore/internal/edg"
 	"github.com/edgelesssys/ego-kvstore/internal/invariants"
 	"github.com/edgelesssys/ego-kvstore/internal/keyspan"
 	"github.com/edgelesssys/ego-kvstore/internal/manifest"
@@ -68,6 +69,8 @@ type tableCacheOpts struct {
 	objProvider     objstorage.Provider
 	opts            sstable.ReaderOptions
 	filterMetrics   *sstable.FilterMetricsTracker
+
+	keyManager *edg.KeyManager
 }
 
 // tableCacheContainer contains the table cache and
@@ -83,7 +86,12 @@ type tableCacheContainer struct {
 // newTableCacheContainer will panic if the underlying cache in the table cache
 // doesn't match Options.Cache.
 func newTableCacheContainer(
-	tc *TableCache, cacheID uint64, objProvider objstorage.Provider, opts *Options, size int,
+	tc *TableCache,
+	cacheID uint64,
+	objProvider objstorage.Provider,
+	opts *Options,
+	size int,
+	keyManager *edg.KeyManager,
 ) *tableCacheContainer {
 	// We will release a ref to table cache acquired here when tableCacheContainer.close is called.
 	if tc != nil {
@@ -105,6 +113,7 @@ func newTableCacheContainer(
 	t.dbOpts.opts = opts.MakeReaderOptions()
 	t.dbOpts.filterMetrics = &sstable.FilterMetricsTracker{}
 	t.dbOpts.iterCount = new(atomic.Int32)
+	t.dbOpts.keyManager = keyManager
 	return t
 }
 
@@ -1093,7 +1102,11 @@ func (v *tableCacheValue) load(loadInfo loadInfo, c *tableCacheShard, dbOpts *ta
 	)
 	if err == nil {
 		cacheOpts := private.SSTableCacheOpts(dbOpts.cacheID, loadInfo.backingFileNum).(sstable.ReaderOption)
-		v.reader, err = sstable.NewReader(f, dbOpts.opts, cacheOpts, dbOpts.filterMetrics)
+		opts := dbOpts.opts
+		opts.EncryptionKey, err = dbOpts.keyManager.Get(loadInfo.backingFileNum.FileNum())
+		if err == nil {
+			v.reader, err = sstable.NewReader(f, opts, cacheOpts, dbOpts.filterMetrics)
+		}
 	}
 	if err != nil {
 		v.err = errors.Wrapf(

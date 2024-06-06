@@ -25,6 +25,7 @@ import (
 	"github.com/cockroachdb/redact"
 	"github.com/edgelesssys/ego-kvstore/internal/base"
 	"github.com/edgelesssys/ego-kvstore/internal/cache"
+	"github.com/edgelesssys/ego-kvstore/internal/edg"
 	"github.com/edgelesssys/ego-kvstore/internal/manifest"
 	"github.com/edgelesssys/ego-kvstore/objstorage"
 	"github.com/edgelesssys/ego-kvstore/objstorage/objstorageprovider"
@@ -194,6 +195,7 @@ func TestNewDBFilenames(t *testing.T) {
 			"LOCK",
 			"MANIFEST-000001",
 			"OPTIONS-000003",
+			edg.SaltChainFilename,
 		},
 		internalFormatNewest: {
 			"000002.log",
@@ -201,6 +203,7 @@ func TestNewDBFilenames(t *testing.T) {
 			"LOCK",
 			"MANIFEST-000001",
 			"OPTIONS-000003",
+			edg.SaltChainFilename,
 			"marker.format-version.000015.016",
 			"marker.manifest.000001.MANIFEST-000001",
 		},
@@ -664,6 +667,8 @@ func TestWALReplaySequenceNumBug(t *testing.T) {
 	d, err = Open("", &Options{
 		FS:       mem,
 		ReadOnly: true,
+
+		EncryptionKey: testKey(),
 	})
 	require.NoError(t, err)
 	val, c, _ := d.Get([]byte("1"))
@@ -942,6 +947,8 @@ func TestCrashOpenCrashAfterWALCreation(t *testing.T) {
 				}
 				return nil
 			})),
+
+			EncryptionKey: testKey(),
 		})
 		require.NoError(t, err)
 		require.NoError(t, d.Close())
