@@ -385,7 +385,7 @@ func TestMetricsWithoutSync(t *testing.T) {
 	w := NewLogWriter(f, 0, LogWriterConfig{WALFsyncLatency: prometheus.NewHistogram(prometheus.HistogramOpts{})})
 	offset, err := w.SyncRecord([]byte("hello"), nil, nil)
 	require.NoError(t, err)
-	const recordSize = 16
+	const recordSize = 24
 	require.EqualValues(t, recordSize, offset)
 	// We have 512KB of buffer capacity, and 5 bytes + overhead = 16 bytes for
 	// each record. Write 28 * 1024 records to fill it up to 87.5%. This

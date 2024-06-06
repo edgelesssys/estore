@@ -6,6 +6,6 @@ package tool
 
 import "testing"
 
-func TestWAL(t *testing.T) {
+func DisabledTestWAL(t *testing.T) { // EDG: tries to read unencrypted files
 	runTests(t, "testdata/wal_*")
 }

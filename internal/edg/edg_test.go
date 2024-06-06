@@ -82,22 +82,23 @@ func TestConfidentiality(t *testing.T) {
 		require.NoError(err)
 		require.NoError(file.Close())
 
-		// check for expected entropy
-		if fileType, _, ok := base.ParseFilename(fs, filename); ok {
-			switch fileType {
-			case base.FileTypeLock, base.FileTypeCurrent: // these are not encrypted
-			case base.FileTypeLog, base.FileTypeManifest, base.FileTypeOptions:
-				continue // TODO
-			default:
-				assert.Greater(entropy(data), 7.5, filename)
-			}
-		}
-
 		sdata := string(data)
 		assert.NotContains(sdata, "ipsum", filename)
 		assert.NotContains(sdata, "adipi", filename)
 		assert.NotContains(sdata, "eiusm", filename)
 		assert.NotContains(sdata, "dolor", filename)
+
+		// check for expected entropy
+		if fileType, _, ok := base.ParseFilename(fs, filename); ok {
+			switch fileType {
+			case base.FileTypeLock, base.FileTypeCurrent: // these are not encrypted
+			case base.FileTypeOptions: // TODO
+			case base.FileTypeManifest:
+				assert.Greater(entropy(data), 6.6, filename) // manifest is short
+			default:
+				assert.Greater(entropy(data), 7.5, filename)
+			}
+		}
 	}
 }
 
@@ -142,7 +143,7 @@ func TestIntegrity(t *testing.T) {
 		// TODO encrypt these file types
 		if fileType, _, ok := base.ParseFilename(fs, filename); ok {
 			switch fileType {
-			case base.FileTypeLog, base.FileTypeManifest, base.FileTypeOptions:
+			case base.FileTypeOptions:
 				continue
 			}
 		}
@@ -211,7 +212,7 @@ func isCryptoError(err error) bool {
 
 	for _, s := range []string{
 		"cipher: message authentication failed",
-		// TODO
+		"pebble/record: invalid chunk",
 	} {
 		if strings.Contains(err.Error(), s) {
 			return true

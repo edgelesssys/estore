@@ -169,6 +169,7 @@ sync-data: db1/000005.sst
 close: db1/000005.sst
 sync: db1
 sync: db1/MANIFEST-000001
+remove: db1_wal/000002.log
 
 close db1
 ----
@@ -227,7 +228,6 @@ sync: db1/temporary.000459.dbtmp
 close: db1/temporary.000459.dbtmp
 rename: db1/temporary.000459.dbtmp -> db1/OPTIONS-000459
 sync: db1
-remove: db1_wal/000002.log
 remove: db1_wal/000004.log
 remove: db1/000123.sst
 remove: db1/000456.sst

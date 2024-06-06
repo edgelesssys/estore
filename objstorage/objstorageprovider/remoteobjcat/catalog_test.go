@@ -19,7 +19,7 @@ import (
 	"github.com/edgelesssys/ego-kvstore/vfs"
 )
 
-func TestCatalog(t *testing.T) {
+func DisabledTestCatalog(t *testing.T) { // EDG: we don't support shared objects
 	mem := vfs.NewMem()
 	var memLog base.InMemLogger
 

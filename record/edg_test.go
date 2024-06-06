@@ -6,7 +6,15 @@ SPDX-License-Identifier: AGPL-3.0-only
 
 package record
 
-import "io"
+import (
+	"io"
+
+	"github.com/edgelesssys/ego-kvstore/internal/edg"
+)
+
+func init() {
+	edg.TestEnableRandomKey()
+}
 
 func (f *syncFile) WriteApproved(buf []byte) (int, error) {
 	return f.Write(buf)

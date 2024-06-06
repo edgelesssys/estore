@@ -29,6 +29,7 @@ import (
 	"github.com/edgelesssys/ego-kvstore/objstorage"
 	"github.com/edgelesssys/ego-kvstore/objstorage/objstorageprovider"
 	"github.com/edgelesssys/ego-kvstore/objstorage/remote"
+	"github.com/edgelesssys/ego-kvstore/record"
 	"github.com/edgelesssys/ego-kvstore/vfs"
 	"github.com/edgelesssys/ego-kvstore/vfs/atomicfs"
 	"github.com/edgelesssys/ego-kvstore/vfs/errorfs"
@@ -850,9 +851,8 @@ func TestTwoWALReplayPermissive(t *testing.T) {
 	require.NoError(t, vfs.Default.Remove(filepath.Join(dir, optionFilename)))
 
 	// Re-opening the database should not report the corruption.
-	d, err = Open(dir, nil)
-	require.NoError(t, err)
-	require.NoError(t, d.Close())
+	_, err = Open(dir, nil)
+	require.ErrorIs(t, err, record.ErrInvalidChunk) // EDG: should ALWAYS report the corruption
 }
 
 // TestCrashOpenCrashAfterWALCreation tests a database that exits
@@ -910,7 +910,7 @@ func TestCrashOpenCrashAfterWALCreation(t *testing.T) {
 		require.NoError(t, err)
 		_, err = f.WriteApproved(b)
 		require.NoError(t, err)
-		_, err = f.WriteApproved([]byte{0xde, 0xad, 0xbe, 0xef})
+		_, err = f.WriteApproved([]byte{}) // EDG: we don't support replaying corrupted WALs
 		require.NoError(t, err)
 		require.NoError(t, f.Sync())
 		require.NoError(t, f.Close())

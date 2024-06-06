@@ -24,7 +24,6 @@ flush
 list-files build
 ----
 build:
-  000002.log
   000004.log
   000005.sst
   CURRENT
@@ -80,8 +79,8 @@ simple:
 stat simple/MANIFEST-000001 simple/MANIFEST-000008 simple/000007.sst
 ----
 simple/MANIFEST-000001:
-  size: 98
+  size: 134
 simple/MANIFEST-000008:
-  size: 122
+  size: 146
 simple/000007.sst:
   size: 767

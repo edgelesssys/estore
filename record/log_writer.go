@@ -1,3 +1,9 @@
+/*
+Copyright (c) Edgeless Systems GmbH
+
+SPDX-License-Identifier: AGPL-3.0-only
+*/
+
 // Copyright 2018 The LevelDB-Go and Pebble Authors. All rights reserved. Use
 // of this source code is governed by a BSD-style license that can be found in
 // the LICENSE file.
@@ -15,7 +21,6 @@ import (
 
 	"github.com/cockroachdb/errors"
 	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/internal/crc"
 	"github.com/edgelesssys/ego-kvstore/internal/edg"
 	"github.com/prometheus/client_golang/prometheus"
 )
@@ -298,6 +303,9 @@ type LogWriter struct {
 
 	// See the comment for LogWriterConfig.QueueSemChan.
 	queueSemChan chan struct{}
+
+	EncryptionKey []byte
+	chunkNum      uint64 // sequence number of the last written chunk
 }
 
 // LogWriterConfig is a struct used for configuring new LogWriters
@@ -698,46 +706,45 @@ func (w *LogWriter) Size() int64 {
 }
 
 func (w *LogWriter) emitEOFTrailer() {
-	// Write a recyclable chunk header with a different log number.  Readers
-	// will treat the header as EOF when the log number does not match.
-	b := w.block
-	i := b.written.Load()
-	binary.LittleEndian.PutUint32(b.buf[i+0:i+4], 0) // CRC
-	binary.LittleEndian.PutUint16(b.buf[i+4:i+6], 0) // Size
-	b.buf[i+6] = recyclableFullChunkType
-	binary.LittleEndian.PutUint32(b.buf[i+7:i+11], w.logNum+1) // Log number
-	b.written.Store(i + int32(recyclableHeaderSize))
+	// EDG: EOF trailer not need if files are not recycled
 }
 
 func (w *LogWriter) emitFragment(n int, p []byte) (remainingP []byte) {
 	b := w.block
 	i := b.written.Load()
 	first := n == 0
-	last := blockSize-i-recyclableHeaderSize >= int32(len(p))
+	last := blockSize-i-legacyHeaderSize >= int32(len(p))
 
 	if last {
 		if first {
-			b.buf[i+6] = recyclableFullChunkType
+			b.buf[i+18] = fullChunkType
 		} else {
-			b.buf[i+6] = recyclableLastChunkType
+			b.buf[i+18] = lastChunkType
 		}
 	} else {
 		if first {
-			b.buf[i+6] = recyclableFirstChunkType
+			b.buf[i+18] = firstChunkType
 		} else {
-			b.buf[i+6] = recyclableMiddleChunkType
+			b.buf[i+18] = middleChunkType
 		}
 	}
 
-	binary.LittleEndian.PutUint32(b.buf[i+7:i+11], w.logNum)
+	r := copy(b.buf[i+legacyHeaderSize:], p)
+	j := i + int32(legacyHeaderSize+r)
+	binary.LittleEndian.PutUint16(b.buf[i+16:i+18], uint16(r))
 
-	r := copy(b.buf[i+recyclableHeaderSize:], p)
-	j := i + int32(recyclableHeaderSize+r)
-	binary.LittleEndian.PutUint32(b.buf[i+0:i+4], crc.New(b.buf[i+6:j]).Value())
-	binary.LittleEndian.PutUint16(b.buf[i+4:i+6], uint16(r))
+	aead, err := edg.GetCipher(w.EncryptionKey)
+	if err != nil {
+		panic(err)
+	}
+	w.chunkNum++
+	ciphertext := aead.Seal(nil, edgMakeNonce(w.chunkNum), b.buf[i+18:j], nil)
+	copy(b.buf[i:], ciphertext[len(ciphertext)-16:])
+	copy(b.buf[i+18:], ciphertext[:len(ciphertext)-16])
+
 	b.written.Store(j)
 
-	if blockSize-b.written.Load() < recyclableHeaderSize {
+	if blockSize-b.written.Load() < legacyHeaderSize {
 		// There is no room for another fragment in the block, so fill the
 		// remaining bytes with zeros and queue the block for flushing.
 		for i := b.written.Load(); i < blockSize; i++ {

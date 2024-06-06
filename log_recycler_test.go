@@ -88,11 +88,6 @@ func TestRecycleLogs(t *testing.T) {
 	})
 	require.NoError(t, err)
 
-	logNum := func() FileNum {
-		d.mu.Lock()
-		defer d.mu.Unlock()
-		return d.mu.log.queue[len(d.mu.log.queue)-1].fileNum.FileNum()
-	}
 	logCount := func() int {
 		d.mu.Lock()
 		defer d.mu.Unlock()
@@ -102,16 +97,14 @@ func TestRecycleLogs(t *testing.T) {
 	// Flush the memtable a few times, forcing rotation of the WAL. We should see
 	// the recycled logs change as expected.
 	require.EqualValues(t, []FileNum(nil), d.logRecycler.logNums())
-	curLog := logNum()
 
 	require.NoError(t, d.Flush())
 
-	require.EqualValues(t, []FileNum{curLog}, d.logRecycler.logNums())
-	curLog = logNum()
+	require.EqualValues(t, []FileNum(nil), d.logRecycler.logNums()) // EDG: recycling is disabled
 
 	require.NoError(t, d.Flush())
 
-	require.EqualValues(t, []FileNum{curLog}, d.logRecycler.logNums())
+	require.EqualValues(t, []FileNum(nil), d.logRecycler.logNums())
 
 	require.NoError(t, d.Close())
 

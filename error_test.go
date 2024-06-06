@@ -167,7 +167,10 @@ func TestRequireReadError(t *testing.T) {
 	run := func(formatVersion FormatMajorVersion, index int32) (err error) {
 		// Perform setup with error injection disabled as it involves writes/background ops.
 		inj := errorfs.OnIndex(-1)
-		fs := errorfs.Wrap(vfs.NewMem(), inj)
+		// EDG: This test expects that all injected FS errors cause an error that is exposed to the user.
+		// With disabled WAL recycling, a WAL file is removed during this test. However, the error of the
+		// remove operation is not checked. So we must not inject errors on remove operations.
+		fs := errorfs.Wrap(vfs.NewMem(), edgInjectIndexButNotOnRemove{inj})
 		opts := &Options{
 			FS:                 fs,
 			Logger:             panicLogger{},

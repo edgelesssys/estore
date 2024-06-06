@@ -3844,7 +3844,7 @@ func (d *DB) deleteObsoleteFiles(jobID int) {
 		{fileTypeManifest, obsoleteManifests},
 		{fileTypeOptions, obsoleteOptions},
 	}
-	_, noRecycle := d.opts.Cleaner.(base.NeedsFileContents)
+	const noRecycle = true // EDG: we don't support recycling
 	filesToDelete := make([]obsoleteFile, 0, len(obsoleteLogs)+len(obsoleteTables)+len(obsoleteManifests)+len(obsoleteOptions))
 	for _, f := range files {
 		// We sort to make the order of deletions deterministic, which is nice for

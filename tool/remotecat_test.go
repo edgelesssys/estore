@@ -6,6 +6,6 @@ package tool
 
 import "testing"
 
-func TestRemotecat(t *testing.T) {
+func DisabledTestRemotecat(t *testing.T) { // EDG: tries to read unencrypted files
 	runTests(t, "testdata/remotecat")
 }

@@ -180,22 +180,22 @@ func TestFlush(t *testing.T) {
 		t.Fatalf("buffer length #0: got %d want %d", got, want)
 	}
 	// Flush the record.Writer buffer, which should yield 17 bytes.
-	// 17 = 2*7 + 1 + 2, which is two headers and 1 + 2 payload bytes.
+	// 41 = 2*19 + 1 + 2, which is two headers and 1 + 2 payload bytes.
 	require.NoError(t, w.Flush())
-	if got, want := buf.Len(), 17; got != want {
+	if got, want := buf.Len(), 41; got != want {
 		t.Fatalf("buffer length #1: got %d want %d", got, want)
 	}
 	// Do another write, one that isn't large enough to complete the block.
 	// The write should not have flowed through to buf.
 	w2, _ := w.Next()
 	w2.Write(bytes.Repeat([]byte("2"), 10000))
-	if got, want := buf.Len(), 17; got != want {
+	if got, want := buf.Len(), 41; got != want {
 		t.Fatalf("buffer length #2: got %d want %d", got, want)
 	}
-	// Flushing should get us up to 10024 bytes written.
-	// 10024 = 17 + 7 + 10000.
+	// Flushing should get us up to 10060 bytes written.
+	// 10060 = 41 + 19 + 10000.
 	require.NoError(t, w.Flush())
-	if got, want := buf.Len(), 10024; got != want {
+	if got, want := buf.Len(), 10060; got != want {
 		t.Fatalf("buffer length #3: got %d want %d", got, want)
 	}
 	// Do a bigger write, one that completes the current block.
@@ -206,11 +206,11 @@ func TestFlush(t *testing.T) {
 	if got, want := buf.Len(), 32768; got != want {
 		t.Fatalf("buffer length #4: got %d want %d", got, want)
 	}
-	// Flushing should get us up to 50038 bytes written.
-	// 50038 = 10024 + 2*7 + 40000. There are two headers because
+	// Flushing should get us up to 50098 bytes written.
+	// 50098 = 10060 + 2*19 + 40000. There are two headers because
 	// the one record was split into two chunks.
 	require.NoError(t, w.Flush())
-	if got, want := buf.Len(), 50038; got != want {
+	if got, want := buf.Len(), 50098; got != want {
 		t.Fatalf("buffer length #5: got %d want %d", got, want)
 	}
 	// Check that reading those records give the right lengths.
@@ -488,13 +488,9 @@ func TestRecoverSingleBlock(t *testing.T) {
 	// block, skipping over the end of the second record and start parsing the
 	// third record.
 	r2, err := r.Next()
-	if err != nil {
-		t.Fatalf("Next: %v", err)
-	}
-	r2Data, _ := io.ReadAll(r2)
-	if !bytes.Equal(r2Data, recs.records[2]) {
-		t.Fatal("Unexpected output in r2's data")
-	}
+	// EDG: we don't support recover
+	require.Equal(t, err, ErrInvalidChunk)
+	require.Nil(t, r2)
 }
 
 func TestRecoverMultipleBlocks(t *testing.T) {
@@ -545,14 +541,9 @@ func TestRecoverMultipleBlocks(t *testing.T) {
 	// have corrupted checksums as well, so the call above to r.Recover
 	// should result in r.Next() being a reader to the 5th record.
 	r4, err := r.Next()
-	if err != nil {
-		t.Fatalf("Next: %v", err)
-	}
-
-	r4Data, _ := io.ReadAll(r4)
-	if !bytes.Equal(r4Data, recs.records[4]) {
-		t.Fatal("Unexpected output in r4's data")
-	}
+	// EDG: we don't support recover
+	require.Equal(t, err, ErrInvalidChunk)
+	require.Nil(t, r4)
 }
 
 // verifyLastBlockRecover reads each record from recs expecting that the
@@ -657,7 +648,7 @@ func TestReaderOffset(t *testing.T) {
 	}
 }
 
-func TestSeekRecord(t *testing.T) {
+func DisabledTestSeekRecord(t *testing.T) { // EDG: we don't support seek
 	recs, err := makeTestRecords(
 		// The first record will consume 3 entire blocks but a fraction of the 4th.
 		blockSize*3,
@@ -764,7 +755,7 @@ func TestLastRecordOffset(t *testing.T) {
 		t.Fatalf("makeTestRecords: %v", err)
 	}
 
-	wants := []int64{0, 98332, 131072, 163840, 196608}
+	wants := []int64{0, 98380, 131072, 163840, 196608}
 	for i, got := range recs.offsets {
 		if want := wants[i]; got != want {
 			t.Errorf("record #%d: got %d, want %d", i, got, want)
@@ -829,9 +820,8 @@ func TestInvalidLogNum(t *testing.T) {
 
 	{
 		r := NewReader(bytes.NewReader(buf.Bytes()), 2)
-		if _, err := r.Next(); err != io.EOF {
-			t.Fatalf("expected %s, but found %s\n", io.EOF, err)
-		}
+		_, err := r.Next()
+		require.NoError(t, err) // EDG: we don't support recycling
 	}
 }
 
@@ -894,7 +884,7 @@ func TestRecycleLog(t *testing.T) {
 			limit:  blocks,
 		}
 
-		w := NewLogWriter(&approvedWriter{limitedBuf}, base.FileNum(i), LogWriterConfig{
+		w := NewLogWriter(&approvedWriter{limitedBuf.Writer}, base.FileNum(i), LogWriterConfig{
 			WALFsyncLatency: prometheus.NewHistogram(prometheus.HistogramOpts{})})
 		sizes := make([]int, 10+rnd.Intn(100))
 		for j := range sizes {
@@ -974,7 +964,7 @@ func TestRecycleLogWithPartialBlock(t *testing.T) {
 	_, err = r.Next()
 	require.NoError(t, err)
 	// 4 bytes left, which are not enough for even the legacy header.
-	if _, err = r.Next(); err != io.EOF {
+	if _, err = r.Next(); err != ErrInvalidChunk {
 		t.Fatalf("unexpected error: %v", err)
 	}
 }
@@ -1005,12 +995,12 @@ func TestRecycleLogNumberOverflow(t *testing.T) {
 	_, err = r.Next()
 	require.NoError(t, err)
 	// 4 bytes left, which are not enough for even the legacy header.
-	if _, err = r.Next(); err != io.EOF {
+	if _, err = r.Next(); err != ErrInvalidChunk {
 		t.Fatalf("unexpected error: %v", err)
 	}
 }
 
-func TestRecycleLogWithPartialRecord(t *testing.T) {
+func DisabledTestRecycleLogWithPartialRecord(t *testing.T) { // EDG: we don't support recycling
 	const recordSize = (blockSize * 3) / 2
 
 	// Write a record that is larger than the log block size.

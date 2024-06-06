@@ -385,7 +385,7 @@ func DisabledTestSharedMultipleLocators(t *testing.T) { // EDG: we don't support
 	require.NoError(t, p3.Close())
 }
 
-func TestAttachCustomObject(t *testing.T) {
+func DisabledTestAttachCustomObject(t *testing.T) { // EDG: we don't support shared objects
 	ctx := context.Background()
 	storage := remote.NewInMem()
 	sharedFactory := remote.MakeSimpleFactory(map[remote.Locator]remote.Storage{
@@ -471,7 +471,6 @@ func TestNotExistError(t *testing.T) {
 	st.Remote.CreateOnSharedLocator = ""
 	provider, err := Open(st)
 	require.NoError(t, err)
-	require.NoError(t, provider.SetCreatorID(1))
 
 	for i, shared := range []bool{false} {
 		fileNum := base.FileNum(1 + i).DiskFileNum()
@@ -559,7 +558,6 @@ func TestParallelSync(t *testing.T) {
 			st.Remote.CreateOnSharedLocator = ""
 			p, err := Open(st)
 			require.NoError(t, err)
-			require.NoError(t, p.SetCreatorID(1))
 
 			const numGoroutines = 4
 			const numOps = 100

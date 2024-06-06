@@ -15,7 +15,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestSharedObjectBacking(t *testing.T) {
+func DisabledTestSharedObjectBacking(t *testing.T) { // EDG: we don't support shared objects
 	for _, cleanup := range []objstorage.SharedCleanupMethod{objstorage.SharedRefTracking, objstorage.SharedNoCleanup} {
 		name := "ref-tracking"
 		if cleanup == objstorage.SharedNoCleanup {
@@ -106,8 +106,6 @@ func TestCreateSharedObjectBacking(t *testing.T) {
 	p, err := Open(st)
 	require.NoError(t, err)
 	defer p.Close()
-
-	require.NoError(t, p.SetCreatorID(1))
 
 	backing, err := p.CreateExternalObjectBacking("foo", "custom-obj-name")
 	require.NoError(t, err)

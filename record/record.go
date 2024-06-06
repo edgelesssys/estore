@@ -1,3 +1,9 @@
+/*
+Copyright (c) Edgeless Systems GmbH
+
+SPDX-License-Identifier: AGPL-3.0-only
+*/
+
 // Copyright 2011 The LevelDB-Go and Pebble Authors. All rights reserved. Use
 // of this source code is governed by a BSD-style license that can be found in
 // the LICENSE file.
@@ -63,40 +69,19 @@
 // boundaries. The last block may be shorter than 32 KiB. Any unused bytes in a
 // block must be zero.
 //
-// A record maps to one or more chunks. There are two chunk formats: legacy and
-// recyclable. The legacy chunk format:
+// A record maps to one or more chunks:
 //
-//	+----------+-----------+-----------+--- ... ---+
-//	| CRC (4B) | Size (2B) | Type (1B) | Payload   |
-//	+----------+-----------+-----------+--- ... ---+
+//	+-----------+-----------+-----------+--- ... ---+
+//	| Tag (16B) | Size (2B) | Type (1B) | Payload   |
+//	+-----------+-----------+-----------+--- ... ---+
 //
-// CRC is computed over the type and payload
+// Tag is the AES-GCM tag
 // Size is the length of the payload in bytes
-// Type is the chunk type
+// Type is the chunk type. It's encrypted together with the payload.
 //
 // There are four chunk types: whether the chunk is the full record, or the
 // first, middle or last chunk of a multi-chunk record. A multi-chunk record
 // has one first chunk, zero or more middle chunks, and one last chunk.
-//
-// The recyclyable chunk format is similar to the legacy format, but extends
-// the chunk header with an additional log number field. This allows reuse
-// (recycling) of log files which can provide significantly better performance
-// when syncing frequently as it avoids needing to update the file
-// metadata. Additionally, recycling log files is a prequisite for using direct
-// IO with log writing. The recyclyable format is:
-//
-//	+----------+-----------+-----------+----------------+--- ... ---+
-//	| CRC (4B) | Size (2B) | Type (1B) | Log number (4B)| Payload   |
-//	+----------+-----------+-----------+----------------+--- ... ---+
-//
-// Recyclable chunks are distinguished from legacy chunks by the addition of 4
-// extra "recyclable" chunk types that map directly to the legacy chunk types
-// (i.e. full, first, middle, last). The CRC is computed over the type, log
-// number, and payload.
-//
-// The wire format allows for limited recovery in the face of data corruption:
-// on a format error (such as a checksum mismatch), the reader moves to the
-// next block and looks for the next full or first chunk.
 package record
 
 // The C++ Level-DB code calls this the log, but it has been renamed to record
@@ -110,7 +95,6 @@ import (
 
 	"github.com/cockroachdb/errors"
 	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/internal/crc"
 	"github.com/edgelesssys/ego-kvstore/internal/edg"
 )
 
@@ -120,18 +104,12 @@ const (
 	firstChunkType  = 2
 	middleChunkType = 3
 	lastChunkType   = 4
-
-	recyclableFullChunkType   = 5
-	recyclableFirstChunkType  = 6
-	recyclableMiddleChunkType = 7
-	recyclableLastChunkType   = 8
 )
 
 const (
-	blockSize            = 32 * 1024
-	blockSizeMask        = blockSize - 1
-	legacyHeaderSize     = 7
-	recyclableHeaderSize = legacyHeaderSize + 4
+	blockSize        = 32 * 1024
+	blockSizeMask    = blockSize - 1
+	legacyHeaderSize = 19
 )
 
 var (
@@ -155,7 +133,7 @@ var (
 // returned for invalid records. These are treated in a way similar to io.EOF
 // in recovery code.
 func IsInvalidRecord(err error) bool {
-	return err == ErrZeroedChunk || err == ErrInvalidChunk || err == io.ErrUnexpectedEOF
+	return false // EDG: we don't support recovery
 }
 
 // Reader reads records from an underlying io.Reader.
@@ -183,6 +161,9 @@ type Reader struct {
 	err error
 	// buf is the buffer.
 	buf [blockSize]byte
+
+	EncryptionKey []byte
+	chunkNum      uint64 // sequence number of the last read chunk
 }
 
 // NewReader returns a new reader. If the file contains records encoded using
@@ -201,68 +182,33 @@ func NewReader(r io.Reader, logNum base.FileNum) *Reader {
 func (r *Reader) nextChunk(wantFirst bool) error {
 	for {
 		if r.end+legacyHeaderSize <= r.n {
-			checksum := binary.LittleEndian.Uint32(r.buf[r.end+0 : r.end+4])
-			length := binary.LittleEndian.Uint16(r.buf[r.end+4 : r.end+6])
-			chunkType := r.buf[r.end+6]
-
-			if checksum == 0 && length == 0 && chunkType == 0 {
-				if r.end+recyclableHeaderSize > r.n {
-					// Skip the rest of the block if the recyclable header size does not
-					// fit within it.
-					r.end = r.n
-					continue
-				}
-				if r.recovering {
-					// Skip the rest of the block, if it looks like it is all
-					// zeroes. This is common with WAL preallocation.
-					//
-					// Set r.err to be an error so r.recover actually recovers.
-					r.err = ErrZeroedChunk
-					r.recover()
-					continue
-				}
-				return ErrZeroedChunk
-			}
-
+			tag := r.buf[r.end+0 : r.end+16]
+			length := binary.LittleEndian.Uint16(r.buf[r.end+16 : r.end+18])
 			headerSize := legacyHeaderSize
-			if chunkType >= recyclableFullChunkType && chunkType <= recyclableLastChunkType {
-				headerSize = recyclableHeaderSize
-				if r.end+headerSize > r.n {
-					return ErrInvalidChunk
-				}
-
-				logNum := binary.LittleEndian.Uint32(r.buf[r.end+7 : r.end+11])
-				if logNum != r.logNum {
-					if wantFirst {
-						// If we're looking for the first chunk of a record, we can treat a
-						// previous instance of the log as EOF.
-						return io.EOF
-					}
-					// Otherwise, treat this chunk as invalid in order to prevent reading
-					// of a partial record.
-					return ErrInvalidChunk
-				}
-
-				chunkType -= (recyclableFullChunkType - 1)
-			}
 
 			r.begin = r.end + headerSize
 			r.end = r.begin + int(length)
 			if r.end > r.n {
 				// The chunk straddles a 32KB boundary (or the end of file).
-				if r.recovering {
-					r.recover()
-					continue
-				}
 				return ErrInvalidChunk
 			}
-			if checksum != crc.New(r.buf[r.begin-headerSize+6:r.end]).Value() {
-				if r.recovering {
-					r.recover()
-					continue
-				}
+
+			// EDG: decrypt the chunk
+			aead, err := edg.GetCipher(r.EncryptionKey)
+			if err != nil {
+				return err
+			}
+			ciphertext := append([]byte(nil), r.buf[r.begin-1:r.end]...)
+			ciphertext = append(ciphertext, tag...)
+			r.chunkNum++
+			ciphertext, err = aead.Open(ciphertext[:0], edgMakeNonce(r.chunkNum), ciphertext, nil)
+			if err != nil {
 				return ErrInvalidChunk
 			}
+			copy(r.buf[r.begin-1:], ciphertext)
+
+			chunkType := r.buf[r.begin-1]
+
 			if wantFirst {
 				if chunkType != fullChunkType && chunkType != firstChunkType {
 					continue
@@ -442,6 +388,9 @@ type Writer struct {
 	err error
 	// buf is the buffer.
 	buf [blockSize]byte
+
+	EncryptionKey []byte
+	chunkNum      uint64 // sequence number of the last written chunk
 }
 
 // NewWriter returns a new Writer.
@@ -470,19 +419,28 @@ func (w *Writer) fillHeader(last bool) {
 	}
 	if last {
 		if w.first {
-			w.buf[w.i+6] = fullChunkType
+			w.buf[w.i+18] = fullChunkType
 		} else {
-			w.buf[w.i+6] = lastChunkType
+			w.buf[w.i+18] = lastChunkType
 		}
 	} else {
 		if w.first {
-			w.buf[w.i+6] = firstChunkType
+			w.buf[w.i+18] = firstChunkType
 		} else {
-			w.buf[w.i+6] = middleChunkType
+			w.buf[w.i+18] = middleChunkType
 		}
 	}
-	binary.LittleEndian.PutUint32(w.buf[w.i+0:w.i+4], crc.New(w.buf[w.i+6:w.j]).Value())
-	binary.LittleEndian.PutUint16(w.buf[w.i+4:w.i+6], uint16(w.j-w.i-legacyHeaderSize))
+	binary.LittleEndian.PutUint16(w.buf[w.i+16:w.i+18], uint16(w.j-w.i-legacyHeaderSize))
+
+	aead, err := edg.GetCipher(w.EncryptionKey)
+	if err != nil {
+		panic(err)
+	}
+	// Use chunk number as IV. Files are written and read sequentially, so this is secure and simple.
+	w.chunkNum++
+	ciphertext := aead.Seal(nil, edgMakeNonce(w.chunkNum), w.buf[w.i+18:w.j], nil)
+	copy(w.buf[w.i:], ciphertext[len(ciphertext)-16:])
+	copy(w.buf[w.i+18:], ciphertext[:len(ciphertext)-16])
 }
 
 // writeBlock writes the buffered block to the underlying writer, and reserves
