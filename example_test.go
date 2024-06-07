@@ -5,15 +5,22 @@
 package kvstore_test
 
 import (
+	"crypto/rand"
 	"fmt"
 	"log"
 
-	"github.com/edgelesssys/ego-kvstore"
+	kvstore "github.com/edgelesssys/ego-kvstore"
 	"github.com/edgelesssys/ego-kvstore/vfs"
 )
 
 func Example() {
-	db, err := kvstore.Open("", &kvstore.Options{FS: vfs.NewMem()})
+	encryptionKey := make([]byte, 16)
+	_, err := rand.Read(encryptionKey)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	db, err := kvstore.Open("", &kvstore.Options{EncryptionKey: encryptionKey, FS: vfs.NewMem()})
 	if err != nil {
 		log.Fatal(err)
 	}
