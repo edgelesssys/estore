@@ -502,6 +502,7 @@ type DB struct {
 	openedAt time.Time
 
 	keyManager *edg.KeyManager
+	txLock     sync.Mutex
 }
 
 var _ Reader = (*DB)(nil)
