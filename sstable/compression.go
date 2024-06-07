@@ -40,7 +40,7 @@ func decompressInto(blockType blockType, compressed []byte, buf []byte) ([]byte,
 	case snappyCompressionBlockType:
 		result, err = snappy.Decode(buf, compressed)
 	case zstdCompressionBlockType:
-		result, err = decodeZstd(buf, compressed)
+		panic("zstd not supported")
 	}
 	if err != nil {
 		return nil, base.MarkCorruptionError(err)
@@ -92,7 +92,8 @@ func compressBlock(
 	varIntLen := binary.PutUvarint(compressedBuf, uint64(len(b)))
 	switch compression {
 	case ZstdCompression:
-		return zstdCompressionBlockType, encodeZstd(compressedBuf, varIntLen, b)
+		_ = varIntLen
+		panic("zstd not supported")
 	default:
 		return noCompressionBlockType, b
 	}

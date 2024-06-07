@@ -994,15 +994,6 @@ func TestBytesIterated(t *testing.T) {
 	t.Run("Uncompressed", func(t *testing.T) {
 		testBytesIteratedWithCompression(t, NoCompression, 0, blockSizes, []uint64{1e5, 1e5, 1e5, 1e5, 1e5})
 	})
-	t.Run("Zstd", func(t *testing.T) {
-		// compression with zstd is extremely slow with small block size (esp the nocgo version).
-		// use less numEntries to make the test run at reasonable speed (under 10 seconds).
-		maxNumEntries := []uint64{1e2, 1e2, 1e3, 4e3, 1e5}
-		if useStandardZstdLib {
-			maxNumEntries = []uint64{1e3, 1e3, 1e4, 4e4, 1e5}
-		}
-		testBytesIteratedWithCompression(t, ZstdCompression, 1, blockSizes, maxNumEntries)
-	})
 }
 
 func TestCompactionIteratorSetupForCompaction(t *testing.T) {
@@ -1191,7 +1182,6 @@ func TestValidateBlockChecksums(t *testing.T) {
 		"testdata/h.table-bloom.no-compression.prefix_extractor.no_whole_key_filter.sst",
 		"testdata/h.table-bloom.no-compression.sst",
 		"testdata/h.table-bloom.sst",
-		"testdata/h.zstd-compression.sst",
 	}
 
 	type corruptionLocation int

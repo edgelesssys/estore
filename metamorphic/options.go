@@ -518,7 +518,7 @@ func randomOptions(
 	case 0:
 		lopts.Compression = pebble.NoCompression
 	case 1:
-		lopts.Compression = pebble.ZstdCompression
+		lopts.Compression = pebble.SnappyCompression // EDG: zstd not supported
 	default:
 		lopts.Compression = pebble.SnappyCompression
 	}
