@@ -8,22 +8,6 @@ package vfs
 
 import "github.com/cockroachdb/errors"
 
-func (*linuxFile) Write([]byte) (int, error) {
-	panic("unapproved write")
-}
-
-func (*linuxFile) WriteAt([]byte, int64) (int, error) {
-	panic("unapproved write")
-}
-
-func (f *linuxFile) WriteApproved(p []byte) (int, error) {
-	return f.File.Write(p)
-}
-
-func (d *linuxDir) WriteApproved(p []byte) (int, error) {
-	panic("unexpected")
-}
-
 func (f *enospcFile) WriteApproved(p []byte) (n int, err error) {
 	gen := f.fs.waitUntilReady()
 

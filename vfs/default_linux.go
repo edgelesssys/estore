@@ -130,3 +130,19 @@ func isSyncRangeSupported(fd uintptr) bool {
 	}
 	return false
 }
+
+func (*linuxFile) Write([]byte) (int, error) {
+	panic("unapproved write")
+}
+
+func (*linuxFile) WriteAt([]byte, int64) (int, error) {
+	panic("unapproved write")
+}
+
+func (f *linuxFile) WriteApproved(p []byte) (int, error) {
+	return f.File.Write(p)
+}
+
+func (d *linuxDir) WriteApproved(p []byte) (int, error) {
+	panic("unexpected")
+}
