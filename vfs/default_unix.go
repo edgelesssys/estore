@@ -47,3 +47,15 @@ func (f *unixFile) SyncTo(int64) (fullSync bool, err error) {
 	}
 	return true, nil
 }
+
+func (*unixFile) Write([]byte) (int, error) {
+	panic("unapproved write")
+}
+
+func (*unixFile) WriteAt([]byte, int64) (int, error) {
+	panic("unapproved write")
+}
+
+func (f *unixFile) WriteApproved(p []byte) (int, error) {
+	return f.File.Write(p)
+}

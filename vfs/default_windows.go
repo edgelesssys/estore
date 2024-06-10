@@ -59,3 +59,19 @@ func (f *windowsFile) SyncTo(length int64) (fullSync bool, err error) {
 	}
 	return true, nil
 }
+
+func (*windowsFile) Write([]byte) (int, error) {
+	panic("unapproved write")
+}
+
+func (*windowsFile) WriteAt([]byte, int64) (int, error) {
+	panic("unapproved write")
+}
+
+func (f *windowsFile) WriteApproved(p []byte) (int, error) {
+	return f.File.Write(p)
+}
+
+func (d *windowsDir) WriteApproved(p []byte) (int, error) {
+	panic("unexpected")
+}

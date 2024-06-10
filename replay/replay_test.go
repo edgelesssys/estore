@@ -510,7 +510,7 @@ func TestCompactionsQuiesce(t *testing.T) {
 
 			wait := 30 * time.Second
 			if invariants.Enabled {
-				wait = time.Minute
+				wait = time.Minute * 2 // EDG: was too short for GH runner
 			}
 
 			// The above call to [Wait] should eventually return. [Wait] blocks
