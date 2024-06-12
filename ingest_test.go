@@ -3251,12 +3251,13 @@ func TestIngestValidation(t *testing.T) {
 				require.NoError(t, err)
 				defer func() { require.NoError(t, osF.Close()) }()
 
-				// Corrupting a key will cause the ingestion to fail due to a
-				// malformed key, rather than a block checksum mismatch.
-				// Instead, we corrupt the last byte in the selected block,
-				// before the trailer, which corresponds to a value.
+				// EDG: Block is encrypted, bytes are unpredictable. Flip a bit to corrupt it.
 				offset := bh.Offset + bh.Length - 1
-				_, err = osF.WriteAt([]byte("\xff"), int64(offset))
+				byteToCorrupt := make([]byte, 1)
+				_, err = osF.ReadAt(byteToCorrupt, int64(offset))
+				require.NoError(t, err)
+				byteToCorrupt[0] ^= 1
+				_, err = osF.WriteAt(byteToCorrupt, int64(offset))
 				require.NoError(t, err)
 			}
 
