@@ -17,8 +17,7 @@ stats
 a: (1, .)
 c: (2, .)
 .
-stats: (interface (dir, seek, step): (fwd, 1, 2), (rev, 0, 0)), (internal (dir, seek, step): (fwd, 1, 2), (rev, 0, 0)),
-(internal-stats: (block-bytes: (total 56B, cached 56B, read-time 0s)), (points: (count 2, key-bytes 2B, value-bytes 2B, tombstoned 0)))
+stats: seeked 1 times (1 internal); stepped 2 times (2 internal); blocks: 56B cached; points: 2 (2B keys, 2B values)
 
 # Perform the same operation again with a new iterator. It should yield
 # identical statistics.
@@ -32,8 +31,7 @@ stats
 a: (1, .)
 c: (2, .)
 .
-stats: (interface (dir, seek, step): (fwd, 1, 2), (rev, 0, 0)), (internal (dir, seek, step): (fwd, 1, 2), (rev, 0, 0)),
-(internal-stats: (block-bytes: (total 56B, cached 56B, read-time 0s)), (points: (count 2, key-bytes 2B, value-bytes 2B, tombstoned 0)))
+stats: seeked 1 times (1 internal); stepped 2 times (2 internal); blocks: 56B cached; points: 2 (2B keys, 2B values)
 
 build ext2
 set d@10 d10

@@ -9,6 +9,7 @@ import (
 	"fmt"
 
 	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/ego-kvstore/objstorage/objstorageprovider"
 	"github.com/edgelesssys/ego-kvstore/objstorage/objstorageprovider/objiotracing"
 )
 
@@ -177,7 +178,7 @@ func (i *twoLevelIterator) init(
 		_ = i.topLevelIndex.Close()
 		return err
 	}
-	i.dataRH = r.readable.NewReadHandle(ctx)
+	i.dataRH = objstorageprovider.UsePreallocatedReadHandle(ctx, r.readable, &i.dataRHPrealloc)
 	if r.tableFormat >= TableFormatPebblev3 {
 		if r.Properties.NumValueBlocks > 0 {
 			i.vbReader = &valueBlockReader{

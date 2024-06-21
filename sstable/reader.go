@@ -582,6 +582,7 @@ func (r *Reader) readBlock(
 			int(bh.Length+blockTrailerLen), readDuration.String())
 	}
 	if stats != nil {
+		stats.BlockBytes += bh.Length
 		stats.BlockReadDuration += readDuration
 	}
 	if err != nil {
@@ -645,9 +646,6 @@ func (r *Reader) readBlock(
 		decompressed = transformed
 	}
 
-	if stats != nil {
-		stats.BlockBytes += bh.Length
-	}
 	if decompressed.buf.Valid() {
 		return bufferHandle{b: decompressed.buf}, nil
 	}

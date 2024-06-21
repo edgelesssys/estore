@@ -19,6 +19,7 @@ import (
 	"github.com/edgelesssys/ego-kvstore/internal/humanize"
 	"github.com/edgelesssys/ego-kvstore/internal/keyspan"
 	"github.com/edgelesssys/ego-kvstore/internal/manifest"
+	"github.com/edgelesssys/ego-kvstore/objstorage/objstorageprovider"
 	"github.com/edgelesssys/ego-kvstore/objstorage/remote"
 	"github.com/edgelesssys/ego-kvstore/rangekey"
 	"github.com/edgelesssys/ego-kvstore/sstable"
@@ -487,6 +488,15 @@ type Options struct {
 	//
 	// The default cleaner uses the DeleteCleaner.
 	Cleaner Cleaner
+
+	// Local contains option that pertain to files stored on the local filesystem.
+	Local struct {
+		// ReadaheadConfigFn is a function used to retrieve the current readahead
+		// mode. This function is consulted when a table enters the table cache.
+		ReadaheadConfigFn func() ReadaheadConfig
+
+		// TODO(radu): move BytesPerSync, LoadBlockSema, Cleaner here.
+	}
 
 	// Comparer defines a total ordering over the space of []byte keys: a 'less
 	// than' relationship. The same comparison algorithm must be used for reads
@@ -997,6 +1007,9 @@ type Options struct {
 		fsCloser io.Closer
 	}
 }
+
+// ReadaheadConfig controls the use of read-ahead.
+type ReadaheadConfig = objstorageprovider.ReadaheadConfig
 
 // DebugCheckLevels calls CheckLevels on the provided database.
 // It may be set in the DebugCheck field of Options to check
