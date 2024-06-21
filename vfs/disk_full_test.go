@@ -111,7 +111,7 @@ func TestOnDiskFull_File(t *testing.T) {
 
 func TestOnDiskFull_Concurrent(t *testing.T) {
 	innerFS := &enospcMockFS{
-		opDelay: 10 * time.Millisecond,
+		opDelay: 100 * time.Millisecond, // EDG: was too short for GH runner
 	}
 	innerFS.enospcs.Store(10)
 	var callbackInvocations atomic.Int32
