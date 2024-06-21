@@ -876,8 +876,8 @@ func TestRecycleLog(t *testing.T) {
 
 	// Recycle a log file 100 times, writing a random number of records filled
 	// with random data.
-	backing := make([]byte, 1<<20)
 	for i := 1; i <= 100; i++ {
+		backing := make([]byte, 1<<20)
 		blocks := rnd.Intn(100)
 		limitedBuf := &limitedWriter{
 			Writer: bytes.NewBuffer(backing[:0]),
