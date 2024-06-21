@@ -153,9 +153,7 @@ stats
 ----
 a: (., [a-z) @5=boop UPDATED)
 .
-stats: (interface (dir, seek, step): (fwd, 1, 1), (rev, 0, 0)), (internal (dir, seek, step): (fwd, 1, 1), (rev, 0, 0)),
-(internal-stats: (block-bytes: (total 1.1KB, cached 0B, read-time 0s)), (points: (count 25, key-bytes 75B, value-bytes 75B, tombstoned 0))),
-(range-key-stats: (count 1), (contained points: (count 25, skipped 25)))
+stats: seeked 1 times (1 internal); stepped 1 times (1 internal); blocks: 0B cached, 1.1KB not cached (read time: 0s); points: 25 (75B keys, 75B values), range keys: 1, contained points: 25 (25 skipped)
 
 # Repeat the above test, but with an iterator that uses a block-property filter
 # mask. The internal stats should reflect fewer bytes read and fewer points
