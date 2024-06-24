@@ -1,4 +1,4 @@
-package kvstore
+package estore
 
 import "github.com/edgelesssys/estore/internal/base"
 

@@ -2,14 +2,14 @@
 // of this source code is governed by a BSD-style license that can be found in
 // the LICENSE file.
 
-package kvstore_test
+package estore_test
 
 import (
 	"crypto/rand"
 	"fmt"
 	"log"
 
-	kvstore "github.com/edgelesssys/estore"
+	"github.com/edgelesssys/estore"
 	"github.com/edgelesssys/estore/vfs"
 )
 
@@ -20,12 +20,12 @@ func Example() {
 		log.Fatal(err)
 	}
 
-	db, err := kvstore.Open("", &kvstore.Options{EncryptionKey: encryptionKey, FS: vfs.NewMem()})
+	db, err := estore.Open("", &estore.Options{EncryptionKey: encryptionKey, FS: vfs.NewMem()})
 	if err != nil {
 		log.Fatal(err)
 	}
 	key := []byte("hello")
-	if err := db.Set(key, []byte("world"), kvstore.Sync); err != nil {
+	if err := db.Set(key, []byte("world"), estore.Sync); err != nil {
 		log.Fatal(err)
 	}
 	value, closer, err := db.Get(key)
