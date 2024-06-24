@@ -10,6 +10,7 @@ import (
 	"bytes"
 	"io"
 	"math"
+	"os"
 	"strings"
 	"testing"
 
@@ -227,6 +228,49 @@ func TestSSTFromForkIsRejected(t *testing.T) {
 	require.NoError(err)
 	_, _, err = db.Get([]byte("key2"))
 	require.EqualError(err, "pebble: backing file 000010 error: cipher: message authentication failed")
+}
+
+// TestOldDB checks that a DB created with v1.0.0 can be used with the current version.
+func TestOldDB(t *testing.T) {
+	if os.Getenv("OE_IS_ENCLAVE") == "1" {
+		t.Skip("skip for EGo") // because it doesn't have the testdata and there's not much value in runnning this test also in EGo
+	}
+
+	require := require.New(t)
+
+	opts := &estore.Options{
+		EncryptionKey: testKey(),
+		FS:            vfs.NewMem(),
+	}
+
+	ok, err := vfs.Clone(vfs.Default, opts.FS, "testdata/db-v1.0.0", "")
+	require.NoError(err)
+	require.True(ok)
+
+	db, err := estore.Open("", opts)
+	require.NoError(err)
+
+	requireGet := func(key, val string) {
+		gotVal, closer, err := db.Get([]byte(key))
+		require.NoError(err)
+		require.EqualValues(val, gotVal)
+		require.NoError(closer.Close())
+	}
+
+	requireGet("key1", "val1")
+	requireGet("key2", "val2")
+	require.NoError(db.Set([]byte("key3"), []byte("val3"), nil))
+	requireGet("key1", "val1")
+	requireGet("key2", "val2")
+	requireGet("key3", "val3")
+	require.NoError(db.Close())
+
+	db, err = estore.Open("", opts)
+	require.NoError(err)
+	requireGet("key1", "val1")
+	requireGet("key2", "val2")
+	requireGet("key3", "val3")
+	require.NoError(db.Close())
 }
 
 func testKey() []byte {
