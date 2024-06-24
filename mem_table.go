@@ -12,12 +12,12 @@ import (
 	"sync/atomic"
 
 	"github.com/cockroachdb/errors"
-	"github.com/edgelesssys/ego-kvstore/internal/arenaskl"
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/internal/keyspan"
-	"github.com/edgelesssys/ego-kvstore/internal/manual"
-	"github.com/edgelesssys/ego-kvstore/internal/rangedel"
-	"github.com/edgelesssys/ego-kvstore/internal/rangekey"
+	"github.com/edgelesssys/estore/internal/arenaskl"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/internal/keyspan"
+	"github.com/edgelesssys/estore/internal/manual"
+	"github.com/edgelesssys/estore/internal/rangedel"
+	"github.com/edgelesssys/estore/internal/rangekey"
 )
 
 func memTableEntrySize(keyBytes, valueBytes int) uint64 {

@@ -13,7 +13,7 @@ import (
 	"sort"
 	"unsafe"
 
-	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/estore/internal/base"
 )
 
 // Layout describes the block organization of an sstable.

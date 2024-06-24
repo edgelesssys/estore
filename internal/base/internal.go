@@ -2,7 +2,7 @@
 // of this source code is governed by a BSD-style license that can be found in
 // the LICENSE file.
 
-package base // import "github.com/edgelesssys/ego-kvstore/internal/base"
+package base // import "github.com/edgelesssys/estore/internal/base"
 
 import (
 	"encoding/binary"

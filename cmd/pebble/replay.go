@@ -20,12 +20,12 @@ import (
 	"unicode"
 
 	"github.com/cockroachdb/errors"
-	pebble "github.com/edgelesssys/ego-kvstore"
-	"github.com/edgelesssys/ego-kvstore/bloom"
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/internal/cache"
-	"github.com/edgelesssys/ego-kvstore/replay"
-	"github.com/edgelesssys/ego-kvstore/vfs"
+	pebble "github.com/edgelesssys/estore"
+	"github.com/edgelesssys/estore/bloom"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/internal/cache"
+	"github.com/edgelesssys/estore/replay"
+	"github.com/edgelesssys/estore/vfs"
 	"github.com/spf13/cobra"
 )
 

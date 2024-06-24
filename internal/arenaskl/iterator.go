@@ -20,7 +20,7 @@ package arenaskl
 import (
 	"sync"
 
-	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/estore/internal/base"
 )
 
 type splice struct {

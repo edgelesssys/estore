@@ -4,7 +4,7 @@
 
 package keyspan
 
-import "github.com/edgelesssys/ego-kvstore/internal/base"
+import "github.com/edgelesssys/estore/internal/base"
 
 // FilterFunc defines a transform from the input Span into the output Span. The
 // function returns true if the Span should be returned by the iterator, and

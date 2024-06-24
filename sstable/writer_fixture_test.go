@@ -23,8 +23,8 @@ import (
 	"testing"
 
 	"github.com/cockroachdb/errors"
-	"github.com/edgelesssys/ego-kvstore/bloom"
-	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/estore/bloom"
+	"github.com/edgelesssys/estore/internal/base"
 	"github.com/stretchr/testify/require"
 )
 

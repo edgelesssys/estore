@@ -22,16 +22,16 @@ import (
 
 	"github.com/cespare/xxhash/v2"
 	"github.com/cockroachdb/errors"
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/internal/bytealloc"
-	"github.com/edgelesssys/ego-kvstore/internal/cache"
-	"github.com/edgelesssys/ego-kvstore/internal/crc"
-	"github.com/edgelesssys/ego-kvstore/internal/edg"
-	"github.com/edgelesssys/ego-kvstore/internal/invariants"
-	"github.com/edgelesssys/ego-kvstore/internal/keyspan"
-	"github.com/edgelesssys/ego-kvstore/internal/private"
-	"github.com/edgelesssys/ego-kvstore/internal/rangekey"
-	"github.com/edgelesssys/ego-kvstore/objstorage"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/internal/bytealloc"
+	"github.com/edgelesssys/estore/internal/cache"
+	"github.com/edgelesssys/estore/internal/crc"
+	"github.com/edgelesssys/estore/internal/edg"
+	"github.com/edgelesssys/estore/internal/invariants"
+	"github.com/edgelesssys/estore/internal/keyspan"
+	"github.com/edgelesssys/estore/internal/private"
+	"github.com/edgelesssys/estore/internal/rangekey"
+	"github.com/edgelesssys/estore/objstorage"
 )
 
 // encodedBHPEstimatedSize estimates the size of the encoded BlockHandleWithProperties.

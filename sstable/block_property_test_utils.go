@@ -7,8 +7,8 @@ package sstable
 import (
 	"math"
 
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/internal/testkeys"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/internal/testkeys"
 )
 
 // Code in this file contains utils for testing. It implements interval block

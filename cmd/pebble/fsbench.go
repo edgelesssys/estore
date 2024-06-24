@@ -11,7 +11,7 @@ import (
 	"time"
 
 	"github.com/cockroachdb/errors"
-	"github.com/edgelesssys/ego-kvstore/vfs"
+	"github.com/edgelesssys/estore/vfs"
 	"github.com/spf13/cobra"
 )
 

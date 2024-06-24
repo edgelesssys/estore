@@ -10,7 +10,7 @@ import (
 	"os"
 	"path"
 
-	"github.com/edgelesssys/ego-kvstore/vfs"
+	"github.com/edgelesssys/estore/vfs"
 )
 
 // NewLocalFS returns a vfs-backed implementation of the remote.Storage

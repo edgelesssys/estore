@@ -14,10 +14,10 @@ import (
 
 	"github.com/cockroachdb/errors"
 	"github.com/cockroachdb/redact"
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/internal/bytealloc"
-	"github.com/edgelesssys/ego-kvstore/internal/keyspan"
-	"github.com/edgelesssys/ego-kvstore/internal/rangekey"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/internal/bytealloc"
+	"github.com/edgelesssys/estore/internal/keyspan"
+	"github.com/edgelesssys/estore/internal/rangekey"
 )
 
 // compactionIter provides a forward-only iterator that encapsulates the logic

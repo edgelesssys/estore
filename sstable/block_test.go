@@ -14,7 +14,7 @@ import (
 	"unsafe"
 
 	"github.com/cockroachdb/datadriven"
-	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/estore/internal/base"
 	"github.com/stretchr/testify/require"
 	"golang.org/x/exp/rand"
 )

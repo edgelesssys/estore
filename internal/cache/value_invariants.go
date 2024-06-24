@@ -11,8 +11,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/edgelesssys/ego-kvstore/internal/invariants"
-	"github.com/edgelesssys/ego-kvstore/internal/manual"
+	"github.com/edgelesssys/estore/internal/invariants"
+	"github.com/edgelesssys/estore/internal/manual"
 )
 
 // newValue creates a Value with a manually managed buffer of size n.

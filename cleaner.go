@@ -12,9 +12,9 @@ import (
 
 	"github.com/cockroachdb/errors/oserror"
 	"github.com/cockroachdb/tokenbucket"
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/internal/invariants"
-	"github.com/edgelesssys/ego-kvstore/objstorage"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/internal/invariants"
+	"github.com/edgelesssys/estore/objstorage"
 )
 
 // Cleaner exports the base.Cleaner type.

@@ -15,7 +15,7 @@
 // The original paper: http://static.usenix.org/event/usenix05/tech/general/full_papers/jiang/jiang_html/html.html
 //
 // It is MIT licensed, like the original.
-package cache // import "github.com/edgelesssys/ego-kvstore/internal/cache"
+package cache // import "github.com/edgelesssys/estore/internal/cache"
 
 import (
 	"fmt"
@@ -26,8 +26,8 @@ import (
 	"sync"
 	"sync/atomic"
 
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/internal/invariants"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/internal/invariants"
 )
 
 type fileKey struct {

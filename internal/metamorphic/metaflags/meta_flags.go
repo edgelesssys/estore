@@ -13,8 +13,8 @@ import (
 	"math"
 	"regexp"
 
-	"github.com/edgelesssys/ego-kvstore/internal/randvar"
-	"github.com/edgelesssys/ego-kvstore/metamorphic"
+	"github.com/edgelesssys/estore/internal/randvar"
+	"github.com/edgelesssys/estore/metamorphic"
 )
 
 // CommonFlags contains flags that apply to both metamorphic.Run and

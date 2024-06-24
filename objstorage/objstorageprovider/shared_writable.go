@@ -7,7 +7,7 @@ package objstorageprovider
 import (
 	"io"
 
-	"github.com/edgelesssys/ego-kvstore/objstorage"
+	"github.com/edgelesssys/estore/objstorage"
 )
 
 // NewRemoteWritable creates an objstorage.Writable out of an io.WriteCloser.

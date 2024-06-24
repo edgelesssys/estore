@@ -5,9 +5,9 @@
 package invalidating
 
 import (
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/internal/fastrand"
-	"github.com/edgelesssys/ego-kvstore/internal/invariants"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/internal/fastrand"
+	"github.com/edgelesssys/estore/internal/invariants"
 )
 
 // MaybeWrapIfInvariants wraps some iterators with an invalidating iterator.

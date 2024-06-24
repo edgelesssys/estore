@@ -4,7 +4,7 @@
 
 package keyspan
 
-import "github.com/edgelesssys/ego-kvstore/internal/base"
+import "github.com/edgelesssys/estore/internal/base"
 
 // Truncate creates a new iterator where every span in the supplied iterator is
 // truncated to be contained within the range [lower, upper). If start and end

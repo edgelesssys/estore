@@ -8,8 +8,8 @@ import (
 	"testing"
 	"time"
 
-	pebble "github.com/edgelesssys/ego-kvstore"
-	"github.com/edgelesssys/ego-kvstore/internal/randvar"
+	pebble "github.com/edgelesssys/estore"
+	"github.com/edgelesssys/estore/internal/randvar"
 	"github.com/pmezard/go-difflib/difflib"
 	"github.com/stretchr/testify/require"
 	"golang.org/x/exp/rand"

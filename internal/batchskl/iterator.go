@@ -17,7 +17,7 @@
 
 package batchskl
 
-import "github.com/edgelesssys/ego-kvstore/internal/base"
+import "github.com/edgelesssys/estore/internal/base"
 
 type splice struct {
 	prev uint32

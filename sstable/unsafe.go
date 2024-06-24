@@ -7,7 +7,7 @@ package sstable
 import (
 	"unsafe"
 
-	"github.com/edgelesssys/ego-kvstore/internal/manual"
+	"github.com/edgelesssys/estore/internal/manual"
 )
 
 func getBytes(ptr unsafe.Pointer, length int) []byte {

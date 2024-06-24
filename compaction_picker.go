@@ -11,9 +11,9 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/internal/humanize"
-	"github.com/edgelesssys/ego-kvstore/internal/manifest"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/internal/humanize"
+	"github.com/edgelesssys/estore/internal/manifest"
 )
 
 // The minimum count for an intra-L0 compaction. This matches the RocksDB

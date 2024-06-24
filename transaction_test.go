@@ -9,7 +9,7 @@ package kvstore
 import (
 	"testing"
 
-	"github.com/edgelesssys/ego-kvstore/vfs"
+	"github.com/edgelesssys/estore/vfs"
 	"github.com/stretchr/testify/require"
 )
 

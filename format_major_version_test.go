@@ -13,12 +13,12 @@ import (
 	"time"
 
 	"github.com/cockroachdb/datadriven"
-	"github.com/edgelesssys/ego-kvstore/bloom"
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/internal/testkeys"
-	"github.com/edgelesssys/ego-kvstore/sstable"
-	"github.com/edgelesssys/ego-kvstore/vfs"
-	"github.com/edgelesssys/ego-kvstore/vfs/atomicfs"
+	"github.com/edgelesssys/estore/bloom"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/internal/testkeys"
+	"github.com/edgelesssys/estore/sstable"
+	"github.com/edgelesssys/estore/vfs"
+	"github.com/edgelesssys/estore/vfs/atomicfs"
 	"github.com/stretchr/testify/require"
 )
 

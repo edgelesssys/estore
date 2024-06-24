@@ -10,8 +10,8 @@ import (
 	"testing"
 
 	"github.com/cockroachdb/datadriven"
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/internal/manifest"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/internal/manifest"
 	"github.com/stretchr/testify/require"
 )
 

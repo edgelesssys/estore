@@ -4,7 +4,7 @@
 
 package private
 
-import "github.com/edgelesssys/ego-kvstore/internal/base"
+import "github.com/edgelesssys/estore/internal/base"
 
 // SSTableCacheOpts is a hook for specifying cache options to
 // sstable.NewReader.

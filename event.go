@@ -11,10 +11,10 @@ import (
 
 	"github.com/cockroachdb/errors"
 	"github.com/cockroachdb/redact"
-	"github.com/edgelesssys/ego-kvstore/internal/humanize"
-	"github.com/edgelesssys/ego-kvstore/internal/invariants"
-	"github.com/edgelesssys/ego-kvstore/internal/manifest"
-	"github.com/edgelesssys/ego-kvstore/vfs"
+	"github.com/edgelesssys/estore/internal/humanize"
+	"github.com/edgelesssys/estore/internal/invariants"
+	"github.com/edgelesssys/estore/internal/manifest"
+	"github.com/edgelesssys/estore/vfs"
 )
 
 // TableInfo exports the manifest.TableInfo type.

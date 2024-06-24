@@ -10,7 +10,7 @@ package cache
 import (
 	"unsafe"
 
-	"github.com/edgelesssys/ego-kvstore/internal/manual"
+	"github.com/edgelesssys/estore/internal/manual"
 )
 
 const valueSize = int(unsafe.Sizeof(Value{}))

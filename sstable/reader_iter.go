@@ -9,8 +9,8 @@ import (
 	"os"
 	"sync"
 
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/internal/invariants"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/internal/invariants"
 )
 
 // Iterator iterates over an entire table of data.

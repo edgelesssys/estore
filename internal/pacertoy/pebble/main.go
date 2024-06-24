@@ -12,7 +12,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/edgelesssys/ego-kvstore/internal/rate"
+	"github.com/edgelesssys/estore/internal/rate"
 	"golang.org/x/exp/rand"
 )
 

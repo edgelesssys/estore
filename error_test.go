@@ -13,8 +13,8 @@ import (
 	"testing"
 
 	"github.com/cockroachdb/errors"
-	"github.com/edgelesssys/ego-kvstore/vfs"
-	"github.com/edgelesssys/ego-kvstore/vfs/errorfs"
+	"github.com/edgelesssys/estore/vfs"
+	"github.com/edgelesssys/estore/vfs/errorfs"
 	"github.com/stretchr/testify/require"
 )
 

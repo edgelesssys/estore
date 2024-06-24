@@ -11,7 +11,7 @@ import (
 
 	"github.com/cockroachdb/errors/oserror"
 	"github.com/cockroachdb/redact"
-	"github.com/edgelesssys/ego-kvstore/vfs"
+	"github.com/edgelesssys/estore/vfs"
 )
 
 // FileNum is an internal DB identifier for a file.

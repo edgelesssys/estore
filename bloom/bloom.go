@@ -3,14 +3,14 @@
 // the LICENSE file.
 
 // Package bloom implements Bloom filters.
-package bloom // import "github.com/edgelesssys/ego-kvstore/bloom"
+package bloom // import "github.com/edgelesssys/estore/bloom"
 
 import (
 	"encoding/binary"
 	"fmt"
 	"sync"
 
-	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/estore/internal/base"
 )
 
 const (

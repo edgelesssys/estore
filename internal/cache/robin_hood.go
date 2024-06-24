@@ -13,8 +13,8 @@ import (
 	"time"
 	"unsafe"
 
-	"github.com/edgelesssys/ego-kvstore/internal/invariants"
-	"github.com/edgelesssys/ego-kvstore/internal/manual"
+	"github.com/edgelesssys/estore/internal/invariants"
+	"github.com/edgelesssys/estore/internal/manual"
 )
 
 var hashSeed = uint64(time.Now().UnixNano())

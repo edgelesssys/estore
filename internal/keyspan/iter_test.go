@@ -11,7 +11,7 @@ import (
 	"testing"
 
 	"github.com/cockroachdb/datadriven"
-	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/estore/internal/base"
 )
 
 func runFragmentIteratorCmd(iter FragmentIterator, input string, extraInfo func() string) string {

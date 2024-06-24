@@ -9,8 +9,8 @@ import (
 	"os"
 	"time"
 
-	"github.com/edgelesssys/ego-kvstore/internal/testkeys"
-	"github.com/edgelesssys/ego-kvstore/tool"
+	"github.com/edgelesssys/estore/internal/testkeys"
+	"github.com/edgelesssys/estore/tool"
 	"github.com/spf13/cobra"
 )
 

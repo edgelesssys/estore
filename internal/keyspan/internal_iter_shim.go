@@ -4,7 +4,7 @@
 
 package keyspan
 
-import "github.com/edgelesssys/ego-kvstore/internal/base"
+import "github.com/edgelesssys/estore/internal/base"
 
 // InternalIteratorShim is a temporary iterator type used as a shim between
 // keyspan.MergingIter and base.InternalIterator. It's used temporarily for

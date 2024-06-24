@@ -1,4 +1,4 @@
-module github.com/edgelesssys/ego-kvstore
+module github.com/edgelesssys/estore
 
 require (
 	github.com/HdrHistogram/hdrhistogram-go v1.1.2

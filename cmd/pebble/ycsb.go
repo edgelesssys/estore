@@ -14,10 +14,10 @@ import (
 	"time"
 
 	"github.com/cockroachdb/errors"
-	pebble "github.com/edgelesssys/ego-kvstore"
-	"github.com/edgelesssys/ego-kvstore/internal/ackseq"
-	"github.com/edgelesssys/ego-kvstore/internal/randvar"
-	"github.com/edgelesssys/ego-kvstore/internal/rate"
+	pebble "github.com/edgelesssys/estore"
+	"github.com/edgelesssys/estore/internal/ackseq"
+	"github.com/edgelesssys/estore/internal/randvar"
+	"github.com/edgelesssys/estore/internal/rate"
 	"github.com/spf13/cobra"
 	"golang.org/x/exp/rand"
 )

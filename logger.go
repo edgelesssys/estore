@@ -4,7 +4,7 @@
 
 package kvstore
 
-import "github.com/edgelesssys/ego-kvstore/internal/base"
+import "github.com/edgelesssys/estore/internal/base"
 
 // Logger defines an interface for writing log messages.
 type Logger = base.Logger

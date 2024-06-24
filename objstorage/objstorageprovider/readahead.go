@@ -4,7 +4,7 @@
 
 package objstorageprovider
 
-import "github.com/edgelesssys/ego-kvstore/internal/invariants"
+import "github.com/edgelesssys/estore/internal/invariants"
 
 const (
 	// Constants for dynamic readahead of data blocks. Note that the size values

@@ -4,7 +4,7 @@
 
 package base
 
-import "github.com/edgelesssys/ego-kvstore/vfs"
+import "github.com/edgelesssys/estore/vfs"
 
 // Cleaner cleans obsolete files.
 type Cleaner interface {

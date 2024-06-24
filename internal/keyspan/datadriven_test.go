@@ -16,7 +16,7 @@ import (
 
 	"github.com/cockroachdb/datadriven"
 	"github.com/cockroachdb/errors"
-	"github.com/edgelesssys/ego-kvstore/internal/dsl"
+	"github.com/edgelesssys/estore/internal/dsl"
 )
 
 // This file contains testing facilities for Spans and FragmentIterators. It's

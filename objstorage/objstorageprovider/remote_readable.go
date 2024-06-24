@@ -8,10 +8,10 @@ import (
 	"context"
 	"io"
 
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/objstorage"
-	"github.com/edgelesssys/ego-kvstore/objstorage/objstorageprovider/sharedcache"
-	"github.com/edgelesssys/ego-kvstore/objstorage/remote"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/objstorage"
+	"github.com/edgelesssys/estore/objstorage/objstorageprovider/sharedcache"
+	"github.com/edgelesssys/estore/objstorage/remote"
 )
 
 const remoteMaxReadaheadSize = 1024 * 1024 /* 1MB */

@@ -9,10 +9,10 @@ import (
 	"os"
 
 	"github.com/cockroachdb/errors/oserror"
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/record"
-	"github.com/edgelesssys/ego-kvstore/vfs"
-	"github.com/edgelesssys/ego-kvstore/vfs/atomicfs"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/record"
+	"github.com/edgelesssys/estore/vfs"
+	"github.com/edgelesssys/estore/vfs/atomicfs"
 )
 
 // checkpointOptions hold the optional parameters to construct checkpoint

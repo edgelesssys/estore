@@ -5,8 +5,8 @@
 package private
 
 import (
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/internal/keyspan"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/internal/keyspan"
 )
 
 // BatchSort is a hook for constructing iterators over the point and range

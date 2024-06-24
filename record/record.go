@@ -94,8 +94,8 @@ import (
 	"io"
 
 	"github.com/cockroachdb/errors"
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/internal/edg"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/internal/edg"
 )
 
 // These constants are part of the wire format and should not be changed.

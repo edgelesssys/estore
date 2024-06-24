@@ -7,8 +7,8 @@ package main
 import (
 	"bytes"
 
-	pebble "github.com/edgelesssys/ego-kvstore"
-	"github.com/edgelesssys/ego-kvstore/internal/bytealloc"
+	pebble "github.com/edgelesssys/estore"
+	"github.com/edgelesssys/estore/internal/bytealloc"
 )
 
 // MVCC encoding and decoding routines adapted from CockroachDB sources. Used

@@ -14,8 +14,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/edgelesssys/ego-kvstore/internal/metamorphic/metaflags"
-	"github.com/edgelesssys/ego-kvstore/metamorphic"
+	"github.com/edgelesssys/estore/internal/metamorphic/metaflags"
+	"github.com/edgelesssys/estore/metamorphic"
 )
 
 var runOnceFlags = metaflags.InitRunOnceFlags()

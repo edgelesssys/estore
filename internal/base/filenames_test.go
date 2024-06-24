@@ -11,7 +11,7 @@ import (
 	"testing"
 
 	"github.com/cockroachdb/redact"
-	"github.com/edgelesssys/ego-kvstore/vfs"
+	"github.com/edgelesssys/estore/vfs"
 	"github.com/stretchr/testify/require"
 )
 

@@ -4,7 +4,7 @@
 
 package metamorphic
 
-import "github.com/edgelesssys/ego-kvstore/internal/randvar"
+import "github.com/edgelesssys/estore/internal/randvar"
 
 type opType int
 

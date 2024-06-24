@@ -10,9 +10,9 @@ import (
 	"os"
 	"sync"
 
-	"github.com/edgelesssys/ego-kvstore/internal/invariants"
-	"github.com/edgelesssys/ego-kvstore/objstorage"
-	"github.com/edgelesssys/ego-kvstore/vfs"
+	"github.com/edgelesssys/estore/internal/invariants"
+	"github.com/edgelesssys/estore/objstorage"
+	"github.com/edgelesssys/estore/vfs"
 )
 
 const fileMaxReadaheadSize = 256 * 1024 /* 256KB */

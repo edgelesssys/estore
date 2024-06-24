@@ -8,7 +8,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 // of this source code is governed by a BSD-style license that can be found in
 // the LICENSE file.
 
-package vfs // import "github.com/edgelesssys/ego-kvstore/vfs"
+package vfs // import "github.com/edgelesssys/estore/vfs"
 
 import (
 	"bytes"
@@ -25,7 +25,7 @@ import (
 
 	"github.com/cockroachdb/errors"
 	"github.com/cockroachdb/errors/oserror"
-	"github.com/edgelesssys/ego-kvstore/internal/invariants"
+	"github.com/edgelesssys/estore/internal/invariants"
 )
 
 const sep = "/"
