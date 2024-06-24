@@ -1,11 +1,14 @@
-# ego-kvstore
+# EStore
 
-ego-kvstore is a key-value store with authenticated encryption for data at rest. It is based on [Pebble](https://github.com/cockroachdb/pebble), the key-value store used in CockroachDB.
-ego-kvstore provides confidentiality *and* integrity for the database state as a whole. We call this "snapshot integrity".
-In contrast, other database encryption schemes typically only provide integrity at record or file level. As a result, in those cases, attackers can modify parts of the database state unnoticed.
+EStore is a key-value store with authenticated encryption for data at rest.
+It's based on [Pebble](https://github.com/cockroachdb/pebble), the key-value store used in CockroachDB.
+EStore provides confidentiality *and* integrity for the database state as a whole.
+We call this "snapshot integrity."
+In contrast, other database encryption schemes typically only provide integrity at the record or file level.
+As a result, in those cases, attackers can modify parts of the database state unnoticed.
 
-With these properties, ego-kvstore is especially suitable to be used with [EGo](https://github.com/edgelesssys/ego) to build [confidential-computing apps](https://www.edgeless.systems/confidential-computing).
-However, ego-kvstore can be used in any Go application to store sensitive information in a structured way. 
+With these properties, EStore is particularly well suited for use with [EGo](https://github.com/edgelesssys/ego) to build [confidential-computing apps](https://www.edgeless.systems/confidential-computing).
+However, you can use EStore in any Go application to store sensitive information in a structured way.
 
 ## Example
 
@@ -17,7 +20,7 @@ import (
 	"fmt"
 	"log"
 
-	kvstore "github.com/edgelesssys/ego-kvstore"
+	"github.com/edgelesssys/estore"
 )
 
 func main() {
@@ -29,10 +32,10 @@ func main() {
 	}
 
 	// Create an encrypted store
-	opts := &kvstore.Options{
+	opts := &estore.Options{
 		EncryptionKey: encryptionKey,
 	}
-	db, err := kvstore.Open("demo", opts)
+	db, err := estore.Open("demo", opts)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -56,7 +59,7 @@ func main() {
 
 ## License
 
-ego-kvstore is licensed under [AGPL-3.0](LICENSE).
+EStore is licensed under [AGPL-3.0](LICENSE).
 It uses code licensed under a [BSD-style license](LICENSE.pebble).
 
 You can also get a [commercial license and enterprise support](https://www.edgeless.systems/enterprise-support).
