@@ -3,7 +3,7 @@
 // the LICENSE file.
 
 // Package kvstore provides an ordered key/value store.
-package kvstore // import "github.com/edgelesssys/ego-kvstore"
+package kvstore // import "github.com/edgelesssys/estore"
 
 import (
 	"context"
@@ -17,21 +17,21 @@ import (
 
 	"github.com/cockroachdb/errors"
 	"github.com/cockroachdb/tokenbucket"
-	"github.com/edgelesssys/ego-kvstore/internal/arenaskl"
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/internal/edg"
-	"github.com/edgelesssys/ego-kvstore/internal/invalidating"
-	"github.com/edgelesssys/ego-kvstore/internal/invariants"
-	"github.com/edgelesssys/ego-kvstore/internal/keyspan"
-	"github.com/edgelesssys/ego-kvstore/internal/manifest"
-	"github.com/edgelesssys/ego-kvstore/internal/manual"
-	"github.com/edgelesssys/ego-kvstore/objstorage"
-	"github.com/edgelesssys/ego-kvstore/objstorage/remote"
-	"github.com/edgelesssys/ego-kvstore/rangekey"
-	"github.com/edgelesssys/ego-kvstore/record"
-	"github.com/edgelesssys/ego-kvstore/sstable"
-	"github.com/edgelesssys/ego-kvstore/vfs"
-	"github.com/edgelesssys/ego-kvstore/vfs/atomicfs"
+	"github.com/edgelesssys/estore/internal/arenaskl"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/internal/edg"
+	"github.com/edgelesssys/estore/internal/invalidating"
+	"github.com/edgelesssys/estore/internal/invariants"
+	"github.com/edgelesssys/estore/internal/keyspan"
+	"github.com/edgelesssys/estore/internal/manifest"
+	"github.com/edgelesssys/estore/internal/manual"
+	"github.com/edgelesssys/estore/objstorage"
+	"github.com/edgelesssys/estore/objstorage/remote"
+	"github.com/edgelesssys/estore/rangekey"
+	"github.com/edgelesssys/estore/record"
+	"github.com/edgelesssys/estore/sstable"
+	"github.com/edgelesssys/estore/vfs"
+	"github.com/edgelesssys/estore/vfs/atomicfs"
 	"github.com/prometheus/client_golang/prometheus"
 )
 

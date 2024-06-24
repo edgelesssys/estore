@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/edgelesssys/ego-kvstore"
-	"github.com/edgelesssys/ego-kvstore/vfs"
+	"github.com/edgelesssys/estore"
+	"github.com/edgelesssys/estore/vfs"
 )
 
 func ExampleIterator() {

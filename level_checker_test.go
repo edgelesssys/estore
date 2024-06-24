@@ -15,14 +15,14 @@ import (
 
 	"github.com/cockroachdb/datadriven"
 	"github.com/cockroachdb/errors"
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/internal/keyspan"
-	"github.com/edgelesssys/ego-kvstore/internal/manifest"
-	"github.com/edgelesssys/ego-kvstore/internal/private"
-	"github.com/edgelesssys/ego-kvstore/internal/rangedel"
-	"github.com/edgelesssys/ego-kvstore/objstorage/objstorageprovider"
-	"github.com/edgelesssys/ego-kvstore/sstable"
-	"github.com/edgelesssys/ego-kvstore/vfs"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/internal/keyspan"
+	"github.com/edgelesssys/estore/internal/manifest"
+	"github.com/edgelesssys/estore/internal/private"
+	"github.com/edgelesssys/estore/internal/rangedel"
+	"github.com/edgelesssys/estore/objstorage/objstorageprovider"
+	"github.com/edgelesssys/estore/sstable"
+	"github.com/edgelesssys/estore/vfs"
 	"github.com/stretchr/testify/require"
 )
 

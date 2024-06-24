@@ -11,9 +11,9 @@ package main
 import (
 	"log"
 
-	"github.com/edgelesssys/ego-kvstore/internal/manifest"
-	"github.com/edgelesssys/ego-kvstore/record"
-	"github.com/edgelesssys/ego-kvstore/vfs"
+	"github.com/edgelesssys/estore/internal/manifest"
+	"github.com/edgelesssys/estore/record"
+	"github.com/edgelesssys/estore/vfs"
 )
 
 func writeVE(writer *record.Writer, ve *manifest.VersionEdit) {

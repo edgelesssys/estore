@@ -11,9 +11,9 @@ import (
 	"sort"
 
 	"github.com/cockroachdb/errors"
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/internal/keyspan"
-	"github.com/edgelesssys/ego-kvstore/internal/manifest"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/internal/keyspan"
+	"github.com/edgelesssys/estore/internal/manifest"
 )
 
 // This file implements DB.CheckLevels() which checks that every entry in the

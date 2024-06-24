@@ -17,7 +17,7 @@
 
 package arenaskl
 
-import "github.com/edgelesssys/ego-kvstore/internal/base"
+import "github.com/edgelesssys/estore/internal/base"
 
 // flushIterator is an iterator over the skiplist object. Use Skiplist.NewFlushIter
 // to construct an iterator. The current state of the iterator can be cloned by

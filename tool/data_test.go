@@ -15,9 +15,9 @@ import (
 
 	"github.com/cockroachdb/datadriven"
 	"github.com/cockroachdb/errors"
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/internal/testkeys"
-	"github.com/edgelesssys/ego-kvstore/vfs"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/internal/testkeys"
+	"github.com/edgelesssys/estore/vfs"
 	"github.com/spf13/cobra"
 	"github.com/stretchr/testify/require"
 )

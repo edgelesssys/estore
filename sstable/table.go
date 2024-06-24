@@ -65,16 +65,16 @@
 //		return err
 //	}
 //	return w.Close()
-package sstable // import "github.com/edgelesssys/ego-kvstore/sstable"
+package sstable // import "github.com/edgelesssys/estore/sstable"
 
 import (
 	"context"
 	"encoding/binary"
 
 	"github.com/cockroachdb/errors"
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/internal/edg"
-	"github.com/edgelesssys/ego-kvstore/objstorage"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/internal/edg"
+	"github.com/edgelesssys/estore/objstorage"
 )
 
 /*

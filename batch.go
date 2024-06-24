@@ -17,14 +17,14 @@ import (
 	"unsafe"
 
 	"github.com/cockroachdb/errors"
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/internal/batchskl"
-	"github.com/edgelesssys/ego-kvstore/internal/humanize"
-	"github.com/edgelesssys/ego-kvstore/internal/keyspan"
-	"github.com/edgelesssys/ego-kvstore/internal/private"
-	"github.com/edgelesssys/ego-kvstore/internal/rangedel"
-	"github.com/edgelesssys/ego-kvstore/internal/rangekey"
-	"github.com/edgelesssys/ego-kvstore/internal/rawalloc"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/internal/batchskl"
+	"github.com/edgelesssys/estore/internal/humanize"
+	"github.com/edgelesssys/estore/internal/keyspan"
+	"github.com/edgelesssys/estore/internal/private"
+	"github.com/edgelesssys/estore/internal/rangedel"
+	"github.com/edgelesssys/estore/internal/rangekey"
+	"github.com/edgelesssys/estore/internal/rawalloc"
 )
 
 const (

@@ -9,11 +9,11 @@ import (
 	"io"
 	"sort"
 
-	pebble "github.com/edgelesssys/ego-kvstore"
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/objstorage"
-	"github.com/edgelesssys/ego-kvstore/objstorage/objstorageprovider/remoteobjcat"
-	"github.com/edgelesssys/ego-kvstore/record"
+	pebble "github.com/edgelesssys/estore"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/objstorage"
+	"github.com/edgelesssys/estore/objstorage/objstorageprovider/remoteobjcat"
+	"github.com/edgelesssys/estore/record"
 	"github.com/spf13/cobra"
 )
 

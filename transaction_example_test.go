@@ -11,8 +11,8 @@ import (
 	"fmt"
 	"log"
 
-	kvstore "github.com/edgelesssys/ego-kvstore"
-	"github.com/edgelesssys/ego-kvstore/vfs"
+	kvstore "github.com/edgelesssys/estore"
+	"github.com/edgelesssys/estore/vfs"
 )
 
 func ExampleTransaction() {

@@ -9,12 +9,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/internal/manifest"
-	"github.com/edgelesssys/ego-kvstore/objstorage/objstorageprovider"
-	"github.com/edgelesssys/ego-kvstore/record"
-	"github.com/edgelesssys/ego-kvstore/sstable"
-	"github.com/edgelesssys/ego-kvstore/vfs"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/internal/manifest"
+	"github.com/edgelesssys/estore/objstorage/objstorageprovider"
+	"github.com/edgelesssys/estore/record"
+	"github.com/edgelesssys/estore/sstable"
+	"github.com/edgelesssys/estore/vfs"
 	"github.com/stretchr/testify/require"
 )
 

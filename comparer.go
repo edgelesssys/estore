@@ -4,7 +4,7 @@
 
 package kvstore
 
-import "github.com/edgelesssys/ego-kvstore/internal/base"
+import "github.com/edgelesssys/estore/internal/base"
 
 // Compare exports the base.Compare type.
 type Compare = base.Compare

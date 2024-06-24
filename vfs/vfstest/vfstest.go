@@ -9,7 +9,7 @@ package vfstest
 import (
 	"os"
 
-	"github.com/edgelesssys/ego-kvstore/vfs"
+	"github.com/edgelesssys/estore/vfs"
 )
 
 // DiscardFile implements vfs.File but discards all written data and reads

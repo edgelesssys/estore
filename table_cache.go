@@ -16,15 +16,15 @@ import (
 	"unsafe"
 
 	"github.com/cockroachdb/errors"
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/internal/edg"
-	"github.com/edgelesssys/ego-kvstore/internal/invariants"
-	"github.com/edgelesssys/ego-kvstore/internal/keyspan"
-	"github.com/edgelesssys/ego-kvstore/internal/manifest"
-	"github.com/edgelesssys/ego-kvstore/internal/private"
-	"github.com/edgelesssys/ego-kvstore/objstorage"
-	"github.com/edgelesssys/ego-kvstore/objstorage/objstorageprovider/objiotracing"
-	"github.com/edgelesssys/ego-kvstore/sstable"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/internal/edg"
+	"github.com/edgelesssys/estore/internal/invariants"
+	"github.com/edgelesssys/estore/internal/keyspan"
+	"github.com/edgelesssys/estore/internal/manifest"
+	"github.com/edgelesssys/estore/internal/private"
+	"github.com/edgelesssys/estore/objstorage"
+	"github.com/edgelesssys/estore/objstorage/objstorageprovider/objiotracing"
+	"github.com/edgelesssys/estore/sstable"
 )
 
 var emptyIter = &errorIter{err: nil}

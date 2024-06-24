@@ -15,7 +15,7 @@ import (
 
 	"github.com/cockroachdb/errors"
 	"github.com/cockroachdb/errors/oserror"
-	"github.com/edgelesssys/ego-kvstore/vfs"
+	"github.com/edgelesssys/estore/vfs"
 )
 
 // ErrInjected is an error artificially injected for testing fs error paths.

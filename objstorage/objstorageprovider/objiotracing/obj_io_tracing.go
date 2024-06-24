@@ -4,7 +4,7 @@
 
 package objiotracing
 
-import "github.com/edgelesssys/ego-kvstore/internal/base"
+import "github.com/edgelesssys/estore/internal/base"
 
 // OpType indicates the type of operation.
 type OpType uint8

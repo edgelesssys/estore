@@ -9,7 +9,7 @@ import (
 	"testing"
 
 	"github.com/cockroachdb/datadriven"
-	"github.com/edgelesssys/ego-kvstore/internal/randvar"
+	"github.com/edgelesssys/estore/internal/randvar"
 	"github.com/stretchr/testify/require"
 )
 

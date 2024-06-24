@@ -13,9 +13,9 @@ import (
 	"strings"
 	"testing"
 
-	kvstore "github.com/edgelesssys/ego-kvstore"
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/vfs"
+	kvstore "github.com/edgelesssys/estore"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/vfs"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

@@ -11,8 +11,8 @@ import (
 	"sync"
 	"unsafe"
 
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/internal/rangekey"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/internal/rangekey"
 )
 
 // Block properties are an optional user-facing feature that can be used to

@@ -12,7 +12,7 @@ import (
 
 	"github.com/cockroachdb/datadriven"
 	"github.com/cockroachdb/errors"
-	pebble "github.com/edgelesssys/ego-kvstore"
+	pebble "github.com/edgelesssys/estore"
 )
 
 // TODO(jackson): Consider a refactoring that can consolidate this package and

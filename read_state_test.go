@@ -9,7 +9,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/edgelesssys/ego-kvstore/vfs"
+	"github.com/edgelesssys/estore/vfs"
 	"golang.org/x/exp/rand"
 )
 

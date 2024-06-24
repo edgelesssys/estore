@@ -8,11 +8,11 @@ import (
 
 	"github.com/cespare/xxhash/v2"
 	"github.com/cockroachdb/errors"
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/internal/bytealloc"
-	"github.com/edgelesssys/ego-kvstore/internal/invariants"
-	"github.com/edgelesssys/ego-kvstore/internal/rangekey"
-	"github.com/edgelesssys/ego-kvstore/objstorage"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/internal/bytealloc"
+	"github.com/edgelesssys/estore/internal/invariants"
+	"github.com/edgelesssys/estore/internal/rangekey"
+	"github.com/edgelesssys/estore/objstorage"
 )
 
 // RewriteKeySuffixes is deprecated.

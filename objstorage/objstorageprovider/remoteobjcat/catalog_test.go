@@ -13,10 +13,10 @@ import (
 	"testing"
 
 	"github.com/cockroachdb/datadriven"
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/objstorage"
-	"github.com/edgelesssys/ego-kvstore/objstorage/objstorageprovider/remoteobjcat"
-	"github.com/edgelesssys/ego-kvstore/vfs"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/objstorage"
+	"github.com/edgelesssys/estore/objstorage/objstorageprovider/remoteobjcat"
+	"github.com/edgelesssys/estore/vfs"
 )
 
 func DisabledTestCatalog(t *testing.T) { // EDG: we don't support shared objects

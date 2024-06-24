@@ -22,8 +22,8 @@ import (
 	"unsafe"
 
 	"github.com/cockroachdb/errors"
-	"github.com/edgelesssys/ego-kvstore/internal/constants"
-	"github.com/edgelesssys/ego-kvstore/internal/invariants"
+	"github.com/edgelesssys/estore/internal/constants"
+	"github.com/edgelesssys/estore/internal/invariants"
 )
 
 // Arena is lock-free.

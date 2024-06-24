@@ -13,7 +13,7 @@ import (
 	"runtime"
 	"sync"
 
-	"github.com/edgelesssys/ego-kvstore/internal/invariants"
+	"github.com/edgelesssys/estore/internal/invariants"
 )
 
 // Logger defines an interface for writing log messages.

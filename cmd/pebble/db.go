@@ -7,11 +7,11 @@ package main
 import (
 	"log"
 
-	pebble "github.com/edgelesssys/ego-kvstore"
-	"github.com/edgelesssys/ego-kvstore/bloom"
-	"github.com/edgelesssys/ego-kvstore/internal/bytealloc"
-	"github.com/edgelesssys/ego-kvstore/objstorage/remote"
-	"github.com/edgelesssys/ego-kvstore/vfs"
+	pebble "github.com/edgelesssys/estore"
+	"github.com/edgelesssys/estore/bloom"
+	"github.com/edgelesssys/estore/internal/bytealloc"
+	"github.com/edgelesssys/estore/objstorage/remote"
+	"github.com/edgelesssys/estore/vfs"
 )
 
 // DB specifies the minimal interfaces that need to be implemented to support

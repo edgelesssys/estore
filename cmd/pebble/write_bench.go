@@ -10,9 +10,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/edgelesssys/ego-kvstore/internal/ackseq"
-	"github.com/edgelesssys/ego-kvstore/internal/randvar"
-	"github.com/edgelesssys/ego-kvstore/internal/rate"
+	"github.com/edgelesssys/estore/internal/ackseq"
+	"github.com/edgelesssys/estore/internal/randvar"
+	"github.com/edgelesssys/estore/internal/rate"
 	"github.com/spf13/cobra"
 )
 

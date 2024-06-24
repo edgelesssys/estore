@@ -10,12 +10,12 @@ import (
 	"time"
 
 	"github.com/cockroachdb/redact"
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/internal/cache"
-	"github.com/edgelesssys/ego-kvstore/internal/humanize"
-	"github.com/edgelesssys/ego-kvstore/objstorage/objstorageprovider/sharedcache"
-	"github.com/edgelesssys/ego-kvstore/record"
-	"github.com/edgelesssys/ego-kvstore/sstable"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/internal/cache"
+	"github.com/edgelesssys/estore/internal/humanize"
+	"github.com/edgelesssys/estore/objstorage/objstorageprovider/sharedcache"
+	"github.com/edgelesssys/estore/record"
+	"github.com/edgelesssys/estore/sstable"
 	"github.com/prometheus/client_golang/prometheus"
 )
 

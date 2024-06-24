@@ -5,8 +5,8 @@
 package keyspan
 
 import (
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/internal/manifest"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/internal/manifest"
 )
 
 // FragmentIterator defines an iterator interface over spans. The spans

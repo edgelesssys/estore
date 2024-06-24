@@ -53,8 +53,8 @@ import (
 	"encoding/binary"
 
 	"github.com/cockroachdb/errors"
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/internal/keyspan"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/internal/keyspan"
 )
 
 // Encode takes a Span containing only range keys. It invokes the provided

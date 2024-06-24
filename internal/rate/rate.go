@@ -3,7 +3,7 @@
 // the LICENSE file.
 
 // Package rate provides a rate limiter.
-package rate // import "github.com/edgelesssys/ego-kvstore/internal/rate"
+package rate // import "github.com/edgelesssys/estore/internal/rate"
 
 import (
 	"sync"

@@ -9,9 +9,9 @@ import (
 	"fmt"
 	"sort"
 
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/internal/invariants"
-	"github.com/edgelesssys/ego-kvstore/internal/manifest"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/internal/invariants"
+	"github.com/edgelesssys/estore/internal/manifest"
 )
 
 // TODO(jackson): Consider implementing an optimization to seek lower levels

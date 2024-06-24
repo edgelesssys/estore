@@ -4,7 +4,7 @@
 
 package keyspan
 
-import "github.com/edgelesssys/ego-kvstore/internal/base"
+import "github.com/edgelesssys/estore/internal/base"
 
 // SeekLE seeks to the span that contains or is before the target key.
 func SeekLE(cmp base.Compare, iter FragmentIterator, key []byte) *Span {

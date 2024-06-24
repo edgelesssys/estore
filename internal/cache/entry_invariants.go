@@ -11,7 +11,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/edgelesssys/ego-kvstore/internal/invariants"
+	"github.com/edgelesssys/estore/internal/invariants"
 )
 
 // When the "invariants" or "tracing" build tags are enabled, we need to

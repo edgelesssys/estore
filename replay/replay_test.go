@@ -18,14 +18,14 @@ import (
 	"time"
 
 	"github.com/cockroachdb/datadriven"
-	pebble "github.com/edgelesssys/ego-kvstore"
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/internal/datatest"
-	"github.com/edgelesssys/ego-kvstore/internal/humanize"
-	"github.com/edgelesssys/ego-kvstore/internal/invariants"
-	"github.com/edgelesssys/ego-kvstore/internal/testkeys"
-	"github.com/edgelesssys/ego-kvstore/rangekey"
-	"github.com/edgelesssys/ego-kvstore/vfs"
+	pebble "github.com/edgelesssys/estore"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/internal/datatest"
+	"github.com/edgelesssys/estore/internal/humanize"
+	"github.com/edgelesssys/estore/internal/invariants"
+	"github.com/edgelesssys/estore/internal/testkeys"
+	"github.com/edgelesssys/estore/rangekey"
+	"github.com/edgelesssys/estore/vfs"
 	"github.com/stretchr/testify/require"
 )
 

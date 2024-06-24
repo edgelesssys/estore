@@ -7,8 +7,8 @@ package kvstore
 import (
 	"fmt"
 
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/vfs"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/vfs"
 )
 
 type fileType = base.FileType

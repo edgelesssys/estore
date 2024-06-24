@@ -16,9 +16,9 @@ import (
 	"time"
 
 	"github.com/cockroachdb/datadriven"
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/internal/keyspan"
-	"github.com/edgelesssys/ego-kvstore/internal/testkeys"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/internal/keyspan"
+	"github.com/edgelesssys/estore/internal/testkeys"
 	"github.com/pmezard/go-difflib/difflib"
 	"github.com/stretchr/testify/require"
 )

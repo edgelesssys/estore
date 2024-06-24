@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/cockroachdb/redact"
-	"github.com/edgelesssys/ego-kvstore/internal/humanize"
+	"github.com/edgelesssys/estore/internal/humanize"
 )
 
 // InternalIterator iterates over a DB's key/value pairs in key order. Unlike

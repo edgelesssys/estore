@@ -7,7 +7,7 @@ package kvstore
 import (
 	"io"
 
-	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/estore/internal/base"
 )
 
 // Merge exports the base.Merge type.

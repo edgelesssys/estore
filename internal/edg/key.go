@@ -15,8 +15,8 @@ import (
 	"sync"
 
 	"github.com/cockroachdb/errors"
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/vfs"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/vfs"
 	"golang.org/x/crypto/hkdf"
 )
 

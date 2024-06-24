@@ -9,8 +9,8 @@ package kvstore
 import (
 	"bytes"
 
-	"github.com/edgelesssys/ego-kvstore/internal/edg"
-	"github.com/edgelesssys/ego-kvstore/vfs/errorfs"
+	"github.com/edgelesssys/estore/internal/edg"
+	"github.com/edgelesssys/estore/vfs/errorfs"
 )
 
 func init() {

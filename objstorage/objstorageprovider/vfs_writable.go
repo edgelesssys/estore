@@ -7,9 +7,9 @@ package objstorageprovider
 import (
 	"bufio"
 
-	"github.com/edgelesssys/ego-kvstore/internal/edg"
-	"github.com/edgelesssys/ego-kvstore/objstorage"
-	"github.com/edgelesssys/ego-kvstore/vfs"
+	"github.com/edgelesssys/estore/internal/edg"
+	"github.com/edgelesssys/estore/objstorage"
+	"github.com/edgelesssys/estore/vfs"
 )
 
 // NewFileWritable returns a Writable that uses a file as underlying storage.

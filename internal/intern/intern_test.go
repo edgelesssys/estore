@@ -8,7 +8,7 @@ import (
 	"bytes"
 	"testing"
 
-	"github.com/edgelesssys/ego-kvstore/internal/invariants"
+	"github.com/edgelesssys/estore/internal/invariants"
 )
 
 func TestBytes(t *testing.T) {

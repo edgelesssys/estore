@@ -11,7 +11,7 @@ import (
 	"crypto/cipher"
 	"crypto/rand"
 
-	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/estore/internal/base"
 )
 
 // GCMTagSize is the AES-GCM tag size.

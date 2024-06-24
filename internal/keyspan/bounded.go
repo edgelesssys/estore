@@ -4,7 +4,7 @@
 
 package keyspan
 
-import "github.com/edgelesssys/ego-kvstore/internal/base"
+import "github.com/edgelesssys/estore/internal/base"
 
 // TODO(jackson): Consider removing this type and adding bounds enforcement
 // directly to the MergingIter. This type is probably too lightweight to warrant

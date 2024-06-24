@@ -5,8 +5,8 @@
 package sstable
 
 import (
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/internal/cache"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/internal/cache"
 )
 
 // Compression is the per-block compression algorithm to use.

@@ -10,9 +10,9 @@ import (
 	"sync"
 	"sync/atomic"
 
-	pebble "github.com/edgelesssys/ego-kvstore"
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/vfs"
+	pebble "github.com/edgelesssys/estore"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/vfs"
 )
 
 type workloadCaptureState uint8

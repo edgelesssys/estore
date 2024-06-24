@@ -8,9 +8,9 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/edgelesssys/ego-kvstore/bloom"
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/objstorage"
+	"github.com/edgelesssys/estore/bloom"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/objstorage"
 	"github.com/stretchr/testify/require"
 )
 

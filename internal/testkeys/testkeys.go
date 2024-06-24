@@ -19,7 +19,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/estore/internal/base"
 	"golang.org/x/exp/constraints"
 	"golang.org/x/exp/rand"
 )

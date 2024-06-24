@@ -9,9 +9,9 @@ package sstable
 import (
 	"testing"
 
-	"github.com/edgelesssys/ego-kvstore/internal/edg"
-	"github.com/edgelesssys/ego-kvstore/objstorage/objstorageprovider"
-	"github.com/edgelesssys/ego-kvstore/vfs"
+	"github.com/edgelesssys/estore/internal/edg"
+	"github.com/edgelesssys/estore/objstorage/objstorageprovider"
+	"github.com/edgelesssys/estore/vfs"
 	"github.com/stretchr/testify/require"
 )
 

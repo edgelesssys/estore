@@ -4,7 +4,7 @@
 
 package kvstore
 
-import "github.com/edgelesssys/ego-kvstore/internal/base"
+import "github.com/edgelesssys/estore/internal/base"
 
 // InternalKeyKind exports the base.InternalKeyKind type.
 type InternalKeyKind = base.InternalKeyKind

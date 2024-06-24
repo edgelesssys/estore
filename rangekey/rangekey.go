@@ -6,9 +6,9 @@
 package rangekey
 
 import (
-	"github.com/edgelesssys/ego-kvstore/internal/keyspan"
-	"github.com/edgelesssys/ego-kvstore/internal/rangekey"
-	"github.com/edgelesssys/ego-kvstore/sstable"
+	"github.com/edgelesssys/estore/internal/keyspan"
+	"github.com/edgelesssys/estore/internal/rangekey"
+	"github.com/edgelesssys/estore/sstable"
 )
 
 // Fragmenter exports the keyspan.Fragmenter type.

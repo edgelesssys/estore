@@ -11,7 +11,7 @@ import (
 	"testing"
 
 	"github.com/cockroachdb/datadriven"
-	"github.com/edgelesssys/ego-kvstore/internal/testkeys"
+	"github.com/edgelesssys/estore/internal/testkeys"
 )
 
 func TestBoundedIter(t *testing.T) {

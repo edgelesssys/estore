@@ -9,7 +9,7 @@ package record
 import (
 	"io"
 
-	"github.com/edgelesssys/ego-kvstore/internal/edg"
+	"github.com/edgelesssys/estore/internal/edg"
 )
 
 func init() {

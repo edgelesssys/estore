@@ -9,11 +9,11 @@ import (
 	"fmt"
 	"unsafe"
 
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/internal/invariants"
-	"github.com/edgelesssys/ego-kvstore/objstorage"
-	"github.com/edgelesssys/ego-kvstore/objstorage/objstorageprovider"
-	"github.com/edgelesssys/ego-kvstore/objstorage/objstorageprovider/objiotracing"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/internal/invariants"
+	"github.com/edgelesssys/estore/objstorage"
+	"github.com/edgelesssys/estore/objstorage/objstorageprovider"
+	"github.com/edgelesssys/estore/objstorage/objstorageprovider/objiotracing"
 )
 
 // singleLevelIterator iterates over an entire table of data. To seek for a given

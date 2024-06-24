@@ -9,10 +9,10 @@ import (
 	"fmt"
 
 	"github.com/cockroachdb/errors"
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/objstorage/objstorageprovider/sharedcache"
-	"github.com/edgelesssys/ego-kvstore/objstorage/remote"
-	"github.com/edgelesssys/ego-kvstore/vfs"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/objstorage/objstorageprovider/sharedcache"
+	"github.com/edgelesssys/estore/objstorage/remote"
+	"github.com/edgelesssys/estore/vfs"
 )
 
 // Readable is the handle for an object that is open for reading.

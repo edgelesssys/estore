@@ -4,7 +4,7 @@
 
 package kvstore
 
-import "github.com/edgelesssys/ego-kvstore/internal/base"
+import "github.com/edgelesssys/estore/internal/base"
 
 // internalIterAdapter adapts the new internalIterator interface which returns
 // the key and value from positioning methods (Seek*, First, Last, Next, Prev)

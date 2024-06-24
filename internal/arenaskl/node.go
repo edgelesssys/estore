@@ -21,7 +21,7 @@ import (
 	"math"
 	"sync/atomic"
 
-	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/estore/internal/base"
 )
 
 // MaxNodeSize returns the maximum space needed for a node with the specified

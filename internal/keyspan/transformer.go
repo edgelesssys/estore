@@ -4,7 +4,7 @@
 
 package keyspan
 
-import "github.com/edgelesssys/ego-kvstore/internal/base"
+import "github.com/edgelesssys/estore/internal/base"
 
 // Transformer defines a transformation to be applied to a Span.
 type Transformer interface {

@@ -17,9 +17,9 @@ import (
 
 	"github.com/cockroachdb/datadriven"
 	"github.com/cockroachdb/redact"
-	"github.com/edgelesssys/ego-kvstore/internal/humanize"
-	"github.com/edgelesssys/ego-kvstore/internal/testkeys"
-	"github.com/edgelesssys/ego-kvstore/vfs"
+	"github.com/edgelesssys/estore/internal/humanize"
+	"github.com/edgelesssys/estore/internal/testkeys"
+	"github.com/edgelesssys/estore/vfs"
 	"github.com/stretchr/testify/require"
 )
 

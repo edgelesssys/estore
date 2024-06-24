@@ -13,7 +13,7 @@ import (
 	"sort"
 	"unsafe"
 
-	"github.com/edgelesssys/ego-kvstore/internal/intern"
+	"github.com/edgelesssys/estore/internal/intern"
 )
 
 const propertiesBlockRestartInterval = math.MaxInt32

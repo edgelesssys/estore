@@ -10,12 +10,12 @@ import (
 	"sort"
 	"time"
 
-	pebble "github.com/edgelesssys/ego-kvstore"
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/internal/humanize"
-	"github.com/edgelesssys/ego-kvstore/internal/manifest"
-	"github.com/edgelesssys/ego-kvstore/record"
-	"github.com/edgelesssys/ego-kvstore/sstable"
+	pebble "github.com/edgelesssys/estore"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/internal/humanize"
+	"github.com/edgelesssys/estore/internal/manifest"
+	"github.com/edgelesssys/estore/record"
+	"github.com/edgelesssys/estore/sstable"
 	"github.com/spf13/cobra"
 )
 

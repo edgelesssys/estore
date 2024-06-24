@@ -10,12 +10,12 @@ import (
 	"time"
 
 	"github.com/cockroachdb/datadriven"
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/internal/invariants"
-	"github.com/edgelesssys/ego-kvstore/objstorage"
-	"github.com/edgelesssys/ego-kvstore/objstorage/objstorageprovider"
-	"github.com/edgelesssys/ego-kvstore/objstorage/objstorageprovider/sharedcache"
-	"github.com/edgelesssys/ego-kvstore/vfs"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/internal/invariants"
+	"github.com/edgelesssys/estore/objstorage"
+	"github.com/edgelesssys/estore/objstorage/objstorageprovider"
+	"github.com/edgelesssys/estore/objstorage/objstorageprovider/sharedcache"
+	"github.com/edgelesssys/estore/vfs"
 	"github.com/stretchr/testify/require"
 	"golang.org/x/exp/rand"
 )

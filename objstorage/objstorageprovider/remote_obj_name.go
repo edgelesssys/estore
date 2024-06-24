@@ -7,8 +7,8 @@ package objstorageprovider
 import (
 	"fmt"
 
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/objstorage"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/objstorage"
 )
 
 // remoteObjectName returns the name of an object on remote storage.

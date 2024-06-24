@@ -8,9 +8,9 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/objstorage/objstorageprovider"
-	"github.com/edgelesssys/ego-kvstore/objstorage/objstorageprovider/objiotracing"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/objstorage/objstorageprovider"
+	"github.com/edgelesssys/estore/objstorage/objstorageprovider/objiotracing"
 )
 
 type twoLevelIterator struct {

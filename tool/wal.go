@@ -10,11 +10,11 @@ import (
 	"fmt"
 	"io"
 
-	pebble "github.com/edgelesssys/ego-kvstore"
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/rangekey"
-	"github.com/edgelesssys/ego-kvstore/record"
-	"github.com/edgelesssys/ego-kvstore/sstable"
+	pebble "github.com/edgelesssys/estore"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/rangekey"
+	"github.com/edgelesssys/estore/record"
+	"github.com/edgelesssys/estore/sstable"
 	"github.com/spf13/cobra"
 )
 

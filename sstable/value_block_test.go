@@ -10,7 +10,7 @@ import (
 	"math/rand"
 	"testing"
 
-	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/estore/internal/base"
 	"github.com/stretchr/testify/require"
 )
 

@@ -13,15 +13,15 @@ import (
 
 	"github.com/cockroachdb/errors"
 	"github.com/cockroachdb/redact"
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/internal/bytealloc"
-	"github.com/edgelesssys/ego-kvstore/internal/fastrand"
-	"github.com/edgelesssys/ego-kvstore/internal/humanize"
-	"github.com/edgelesssys/ego-kvstore/internal/invariants"
-	"github.com/edgelesssys/ego-kvstore/internal/keyspan"
-	"github.com/edgelesssys/ego-kvstore/internal/manifest"
-	"github.com/edgelesssys/ego-kvstore/internal/rangekey"
-	"github.com/edgelesssys/ego-kvstore/sstable"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/internal/bytealloc"
+	"github.com/edgelesssys/estore/internal/fastrand"
+	"github.com/edgelesssys/estore/internal/humanize"
+	"github.com/edgelesssys/estore/internal/invariants"
+	"github.com/edgelesssys/estore/internal/keyspan"
+	"github.com/edgelesssys/estore/internal/manifest"
+	"github.com/edgelesssys/estore/internal/rangekey"
+	"github.com/edgelesssys/estore/sstable"
 )
 
 // iterPos describes the state of the internal iterator, in terms of whether it

@@ -9,7 +9,7 @@ import (
 	"sort"
 	"unsafe"
 
-	"github.com/edgelesssys/ego-kvstore/internal/base"
+	"github.com/edgelesssys/estore/internal/base"
 )
 
 type rawBlockWriter struct {

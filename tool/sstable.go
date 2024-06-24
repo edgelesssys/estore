@@ -13,14 +13,14 @@ import (
 	"sort"
 	"text/tabwriter"
 
-	pebble "github.com/edgelesssys/ego-kvstore"
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/internal/humanize"
-	"github.com/edgelesssys/ego-kvstore/internal/keyspan"
-	"github.com/edgelesssys/ego-kvstore/internal/private"
-	"github.com/edgelesssys/ego-kvstore/internal/rangedel"
-	"github.com/edgelesssys/ego-kvstore/sstable"
-	"github.com/edgelesssys/ego-kvstore/vfs"
+	pebble "github.com/edgelesssys/estore"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/internal/humanize"
+	"github.com/edgelesssys/estore/internal/keyspan"
+	"github.com/edgelesssys/estore/internal/private"
+	"github.com/edgelesssys/estore/internal/rangedel"
+	"github.com/edgelesssys/estore/sstable"
+	"github.com/edgelesssys/estore/vfs"
 	"github.com/spf13/cobra"
 )
 

@@ -18,7 +18,7 @@ import (
 	"time"
 
 	"github.com/HdrHistogram/hdrhistogram-go"
-	pebble "github.com/edgelesssys/ego-kvstore"
+	pebble "github.com/edgelesssys/estore"
 )
 
 const (

@@ -1,6 +1,6 @@
 package kvstore
 
-import "github.com/edgelesssys/ego-kvstore/internal/base"
+import "github.com/edgelesssys/estore/internal/base"
 
 // The maximum number of elements in the readCompactions queue.
 // We want to limit the number of elements so that we only do

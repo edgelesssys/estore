@@ -7,9 +7,9 @@ package keyspan
 import (
 	"bytes"
 
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/internal/bytealloc"
-	"github.com/edgelesssys/ego-kvstore/internal/invariants"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/internal/bytealloc"
+	"github.com/edgelesssys/estore/internal/invariants"
 )
 
 // bufferReuseMaxCapacity is the maximum capacity of a DefragmentingIter buffer

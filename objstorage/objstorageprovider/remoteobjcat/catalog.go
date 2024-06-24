@@ -11,12 +11,12 @@ import (
 	"sync"
 
 	"github.com/cockroachdb/errors"
-	"github.com/edgelesssys/ego-kvstore/internal/base"
-	"github.com/edgelesssys/ego-kvstore/objstorage"
-	"github.com/edgelesssys/ego-kvstore/objstorage/remote"
-	"github.com/edgelesssys/ego-kvstore/record"
-	"github.com/edgelesssys/ego-kvstore/vfs"
-	"github.com/edgelesssys/ego-kvstore/vfs/atomicfs"
+	"github.com/edgelesssys/estore/internal/base"
+	"github.com/edgelesssys/estore/objstorage"
+	"github.com/edgelesssys/estore/objstorage/remote"
+	"github.com/edgelesssys/estore/record"
+	"github.com/edgelesssys/estore/vfs"
+	"github.com/edgelesssys/estore/vfs/atomicfs"
 )
 
 // Catalog is used to manage the on-disk remote object catalog.
