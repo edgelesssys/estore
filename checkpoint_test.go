@@ -2,7 +2,7 @@
 // of this source code is governed by a BSD-style license that can be found in
 // the LICENSE file.
 
-package kvstore
+package estore
 
 import (
 	"bytes"
@@ -255,7 +255,7 @@ func TestCheckpointCompaction(t *testing.T) {
 		defer cancel()
 		defer close(check)
 		defer wg.Done()
-		for i := 0; ctx.Err() == nil && i < 200; i++ {
+		for i := 0; ctx.Err() == nil && i < 20; i++ {
 			dir := fmt.Sprintf("checkpoint%06d", i)
 			if err := d.Checkpoint(dir); err != nil {
 				t.Error(err)

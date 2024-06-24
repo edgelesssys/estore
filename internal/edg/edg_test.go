@@ -13,7 +13,7 @@ import (
 	"strings"
 	"testing"
 
-	kvstore "github.com/edgelesssys/estore"
+	"github.com/edgelesssys/estore"
 	"github.com/edgelesssys/estore/internal/base"
 	"github.com/edgelesssys/estore/vfs"
 	"github.com/stretchr/testify/assert"
@@ -24,20 +24,20 @@ import (
 func TestReopen(t *testing.T) {
 	require := require.New(t)
 
-	opts := &kvstore.Options{
+	opts := &estore.Options{
 		EncryptionKey: testKey(),
 		FS:            vfs.NewMem(),
 	}
 	key := []byte("foo")
 	val := []byte("bar")
 
-	db, err := kvstore.Open("", opts)
+	db, err := estore.Open("", opts)
 	require.NoError(err)
 	require.NoError(db.Set(key, val, nil))
 	require.NoError(db.Close())
 
 	for i := 0; i < 9; i++ {
-		db, err := kvstore.Open("", opts)
+		db, err := estore.Open("", opts)
 		require.NoError(err)
 		gotVal, closer, err := db.Get(key)
 		require.NoError(err)
@@ -53,10 +53,10 @@ func TestConfidentiality(t *testing.T) {
 	require := require.New(t)
 
 	fs := vfs.NewMem()
-	db, err := kvstore.Open("", &kvstore.Options{
+	db, err := estore.Open("", &estore.Options{
 		EncryptionKey: testKey(),
 		FS:            fs,
-		Levels:        []kvstore.LevelOptions{{Compression: kvstore.NoCompression}},
+		Levels:        []estore.LevelOptions{{Compression: estore.NoCompression}},
 	})
 	require.NoError(err)
 
@@ -105,14 +105,14 @@ func TestIntegrity(t *testing.T) {
 	const db1 = "db1"
 	const db2 = "db2"
 	fs := vfs.NewMem()
-	opts := &kvstore.Options{
+	opts := &estore.Options{
 		EncryptionKey: testKey(),
 		FS:            fs,
 		Logger:        base.NoopLoggerAndTracer{},
 	}
 
 	// arange a db
-	db, err := kvstore.Open(db1, opts)
+	db, err := estore.Open(db1, opts)
 	require.NoError(err)
 	require.NoError(db.Set([]byte("key1"), []byte("val1"), nil))
 	require.NoError(db.Flush())
@@ -151,7 +151,7 @@ func TestIntegrity(t *testing.T) {
 			require.NoError(file.Close())
 
 			// try to open the db and maybe try to get the value (some errors only occur on Get)
-			db, openErr := kvstore.Open(db2, opts)
+			db, openErr := estore.Open(db2, opts)
 			var getErr error
 			if openErr == nil {
 				var closer io.Closer
@@ -171,7 +171,7 @@ func TestIntegrity(t *testing.T) {
 	ok, err := vfs.Clone(fs, fs, db1, db2)
 	require.NoError(err)
 	require.True(ok)
-	db, err = kvstore.Open(db2, opts)
+	db, err = estore.Open(db2, opts)
 	require.NoError(err)
 	require.NoError(db.Close())
 }
@@ -183,7 +183,7 @@ func TestSSTFromForkIsRejected(t *testing.T) {
 	const dbdir = "db"
 	const forkdir = "fork"
 	fs := vfs.NewMem()
-	opts := &kvstore.Options{
+	opts := &estore.Options{
 		EncryptionKey: testKey(),
 		FS:            fs,
 		Logger:        base.NoopLoggerAndTracer{},
@@ -191,7 +191,7 @@ func TestSSTFromForkIsRejected(t *testing.T) {
 	}
 
 	// create db
-	db, err := kvstore.Open(dbdir, opts)
+	db, err := estore.Open(dbdir, opts)
 	require.NoError(err)
 	require.NoError(db.Set([]byte("key1"), []byte("val1"), nil))
 	require.NoError(db.Flush())
@@ -204,7 +204,7 @@ func TestSSTFromForkIsRejected(t *testing.T) {
 	require.True(ok)
 
 	// advance db
-	db, err = kvstore.Open(dbdir, opts)
+	db, err = estore.Open(dbdir, opts)
 	require.NoError(err)
 	require.NoError(db.Set([]byte("key2"), []byte("val2"), nil))
 	require.NoError(db.Flush())
@@ -212,7 +212,7 @@ func TestSSTFromForkIsRejected(t *testing.T) {
 	require.NoError(fs.RemoveAll(opts.WALDir))
 
 	// advance fork
-	db, err = kvstore.Open(forkdir, opts)
+	db, err = estore.Open(forkdir, opts)
 	require.NoError(err)
 	require.NoError(db.Set([]byte("key2"), []byte("val2"), nil))
 	require.NoError(db.Flush())
@@ -223,7 +223,7 @@ func TestSSTFromForkIsRejected(t *testing.T) {
 	require.NoError(vfs.Copy(fs, "fork/000010.sst", "db/000010.sst"))
 
 	// try to read from db
-	db, err = kvstore.Open(dbdir, opts)
+	db, err = estore.Open(dbdir, opts)
 	require.NoError(err)
 	_, _, err = db.Get([]byte("key2"))
 	require.EqualError(err, "pebble: backing file 000010 error: cipher: message authentication failed")

@@ -8,7 +8,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 // of this source code is governed by a BSD-style license that can be found in
 // the LICENSE file.
 
-package kvstore
+package estore
 
 import (
 	"bytes"

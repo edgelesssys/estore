@@ -4,14 +4,14 @@ Copyright (c) Edgeless Systems GmbH
 SPDX-License-Identifier: AGPL-3.0-only
 */
 
-package kvstore_test
+package estore_test
 
 import (
 	"crypto/rand"
 	"fmt"
 	"log"
 
-	kvstore "github.com/edgelesssys/estore"
+	"github.com/edgelesssys/estore"
 	"github.com/edgelesssys/estore/vfs"
 )
 
@@ -22,7 +22,7 @@ func ExampleTransaction() {
 		log.Fatal(err)
 	}
 
-	db, err := kvstore.Open("", &kvstore.Options{EncryptionKey: encryptionKey, FS: vfs.NewMem()})
+	db, err := estore.Open("", &estore.Options{EncryptionKey: encryptionKey, FS: vfs.NewMem()})
 	if err != nil {
 		panic(err)
 	}
