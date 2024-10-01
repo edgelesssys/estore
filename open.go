@@ -72,6 +72,18 @@ func TableCacheSize(maxOpenFiles int) int {
 
 // Open opens a DB whose files live in the given directory.
 func Open(dirname string, opts *Options) (db *DB, _ error) {
+	db, err := open(dirname, opts)
+	if err != nil {
+		return db, err
+	}
+	if err := db.edgVerifyFreshness(); err != nil {
+		db.Close()
+		return nil, err
+	}
+	return db, nil
+}
+
+func open(dirname string, opts *Options) (db *DB, _ error) {
 	// Make a copy of the options so that we don't mutate the passed in options.
 	opts = opts.Clone()
 	opts = opts.EnsureDefaults()

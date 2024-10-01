@@ -12,6 +12,7 @@ import (
 	"math"
 	"os"
 	"strings"
+	"sync"
 	"testing"
 
 	"github.com/edgelesssys/estore"
@@ -55,9 +56,10 @@ func TestConfidentiality(t *testing.T) {
 
 	fs := vfs.NewMem()
 	db, err := estore.Open("", &estore.Options{
-		EncryptionKey: testKey(),
-		FS:            fs,
-		Levels:        []estore.LevelOptions{{Compression: estore.NoCompression}},
+		EncryptionKey:       testKey(),
+		SetMonotonicCounter: (&fakeCounter{}).set,
+		FS:                  fs,
+		Levels:              []estore.LevelOptions{{Compression: estore.NoCompression}},
 	})
 	require.NoError(err)
 
@@ -239,8 +241,9 @@ func TestOldDB(t *testing.T) {
 	require := require.New(t)
 
 	opts := &estore.Options{
-		EncryptionKey: testKey(),
-		FS:            vfs.NewMem(),
+		EncryptionKey:       testKey(),
+		SetMonotonicCounter: (&fakeCounter{}).set,
+		FS:                  vfs.NewMem(),
 	}
 
 	ok, err := vfs.Clone(vfs.Default, opts.FS, "testdata/db-v1.0.0", "")
@@ -270,6 +273,206 @@ func TestOldDB(t *testing.T) {
 	requireGet("key1", "val1")
 	requireGet("key2", "val2")
 	requireGet("key3", "val3")
+	require.NoError(db.Close())
+}
+
+func TestRollbackProtection(t *testing.T) {
+	require := require.New(t)
+
+	const dbdir = "db"
+	const olddir = "old"
+	fs := vfs.NewMem()
+	var counter fakeCounter
+
+	opts := &estore.Options{
+		EncryptionKey:       testKey(),
+		SetMonotonicCounter: counter.set,
+		FS:                  fs,
+	}
+
+	// create db
+	db, err := estore.Open(dbdir, opts)
+	require.NoError(err)
+	tx := db.NewTransaction(true)
+	require.NoError(tx.Set([]byte("key"), []byte("val1"), nil))
+	require.NoError(tx.Commit())
+	require.NoError(db.Close())
+
+	// copy the db
+	ok, err := vfs.Clone(fs, fs, dbdir, olddir)
+	require.NoError(err)
+	require.True(ok)
+
+	// advance db
+	db, err = estore.Open(dbdir, opts)
+	require.NoError(err)
+	tx = db.NewTransaction(true)
+	require.NoError(tx.Set([]byte("key"), []byte("val2"), nil))
+	require.NoError(tx.Commit())
+	require.NoError(db.Close())
+
+	// try to roll back the db
+	_, err = estore.Open(olddir, opts)
+	require.ErrorContains(err, "rollback detected")
+}
+
+func TestRollbackProtection_Open_CounterSourceFails(t *testing.T) {
+	require := require.New(t)
+
+	counter := fakeCounter{preErr: assert.AnError}
+
+	opts := &estore.Options{
+		EncryptionKey:       testKey(),
+		SetMonotonicCounter: counter.set,
+		FS:                  vfs.NewMem(),
+	}
+
+	_, err := estore.Open("", opts)
+	require.ErrorIs(err, counter.preErr)
+}
+
+func TestRollbackProtection_Open_NewDBWithExistingCounter(t *testing.T) {
+	require := require.New(t)
+
+	var counter fakeCounter
+
+	opts := &estore.Options{
+		EncryptionKey:       testKey(),
+		SetMonotonicCounter: counter.set,
+		FS:                  vfs.NewMem(),
+	}
+
+	counter.value = 2
+	_, err := estore.Open("", opts)
+	require.ErrorContains(err, "rollback detected")
+}
+
+func TestRollbackProtection_Open_CounterSourceRollbackCanBeHandled(t *testing.T) {
+	require := require.New(t)
+
+	var counter fakeCounter
+
+	opts := &estore.Options{
+		EncryptionKey:       testKey(),
+		SetMonotonicCounter: counter.set,
+		FS:                  vfs.NewMem(),
+	}
+
+	// create db
+	db, err := estore.Open("", opts)
+	require.NoError(err)
+	tx := db.NewTransaction(true)
+	require.NoError(tx.Set([]byte("key"), []byte("val1"), nil))
+	require.NoError(tx.Commit())
+	tx = db.NewTransaction(true)
+	require.NoError(tx.Set([]byte("key"), []byte("val2"), nil))
+	require.NoError(tx.Commit())
+	require.NoError(db.Close())
+
+	// roll back counter source
+	counter.value--
+
+	// advance db
+	db, err = estore.Open("", opts)
+	require.NoError(err)
+	tx = db.NewTransaction(true)
+	require.NoError(tx.Set([]byte("key"), []byte("val3"), nil))
+	require.NoError(tx.Commit())
+	require.NoError(db.Close())
+
+	// counter is synced
+	require.EqualValues(3, counter.value)
+}
+
+func TestRollbackProtection_CounterSourceReturnsError(t *testing.T) {
+	testCases := map[string]struct {
+		preErr  error
+		postErr error
+	}{
+		"error before increment": {
+			preErr: assert.AnError,
+		},
+		"error after increment": {
+			postErr: assert.AnError,
+		},
+	}
+
+	for name, tc := range testCases {
+		t.Run(name, func(t *testing.T) {
+			require := require.New(t)
+
+			var counter fakeCounter
+
+			opts := &estore.Options{
+				EncryptionKey:       testKey(),
+				SetMonotonicCounter: counter.set,
+				FS:                  vfs.NewMem(),
+			}
+
+			db, err := estore.Open("", opts)
+			require.NoError(err)
+
+			// tx fails
+			counter.preErr = tc.preErr
+			counter.postErr = tc.postErr
+			tx := db.NewTransaction(true)
+			require.NoError(tx.Set([]byte("key"), []byte("val1"), nil))
+			require.Error(tx.Commit())
+
+			// value was not written
+			_, _, err = db.Get([]byte("key"))
+			require.ErrorIs(err, estore.ErrNotFound)
+
+			// retry succeeds
+			counter.preErr = nil
+			counter.postErr = nil
+			tx = db.NewTransaction(true)
+			require.NoError(tx.Set([]byte("key"), []byte("val1"), nil))
+			require.NoError(tx.Commit())
+
+			require.NoError(db.Close())
+
+			// counter is synced
+			require.EqualValues(2, counter.value)
+		})
+	}
+}
+
+func TestRollbackProtection_AdvancingCounterSourceCausesFailure(t *testing.T) {
+	require := require.New(t)
+
+	var counter fakeCounter
+
+	opts := &estore.Options{
+		EncryptionKey:       testKey(),
+		SetMonotonicCounter: counter.set,
+		FS:                  vfs.NewMem(),
+		Logger:              &base.InMemLogger{}, // calls runtime.Goexit on Fatalf
+	}
+
+	// create db
+	db, err := estore.Open("", opts)
+	require.NoError(err)
+	tx := db.NewTransaction(true)
+	require.NoError(tx.Set([]byte("key"), []byte("val1"), nil))
+	require.NoError(tx.Commit())
+
+	// advance counter source
+	counter.value++
+
+	tx = db.NewTransaction(true)
+	require.NoError(tx.Set([]byte("key"), []byte("val2"), nil))
+
+	// expect fatal exit on commit
+	var wg sync.WaitGroup
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		tx.Commit()
+		panic("unreachable")
+	}()
+	wg.Wait()
+
 	require.NoError(db.Close())
 }
 
@@ -311,4 +514,24 @@ func isCryptoError(err error) bool {
 	}
 
 	return false
+}
+
+type fakeCounter struct {
+	value   uint64
+	preErr  error
+	postErr error
+}
+
+func (c *fakeCounter) set(value uint64) (uint64, error) {
+	if c.preErr != nil {
+		return 0, c.preErr
+	}
+	prev := c.value
+	if value > c.value {
+		c.value = value
+	}
+	if c.postErr != nil {
+		return 0, c.postErr
+	}
+	return prev, nil
 }

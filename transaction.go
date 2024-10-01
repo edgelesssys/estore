@@ -9,6 +9,8 @@ package estore
 import (
 	"context"
 	"io"
+
+	"github.com/cockroachdb/errors"
 )
 
 // NewTransaction starts a new transaction.
@@ -35,6 +37,39 @@ type Transaction struct {
 // Commit commits and closes the transaction.
 func (t *Transaction) Commit() error {
 	defer t.Close()
+	if t.Batch == nil {
+		return nil
+	}
+	db := t.db
+
+	if db.opts.SetMonotonicCounter != nil {
+		// We must increment the store counter and the source counter. The order is important so that errors don't make
+		// the store inaccessible: It's tolerable if the store counter is incremented but the source counter is not.
+		// We only commit the transaction if both counters are incremented.
+
+		if err := db.edgSetMonotonicCounterOnStore(db.monotonicCounter + 1); err != nil {
+			return errors.Wrap(err, "setting monotonic counter on store")
+		}
+		prevStoreCount := db.monotonicCounter
+		db.monotonicCounter++
+
+		prevSourceCount, err := db.opts.SetMonotonicCounter(db.monotonicCounter)
+		if err != nil {
+			// We don't know if the source counter was incremented or not.
+			// Keep the store counter incremented. It will be synced on next successful commit.
+			db.opts.Logger.Infof("ERROR: incrementing the trusted source counter: %v", err)
+			return errors.Wrap(err, "incrementing the trusted source counter")
+		}
+
+		if prevSourceCount > prevStoreCount {
+			// Unrecovarable error. Should only be possible if someone else incremented the monotonic counter.
+			db.opts.Logger.Fatalf("Previous value of the trusted source counter (%v) is greater than expected (%v)", prevSourceCount, prevStoreCount)
+		}
+		if prevSourceCount < prevStoreCount {
+			db.opts.Logger.Infof("WARNING: tx commit: monotonic counter source lagged behind (store counter: %v, source counter: %v) and should have been synced now", prevStoreCount, prevSourceCount)
+		}
+	}
+
 	return t.Batch.Commit(nil)
 }
 
