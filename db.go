@@ -501,8 +501,9 @@ type DB struct {
 	// compaction concurrency
 	openedAt time.Time
 
-	keyManager *edg.KeyManager
-	txLock     sync.Mutex
+	keyManager       *edg.KeyManager
+	txLock           sync.Mutex
+	monotonicCounter uint64
 }
 
 var _ Reader = (*DB)(nil)

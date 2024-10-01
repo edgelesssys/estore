@@ -470,6 +470,17 @@ type Options struct {
 	// EncryptionKey is the master key for encryption at rest. Must be 16, 24, or 32 bytes.
 	EncryptionKey []byte
 
+	// SetMonotonicCounter is a callback that EStore invokes to provide rollback protection by using a trusted monotonic counter.
+	//
+	// The behavior of the counter must be the following:
+	// If the passed value is greater than the counter's value, it is set as the new value and the old value is returned.
+	// Otherwise, the value is not changed and the current value is returned.
+	//
+	// If you use this feature, you should perform all write operations inside transactions because only these will be protected.
+	//
+	// If not set, rollback protection is disabled.
+	SetMonotonicCounter func(uint64) (uint64, error)
+
 	// Sync sstables periodically in order to smooth out writes to disk. This
 	// option does not provide any persistency guarantee, but is used to avoid
 	// latency spikes if the OS automatically decides to write out a large chunk
