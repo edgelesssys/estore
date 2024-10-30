@@ -394,6 +394,9 @@ func TestLargeBatch(t *testing.T) {
 	startLogStartSize := fileSize(startLogNum)
 	startSeqNum := d.mu.versions.logSeqNum.Load()
 
+	// EDG: As we disabled log recycling, the log file may get deleted. Disable file deletions for this test.
+	d.mu.disableFileDeletions++
+
 	// Write a key with a value larger than the memtable size.
 	require.NoError(t, d.Set([]byte("a"), bytes.Repeat([]byte("a"), 512), nil))
 
